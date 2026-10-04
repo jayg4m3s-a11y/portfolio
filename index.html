@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KINGJAY142p · Roblox Portfolio</title>
+<meta name="description" content="KINGJAY142p, After Hours Studios. Roblox scripting, building, 3D assets, UI and thumbnails.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #090B13; --body: #172534; --panel: #1f3246; --line: #35536f;
+    --text: #f4f8ff; --muted: #a9bdd2;
+    --green: #52ED16; --green-hi: #D8FF8A; --gold-hi: #FFE889; --cyan: #119CEB; --cyan-hi: #73EFFF;
+    --radius: 8px;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--ink); color: var(--text); font-family: "Fredoka", system-ui, -apple-system, "Segoe UI", sans-serif; font-size: 17px; line-height: 1.4; }
+  img, video { display: block; max-width: 100%; }
+  .wrap { max-width: 1280px; margin: 0 auto; padding: 0 16px; }
+
+  .top { position: sticky; top: 0; z-index: 20; background: rgba(9,11,19,0.95); border-bottom: 2px solid var(--line); }
+  .top .wrap { display: flex; align-items: center; gap: 12px; padding-top: 10px; padding-bottom: 10px; flex-wrap: wrap; }
+  .name { font-weight: 700; font-size: 22px; line-height: 1.1; margin-right: auto; }
+  .name small { display: block; font-size: 14px; font-weight: 500; color: var(--gold-hi); }
+  .btn { display: inline-block; text-decoration: none; font-weight: 700; font-size: 16px; color: var(--ink); padding: 9px 16px; border-radius: var(--radius);
+    border: 3px solid var(--ink); box-shadow: 0 3px 0 #000; background: linear-gradient(180deg, var(--green-hi), var(--green)); white-space: nowrap; }
+  .btn.alt { background: linear-gradient(180deg, var(--cyan-hi), var(--cyan)); }
+  .btn.ghost { background: var(--panel); color: var(--text); border-color: var(--line); box-shadow: none; }
+
+  .intro { padding: 20px 0 8px; }
+  .intro h1 { font-size: clamp(24px, 3.4vw, 36px); margin: 0 0 12px; line-height: 1.15; }
+  .intro h1 span { color: var(--green); }
+  .facts { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
+  .facts li { background: var(--body); border: 2px solid var(--line); border-radius: 999px; padding: 4px 14px; font-size: 15px; color: var(--muted); }
+  .facts b { color: var(--gold-hi); }
+
+  .tabs { display: flex; gap: 8px; flex-wrap: wrap; padding: 16px 0 12px; position: sticky; top: 62px; z-index: 10; background: var(--ink); }
+  .tab { font: inherit; font-weight: 600; font-size: 16px; color: var(--text); cursor: pointer; background: var(--body); border: 2px solid var(--line); border-radius: var(--radius); padding: 8px 14px; }
+  .tab small { color: var(--muted); font-weight: 500; margin-left: 4px; }
+  .tab[aria-pressed="true"] { background: var(--gold-hi); color: var(--ink); border-color: var(--ink); }
+  .tab[aria-pressed="true"] small { color: #5a4a12; }
+
+  .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; grid-auto-flow: dense; }
+  @media (max-width: 1000px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+  figure { margin: 0; position: relative; border: 3px solid var(--ink); outline: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; cursor: zoom-in; background: var(--body); }
+  figure img, figure video { width: 100%; height: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
+  figure.w2, figure.sheet { grid-column: span 2; }
+  figure.w2 video { aspect-ratio: 960 / 366; }
+  figure.sheet img { aspect-ratio: 113 / 30; }
+  figure.big { grid-column: span 2; grid-row: span 2; }
+  figure.big img { aspect-ratio: auto; }
+  .hide { display: none !important; }
+  figcaption { position: absolute; left: 0; right: 0; bottom: 0; padding: 18px 10px 6px; font-size: 14px; font-weight: 500; background: linear-gradient(180deg, transparent, rgba(9,11,19,0.92)); pointer-events: none; }
+  figcaption i { font-style: normal; color: var(--gold-hi); font-weight: 700; font-size: 12px; letter-spacing: 0.8px; text-transform: uppercase; margin-right: 6px; }
+  .play { position: absolute; top: 8px; right: 8px; width: 28px; height: 28px; border-radius: 50%; background: rgba(9,11,19,0.8); border: 2px solid var(--line);
+    display: grid; place-items: center; font-size: 11px; color: var(--gold-hi); pointer-events: none; }
+
+  .icons { display: grid; grid-template-columns: repeat(auto-fill, minmax(84px, 1fr)); gap: 8px; margin-top: 10px; }
+  .icons div { background: var(--body); border: 2px solid var(--line); border-radius: var(--radius); padding: 8px; display: grid; place-items: center; }
+  .icons img { width: 64px; height: 64px; object-fit: contain; }
+  .systems { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 0; padding: 0; list-style: none; }
+  .systems li { background: var(--panel); border: 2px solid var(--line); border-radius: var(--radius); padding: 6px 12px; font-size: 15px; }
+  .systems li.h { background: none; border: none; padding-left: 0; font-weight: 700; color: var(--cyan-hi); }
+
+  footer { padding: 28px 0 40px; margin-top: 28px; border-top: 2px solid var(--line); text-align: center; }
+  footer .row { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; }
+  footer p { color: #6c8198; font-size: 14px; margin: 0; }
+
+  #lightbox { position: fixed; inset: 0; z-index: 50; background: rgba(9,11,19,0.95); display: none; place-items: center; padding: 16px; cursor: zoom-out; }
+  #lightbox.open { display: grid; }
+  #lightbox img, #lightbox video { max-width: 100%; max-height: 88vh; border: 3px solid var(--line); border-radius: var(--radius); }
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="wrap">
+    <div class="name">KINGJAY142p<small>After Hours Studios · Roblox developer</small></div>
+    <a class="btn" href="https://discord.com/users/767992133251629096" target="_blank" rel="noopener">Discord</a>
+    <a class="btn alt" href="https://www.roblox.com/games/94007788716602" target="_blank" rel="noopener">Play Odd Waters</a>
+    <a class="btn ghost" href="https://www.roblox.com/users/1424896813/profile" target="_blank" rel="noopener">Roblox</a>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="intro">
+    <h1>Scripting, building, 3D assets, UI and thumbnails<span>.</span> Open for commissions.</h1>
+    <ul class="facts">
+      <li>Latest game: <b>Odd Waters</b>, a fishing simulator</li>
+      <li><b>151</b> scripts</li>
+      <li><b>243</b> models</li>
+      <li><b>31</b> fish</li>
+      <li><b>5</b> areas built</li>
+      <li><b>24</b> passes and products</li>
+      <li>PC and mobile</li>
+    </ul>
+  </div>
+
+  <div class="tabs" role="group" aria-label="Filter the work">
+    <button class="tab" data-f="all" aria-pressed="true">All <small>64</small></button>
+    <button class="tab" data-f="script" aria-pressed="false">Gameplay &amp; systems <small>15</small></button>
+    <button class="tab" data-f="build" aria-pressed="false">Builds <small>9</small></button>
+    <button class="tab" data-f="model" aria-pressed="false">3D models <small>14</small></button>
+    <button class="tab" data-f="ui" aria-pressed="false">UI <small>21</small></button>
+    <button class="tab" data-f="art" aria-pressed="false">Thumbnails <small>5</small></button>
+  </div>
+
+  <div class="grid">
+    <figure class="big" data-c="art"><img src="assets/art-thumb-catch.jpg" alt="The big catch" loading="lazy"><figcaption><i>Thumbnail</i>The big catch</figcaption></figure>
+    <figure class="w2 vid" data-c="build"><video muted loop playsinline preload="none" poster="assets/vid-harbour.jpg" data-src="assets/vid-harbour.mp4" aria-label="Harbour fly-around"></video><span class="play">&#9654;</span><figcaption><i>Build</i>Harbour fly-around</figcaption></figure>
+    <figure class="w2 vid" data-c="script"><video muted loop playsinline preload="none" poster="assets/vid-catch-dock.jpg" data-src="assets/vid-catch-dock.mp4" aria-label="Cast, reel, catch"></video><span class="play">&#9654;</span><figcaption><i>Gameplay</i>Cast, reel, catch</figcaption></figure>
+    <figure class="w2 vid" data-c="script"><video muted loop playsinline preload="none" poster="assets/vid-catch-frozen.jpg" data-src="assets/vid-catch-frozen.mp4" aria-label="Frozen Lake catch"></video><span class="play">&#9654;</span><figcaption><i>Gameplay</i>Frozen Lake catch</figcaption></figure>
+    <figure class="w2 vid" data-c="script"><video muted loop playsinline preload="none" poster="assets/vid-catch-lava.jpg" data-src="assets/vid-catch-lava.mp4" aria-label="Lava Vent catch"></video><span class="play">&#9654;</span><figcaption><i>Gameplay</i>Lava Vent catch</figcaption></figure>
+    <figure class="w2 vid" data-c="script"><video muted loop playsinline preload="none" poster="assets/vid-catch-sewer.jpg" data-src="assets/vid-catch-sewer.mp4" aria-label="Sewer catch"></video><span class="play">&#9654;</span><figcaption><i>Gameplay</i>Sewer catch</figcaption></figure>
+    <figure class="w2 vid" data-c="script"><video muted loop playsinline preload="none" poster="assets/vid-meteors.jpg" data-src="assets/vid-meteors.mp4" aria-label="Meteor shower"></video><span class="play">&#9654;</span><figcaption><i>World event</i>Meteor shower</figcaption></figure>
+    <figure class="w2 vid" data-c="script"><video muted loop playsinline preload="none" poster="assets/vid-thunder.jpg" data-src="assets/vid-thunder.mp4" aria-label="Thunderstorm"></video><span class="play">&#9654;</span><figcaption><i>World event</i>Thunderstorm</figcaption></figure>
+    <figure class="w2 vid" data-c="script"><video muted loop playsinline preload="none" poster="assets/vid-aquarium.jpg" data-src="assets/vid-aquarium.mp4" aria-label="Aquarium that earns coins"></video><span class="play">&#9654;</span><figcaption><i>System</i>Aquarium that earns coins</figcaption></figure>
+    <figure class="w2 vid" data-c="script"><video muted loop playsinline preload="none" poster="assets/vid-rods.jpg" data-src="assets/vid-rods.mp4" aria-label="Rod effects"></video><span class="play">&#9654;</span><figcaption><i>System</i>Rod effects</figcaption></figure>
+    <figure class="w2 vid" data-c="script"><video muted loop playsinline preload="none" poster="assets/vid-run.jpg" data-src="assets/vid-run.mp4" aria-label="Rod on the back"></video><span class="play">&#9654;</span><figcaption><i>System</i>Rod on the back</figcaption></figure>
+    <figure class="w2 vid" data-c="script"><video muted loop playsinline preload="none" poster="assets/vid-rebirth.jpg" data-src="assets/vid-rebirth.mp4" aria-label="Rebirth"></video><span class="play">&#9654;</span><figcaption><i>System</i>Rebirth</figcaption></figure>
+    <figure class="w2 vid" data-c="script"><video muted loop playsinline preload="none" poster="assets/vid-sell.jpg" data-src="assets/vid-sell.mp4" aria-label="Selling fish"></video><span class="play">&#9654;</span><figcaption><i>System</i>Selling fish</figcaption></figure>
+    <figure class="w2 vid" data-c="script"><video muted loop playsinline preload="none" poster="assets/vid-auto-fish.jpg" data-src="assets/vid-auto-fish.mp4" aria-label="Auto fishing, hands off"></video><span class="play">&#9654;</span><figcaption><i>System</i>Auto fishing, hands off</figcaption></figure>
+    <figure class="w2 vid" data-c="script"><video muted loop playsinline preload="none" poster="assets/vid-tutorial-start.jpg" data-src="assets/vid-tutorial-start.mp4" aria-label="Tutorial: first rod and cast"></video><span class="play">&#9654;</span><figcaption><i>System</i>Tutorial: first rod and cast</figcaption></figure>
+    <figure class="w2 vid" data-c="script"><video muted loop playsinline preload="none" poster="assets/vid-tutorial-aquarium.jpg" data-src="assets/vid-tutorial-aquarium.mp4" aria-label="Tutorial: the aquarium"></video><span class="play">&#9654;</span><figcaption><i>System</i>Tutorial: the aquarium</figcaption></figure>
+    <figure class="" data-c="script"><img src="assets/ui-admin.jpg" alt="Admin tools" loading="lazy"><figcaption><i>System</i>Admin tools</figcaption></figure>
+    <figure class="w2 vid" data-c="build"><video muted loop playsinline preload="none" poster="assets/vid-frozen-zone.jpg" data-src="assets/vid-frozen-zone.mp4" aria-label="Frozen Lake"></video><span class="play">&#9654;</span><figcaption><i>Build</i>Frozen Lake</figcaption></figure>
+    <figure class="w2 vid" data-c="build"><video muted loop playsinline preload="none" poster="assets/vid-lava-zone.jpg" data-src="assets/vid-lava-zone.mp4" aria-label="Lava Vent"></video><span class="play">&#9654;</span><figcaption><i>Build</i>Lava Vent</figcaption></figure>
+    <figure class="w2 vid" data-c="build"><video muted loop playsinline preload="none" poster="assets/vid-sewer-zone.jpg" data-src="assets/vid-sewer-zone.mp4" aria-label="The Sewer"></video><span class="play">&#9654;</span><figcaption><i>Build</i>The Sewer</figcaption></figure>
+    <figure class="w2 vid" data-c="build"><video muted loop playsinline preload="none" poster="assets/vid-frozen-fly.jpg" data-src="assets/vid-frozen-fly.mp4" aria-label="Frozen Lake fly-through"></video><span class="play">&#9654;</span><figcaption><i>Build</i>Frozen Lake fly-through</figcaption></figure>
+    <figure class="" data-c="build"><img src="assets/build-harbour.jpg" alt="Harbour town" loading="lazy"><figcaption><i>Build</i>Harbour town</figcaption></figure>
+    <figure class="" data-c="build"><img src="assets/build-plaza.jpg" alt="Portal Plaza hub" loading="lazy"><figcaption><i>Build</i>Portal Plaza hub</figcaption></figure>
+    <figure class="" data-c="build"><img src="assets/build-sewer.jpg" alt="Sewer zone" loading="lazy"><figcaption><i>Build</i>Sewer zone</figcaption></figure>
+    <figure class="" data-c="build"><img src="assets/play-pier.jpg" alt="The bay" loading="lazy"><figcaption><i>Build</i>The bay</figcaption></figure>
+    <figure class="sheet" data-c="model"><img src="assets/sheet-fish-a.jpg" alt="Fish, set 1 of 2" loading="lazy"><figcaption><i>3D</i>Fish, set 1 of 2</figcaption></figure>
+    <figure class="sheet" data-c="model"><img src="assets/sheet-fish-b.jpg" alt="Fish, set 2 of 2" loading="lazy"><figcaption><i>3D</i>Fish, set 2 of 2</figcaption></figure>
+    <figure class="sheet" data-c="model"><img src="assets/sheet-rods.jpg" alt="10 rods and 6 skins" loading="lazy"><figcaption><i>3D</i>10 rods and 6 skins</figcaption></figure>
+    <figure class="sheet" data-c="model"><img src="assets/sheet-items.jpg" alt="Bait, chests, event rocks, junk" loading="lazy"><figcaption><i>3D</i>Bait, chests, event rocks, junk</figcaption></figure>
+    <figure class="sheet" data-c="model"><img src="assets/sheet-landmarks.jpg" alt="Harbour landmarks" loading="lazy"><figcaption><i>3D</i>Harbour landmarks</figcaption></figure>
+    <figure class="sheet" data-c="model"><img src="assets/sheet-props.jpg" alt="Harbour props and characters" loading="lazy"><figcaption><i>3D</i>Harbour props and characters</figcaption></figure>
+    <figure class="sheet" data-c="model"><img src="assets/sheet-aquarium.jpg" alt="Aquarium tanks and decor" loading="lazy"><figcaption><i>3D</i>Aquarium tanks and decor</figcaption></figure>
+    <figure class="sheet" data-c="model"><img src="assets/sheet-zones.jpg" alt="Zone props" loading="lazy"><figcaption><i>3D</i>Zone props</figcaption></figure>
+    <figure class="" data-c="model"><img src="assets/model-midas.jpg" alt="Midas Tide rod" loading="lazy"><figcaption><i>3D</i>Midas Tide rod</figcaption></figure>
+    <figure class="" data-c="model"><img src="assets/model-emberfang.jpg" alt="Emberfang rod" loading="lazy"><figcaption><i>3D</i>Emberfang rod</figcaption></figure>
+    <figure class="" data-c="model"><img src="assets/model-whisper.jpg" alt="Abyssal Whisper rod" loading="lazy"><figcaption><i>3D</i>Abyssal Whisper rod</figcaption></figure>
+    <figure class="" data-c="model"><img src="assets/model-moonveil.jpg" alt="Moonveil rod" loading="lazy"><figcaption><i>3D</i>Moonveil rod</figcaption></figure>
+    <figure class="" data-c="model"><img src="assets/model-sakura.jpg" alt="Sakura Drift rod" loading="lazy"><figcaption><i>3D</i>Sakura Drift rod</figcaption></figure>
+    <figure class="" data-c="model"><img src="assets/model-chests-rocks.jpg" alt="Chests and event rocks" loading="lazy"><figcaption><i>3D</i>Chests and event rocks</figcaption></figure>
+    <figure class="w2 vid" data-c="ui"><video muted loop playsinline preload="none" poster="assets/vid-ui-menus.jpg" data-src="assets/vid-ui-menus.mp4" aria-label="Menu animations"></video><span class="play">&#9654;</span><figcaption><i>UI</i>Menu animations</figcaption></figure>
+    <figure class="w2 vid" data-c="ui"><video muted loop playsinline preload="none" poster="assets/vid-shops.jpg" data-src="assets/vid-shops.mp4" aria-label="Shops in motion"></video><span class="play">&#9654;</span><figcaption><i>UI</i>Shops in motion</figcaption></figure>
+    <figure class="" data-c="ui"><img src="assets/ui-shop.jpg" alt="Shop" loading="lazy"><figcaption><i>UI</i>Shop</figcaption></figure>
+    <figure class="" data-c="ui"><img src="assets/ui-chests.jpg" alt="Treasure Chest odds" loading="lazy"><figcaption><i>UI</i>Treasure Chest odds</figcaption></figure>
+    <figure class="" data-c="ui"><img src="assets/ui-passes.jpg" alt="Gamepasses" loading="lazy"><figcaption><i>UI</i>Gamepasses</figcaption></figure>
+    <figure class="" data-c="ui"><img src="assets/ui-coins.jpg" alt="Coin packs" loading="lazy"><figcaption><i>UI</i>Coin packs</figcaption></figure>
+    <figure class="" data-c="ui"><img src="assets/ui-inventory.jpg" alt="Inventory" loading="lazy"><figcaption><i>UI</i>Inventory</figcaption></figure>
+    <figure class="" data-c="ui"><img src="assets/ui-rodshop.jpg" alt="Rod Shop" loading="lazy"><figcaption><i>UI</i>Rod Shop</figcaption></figure>
+    <figure class="" data-c="ui"><img src="assets/ui-skins.jpg" alt="Skin picker" loading="lazy"><figcaption><i>UI</i>Skin picker</figcaption></figure>
+    <figure class="" data-c="ui"><img src="assets/ui-index.jpg" alt="Fish Index" loading="lazy"><figcaption><i>UI</i>Fish Index</figcaption></figure>
+    <figure class="" data-c="ui"><img src="assets/ui-quests.jpg" alt="Quests" loading="lazy"><figcaption><i>UI</i>Quests</figcaption></figure>
+    <figure class="" data-c="ui"><img src="assets/ui-daily.jpg" alt="Daily rewards" loading="lazy"><figcaption><i>UI</i>Daily rewards</figcaption></figure>
+    <figure class="" data-c="ui"><img src="assets/ui-spin.jpg" alt="Spin wheel" loading="lazy"><figcaption><i>UI</i>Spin wheel</figcaption></figure>
+    <figure class="" data-c="ui"><img src="assets/ui-playtime.jpg" alt="Playtime rewards" loading="lazy"><figcaption><i>UI</i>Playtime rewards</figcaption></figure>
+    <figure class="" data-c="ui"><img src="assets/ui-aquarium.jpg" alt="Aquarium" loading="lazy"><figcaption><i>UI</i>Aquarium</figcaption></figure>
+    <figure class="" data-c="ui"><img src="assets/ui-reveal.jpg" alt="Chest reveal" loading="lazy"><figcaption><i>UI</i>Chest reveal</figcaption></figure>
+    <figure class="" data-c="ui"><img src="assets/ui-stats.jpg" alt="Stats and titles" loading="lazy"><figcaption><i>UI</i>Stats and titles</figcaption></figure>
+    <figure class="" data-c="ui"><img src="assets/ui-teleport.jpg" alt="Teleport" loading="lazy"><figcaption><i>UI</i>Teleport</figcaption></figure>
+    <figure class="" data-c="ui"><img src="assets/ui-group.jpg" alt="Group perk" loading="lazy"><figcaption><i>UI</i>Group perk</figcaption></figure>
+    <figure class="" data-c="ui"><img src="assets/ui-settings.jpg" alt="Settings" loading="lazy"><figcaption><i>UI</i>Settings</figcaption></figure>
+    <figure class="" data-c="ui"><img src="assets/ui-tablet.jpg" alt="Tablet layout" loading="lazy"><figcaption><i>UI</i>Tablet layout</figcaption></figure>
+    <figure class="" data-c="art"><img src="assets/art-thumb-zones.jpg" alt="Four zones" loading="lazy"><figcaption><i>Thumbnail</i>Four zones</figcaption></figure>
+    <figure class="" data-c="art"><img src="assets/art-thumb-rods.jpg" alt="Rods and loot" loading="lazy"><figcaption><i>Thumbnail</i>Rods and loot</figcaption></figure>
+    <figure class="" data-c="art"><img src="assets/art-thumb-meteor.jpg" alt="World events" loading="lazy"><figcaption><i>Thumbnail</i>World events</figcaption></figure>
+    <figure class="" data-c="art"><img src="assets/art-icon.jpg" alt="Game icon" loading="lazy"><figcaption><i>Icon</i>Game icon</figcaption></figure>
+  </div>
+
+  <div class="icons" data-c="art">
+    <div><img src="assets/icon-cosmetic-chest-closed.png" alt="cosmetic chest closed icon" loading="lazy"></div>
+    <div><img src="assets/icon-treasure.png" alt="treasure icon" loading="lazy"></div>
+    <div><img src="assets/icon-skin-sakura-drift.png" alt="skin sakura drift icon" loading="lazy"></div>
+    <div><img src="assets/icon-skin-moonveil.png" alt="skin moonveil icon" loading="lazy"></div>
+    <div><img src="assets/icon-skin-emberfang.png" alt="skin emberfang icon" loading="lazy"></div>
+    <div><img src="assets/icon-skin-abyssal-whisper-v2.png" alt="skin abyssal whisper v2 icon" loading="lazy"></div>
+    <div><img src="assets/icon-skin-midas-tide.png" alt="skin midas tide icon" loading="lazy"></div>
+    <div><img src="assets/icon-skin-void.png" alt="skin void icon" loading="lazy"></div>
+    <div><img src="assets/icon-potion-luck.png" alt="potion luck icon" loading="lazy"></div>
+    <div><img src="assets/icon-potion-super.png" alt="potion super icon" loading="lazy"></div>
+    <div><img src="assets/icon-product-vip.png" alt="product vip icon" loading="lazy"></div>
+    <div><img src="assets/icon-product-2x-luck.png" alt="product 2x luck icon" loading="lazy"></div>
+    <div><img src="assets/icon-product-2x-coins.png" alt="product 2x coins icon" loading="lazy"></div>
+    <div><img src="assets/icon-coins-large.png" alt="coins large icon" loading="lazy"></div>
+  </div>
+
+  <ul class="systems" data-c="script">
+    <li class="h">Systems scripted:</li>
+    <li>Fishing and reel minigame</li>
+    <li>Rarity, size and mutation rolls</li>
+    <li>Data saving</li>
+    <li>Gamepasses and products</li>
+    <li>Aquarium with offline income</li>
+    <li>Rebirth</li>
+    <li>Daily rewards, quests, spin wheel</li>
+    <li>Codes</li>
+    <li>World events</li>
+    <li>Tutorial</li>
+    <li>Auto fishing</li>
+    <li>Luck potions</li>
+    <li>Admin panel</li>
+    <li>Anti-exploit checks</li>
+  </ul>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="row">
+      <a class="btn" href="https://discord.com/users/767992133251629096" target="_blank" rel="noopener">Message me on Discord</a>
+      <a class="btn ghost" href="https://www.roblox.com/communities/419153316" target="_blank" rel="noopener">After Hours Studios</a>
+    </div>
+    <p>KINGJAY142p · After Hours Studios · AI-assisted workflow</p>
+  </div>
+</footer>
+
+<div id="lightbox"></div>
+
+<script>
+  // filter tabs
+  var tabs = document.querySelectorAll('.tab');
+  var items = document.querySelectorAll('[data-c]');
+  tabs.forEach(function (tab) {
+    tab.addEventListener('click', function () {
+      var f = tab.dataset.f;
+      tabs.forEach(function (t) { t.setAttribute('aria-pressed', t === tab ? 'true' : 'false'); });
+      items.forEach(function (el) { el.classList.toggle('hide', f !== 'all' && el.dataset.c !== f); });
+    });
+  });
+  // clips load and play only while they are on screen
+  var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if ('IntersectionObserver' in window && !still) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        var v = e.target;
+        if (e.isIntersecting) { if (!v.getAttribute('src')) v.src = v.dataset.src; v.play().catch(function () {}); }
+        else { v.pause(); }
+      });
+    }, { threshold: 0.35 });
+    document.querySelectorAll('figure video').forEach(function (v) { io.observe(v); });
+  }
+  // click to enlarge (images and clips)
+  var box = document.getElementById('lightbox');
+  function closeBox() { box.classList.remove('open'); box.replaceChildren(); }
+  document.querySelectorAll('figure').forEach(function (fig) {
+    fig.addEventListener('click', function () {
+      var v = fig.querySelector('video');
+      var el;
+      if (v) {
+        el = document.createElement('video');
+        el.src = v.dataset.src; el.poster = v.poster; el.controls = true; el.autoplay = true; el.loop = true; el.muted = true; el.playsInline = true;
+        el.addEventListener('click', function (ev) { ev.stopPropagation(); });
+      } else {
+        var img = fig.querySelector('img');
+        el = document.createElement('img');
+        el.src = img.src; el.alt = img.alt;
+      }
+      box.replaceChildren(el);
+      box.classList.add('open');
+    });
+  });
+  box.addEventListener('click', closeBox);
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeBox(); });
+</script>
+</body>
+</html>
