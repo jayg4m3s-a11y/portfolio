@@ -3,270 +3,408 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>KINGJAY142p · Roblox Portfolio</title>
-<meta name="description" content="KINGJAY142p, After Hours Studios. Roblox scripting, building, 3D assets, UI and thumbnails.">
+<title>KINGJAY142p · Roblox Builder, 3D Modeler, UI Designer</title>
+<meta name="description" content="Portfolio of KINGJAY142p, After Hours Studios: Roblox builds, 3D models and UI design.">
+<meta property="og:title" content="KINGJAY142p · Roblox Builder, 3D Modeler, UI Designer">
+<meta property="og:image" content="assets/build-halloween-bayou.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<script type="module" src="https://unpkg.com/@google/model-viewer@3.5.0/dist/model-viewer.min.js"></script>
 <style>
-  :root {
-    --ink: #090B13; --body: #172534; --panel: #1f3246; --line: #35536f;
-    --text: #f4f8ff; --muted: #a9bdd2;
-    --green: #52ED16; --green-hi: #D8FF8A; --gold-hi: #FFE889; --cyan: #119CEB; --cyan-hi: #73EFFF;
-    --radius: 8px;
-  }
-  * { box-sizing: border-box; }
-  body { margin: 0; background: var(--ink); color: var(--text); font-family: "Fredoka", system-ui, -apple-system, "Segoe UI", sans-serif; font-size: 17px; line-height: 1.4; }
-  img, video { display: block; max-width: 100%; }
-  .wrap { max-width: 1280px; margin: 0 auto; padding: 0 16px; }
+:root {
+  --bg: #FFFFFF; --ink: #0A0A0A; --muted: #6B6B6B; --line: #E6E6E6; --soft: #F4F4F2; --soft-2: #EDEDEA;
+  --sans: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --max: 1360px; --gap: 14px;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 76px; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 400 16px/1.5 var(--sans); -webkit-font-smoothing: antialiased; }
+img, video { display: block; max-width: 100%; }
+a { color: inherit; }
+h1, h2, h3, p { margin: 0; }
+.wrap { max-width: var(--max); margin: 0 auto; padding: 0 28px; }
+:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+.hide { display: none !important; }
 
-  .top { position: sticky; top: 0; z-index: 20; background: rgba(9,11,19,0.95); border-bottom: 2px solid var(--line); }
-  .top .wrap { display: flex; align-items: center; gap: 12px; padding-top: 10px; padding-bottom: 10px; flex-wrap: wrap; }
-  .name { font-weight: 700; font-size: 22px; line-height: 1.1; margin-right: auto; }
-  .name small { display: block; font-size: 14px; font-weight: 500; color: var(--gold-hi); }
-  .btn { display: inline-block; text-decoration: none; font-weight: 700; font-size: 16px; color: var(--ink); padding: 9px 16px; border-radius: var(--radius);
-    border: 3px solid var(--ink); box-shadow: 0 3px 0 #000; background: linear-gradient(180deg, var(--green-hi), var(--green)); white-space: nowrap; }
-  .btn.alt { background: linear-gradient(180deg, var(--cyan-hi), var(--cyan)); }
-  .btn.ghost { background: var(--panel); color: var(--text); border-color: var(--line); box-shadow: none; }
+/* nav */
+.nav { position: sticky; top: 0; z-index: 30; background: rgba(255, 255, 255, .92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+.nav .wrap { display: flex; align-items: center; gap: 28px; height: 60px; }
+.brand { font-weight: 600; letter-spacing: -.01em; text-decoration: none; margin-right: auto; }
+.nav a.l { font-size: 14px; text-decoration: none; color: var(--muted); }
+.nav a.l:hover { color: var(--ink); }
+.pill { display: inline-flex; align-items: center; justify-content: center; min-height: 40px; padding: 0 18px; border-radius: 999px; background: var(--ink); color: #fff !important; font: 500 14px var(--sans); text-decoration: none; white-space: nowrap; border: 1px solid var(--ink); }
+.pill:hover { background: #333; }
+.pill.ghost { background: transparent; color: var(--ink) !important; border-color: var(--ink); }
+.pill.ghost:hover { background: var(--soft); }
 
-  .intro { padding: 20px 0 8px; }
-  .intro h1 { font-size: clamp(24px, 3.4vw, 36px); margin: 0 0 12px; line-height: 1.15; }
-  .intro h1 span { color: var(--green); }
-  .facts { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
-  .facts li { background: var(--body); border: 2px solid var(--line); border-radius: 999px; padding: 4px 14px; font-size: 15px; color: var(--muted); }
-  .facts b { color: var(--gold-hi); }
+/* intro + category tiles */
+.intro { padding: 72px 0 36px; }
+.intro h1 { font-size: clamp(40px, 6.4vw, 88px); line-height: .98; letter-spacing: -.04em; font-weight: 600; max-width: 14ch; }
+.intro p { color: var(--muted); margin-top: 20px; font-size: 18px; max-width: 40ch; }
+.tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gap); padding-bottom: 24px; }
+.tile { position: relative; display: block; text-decoration: none; border-radius: 14px; overflow: hidden; background: var(--soft); aspect-ratio: 4 / 3; }
+.tile img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s; }
+.tile.models img { object-fit: contain; padding: 8%; }
+.tile:hover img { transform: scale(1.03); }
+.tile span { position: absolute; left: 16px; bottom: 14px; background: #fff; color: var(--ink); border-radius: 999px; padding: 6px 14px; font-weight: 600; font-size: 15px; }
+.tile span small { color: var(--muted); font-weight: 500; margin-left: 6px; }
 
-  .tabs { display: flex; gap: 8px; flex-wrap: wrap; padding: 16px 0 12px; position: sticky; top: 62px; z-index: 10; background: var(--ink); }
-  .tab { font: inherit; font-weight: 600; font-size: 16px; color: var(--text); cursor: pointer; background: var(--body); border: 2px solid var(--line); border-radius: var(--radius); padding: 8px 14px; }
-  .tab small { color: var(--muted); font-weight: 500; margin-left: 4px; }
-  .tab[aria-pressed="true"] { background: var(--gold-hi); color: var(--ink); border-color: var(--ink); }
-  .tab[aria-pressed="true"] small { color: #5a4a12; }
+/* sections */
+section.s { padding: 80px 0 0; }
+.head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 16px 32px; margin-bottom: 24px; }
+.head h2 { font-size: clamp(30px, 4vw, 52px); letter-spacing: -.035em; font-weight: 600; line-height: 1; }
+.filters { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; align-items: center; }
+.filters .lbl { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; margin-right: 8px; min-width: 52px; }
+.chip { font: 500 14px var(--sans); color: var(--ink); background: transparent; border: 1px solid var(--line); border-radius: 999px; padding: 0 14px; min-height: 36px; cursor: pointer; }
+.chip:hover { border-color: var(--ink); }
+.chip[aria-pressed="true"] { background: var(--ink); color: #fff; border-color: var(--ink); }
+.chip small { opacity: .55; margin-left: 5px; font-size: 12px; }
+.bar { margin-bottom: 20px; }
 
-  .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; grid-auto-flow: dense; }
-  @media (max-width: 1000px) { .grid { grid-template-columns: repeat(2, 1fr); } }
-  figure { margin: 0; position: relative; border: 3px solid var(--ink); outline: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; cursor: zoom-in; background: var(--body); }
-  figure img, figure video { width: 100%; height: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
-  figure.w2, figure.sheet { grid-column: span 2; }
-  figure.w2 video { aspect-ratio: 960 / 366; }
-  figure.sheet img { aspect-ratio: 113 / 30; }
-  figure.big { grid-column: span 2; grid-row: span 2; }
-  figure.big img { aspect-ratio: auto; }
-  .hide { display: none !important; }
-  figcaption { position: absolute; left: 0; right: 0; bottom: 0; padding: 18px 10px 6px; font-size: 14px; font-weight: 500; background: linear-gradient(180deg, transparent, rgba(9,11,19,0.92)); pointer-events: none; }
-  figcaption i { font-style: normal; color: var(--gold-hi); font-weight: 700; font-size: 12px; letter-spacing: 0.8px; text-transform: uppercase; margin-right: 6px; }
-  .play { position: absolute; top: 8px; right: 8px; width: 28px; height: 28px; border-radius: 50%; background: rgba(9,11,19,0.8); border: 2px solid var(--line);
-    display: grid; place-items: center; font-size: 11px; color: var(--gold-hi); pointer-events: none; }
+/* builds + ui grids */
+.grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--gap); }
+.grid.ui { grid-template-columns: repeat(3, 1fr); }
+figure { margin: 0; position: relative; border-radius: 14px; overflow: hidden; background: var(--soft); cursor: zoom-in; }
+figure img, figure video { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; transition: transform .5s; }
+figure:hover img { transform: scale(1.02); }
+figure.feature { grid-column: span 2; }
+figure.clip video { aspect-ratio: 2.3 / 1; }
+figure.feature img { aspect-ratio: 21 / 9; }
+figcaption { position: absolute; left: 12px; bottom: 12px; background: #fff; border-radius: 999px; padding: 5px 13px; font-size: 13px; font-weight: 500; display: flex; gap: 8px; align-items: baseline; }
+figcaption i { font-style: normal; color: var(--muted); font-weight: 400; }
+.grid.ui figure img { aspect-ratio: 4 / 3; object-position: top; }
+.grid.ui figure.feature img { aspect-ratio: 2.29 / 1; object-position: center; }
+.play { position: absolute; top: 12px; right: 12px; width: 28px; height: 28px; border-radius: 50%; background: #fff; display: grid; place-items: center; font-size: 10px; pointer-events: none; }
 
-  .icons { display: grid; grid-template-columns: repeat(auto-fill, minmax(84px, 1fr)); gap: 8px; margin-top: 10px; }
-  .icons div { background: var(--body); border: 2px solid var(--line); border-radius: var(--radius); padding: 8px; display: grid; place-items: center; }
-  .icons img { width: 64px; height: 64px; object-fit: contain; }
-  .systems { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 0; padding: 0; list-style: none; }
-  .systems li { background: var(--panel); border: 2px solid var(--line); border-radius: var(--radius); padding: 6px 12px; font-size: 15px; }
-  .systems li.h { background: none; border: none; padding-left: 0; font-weight: 700; color: var(--cyan-hi); }
+/* models */
+.mgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: var(--gap); }
+.mc { position: relative; background: var(--soft); border: 0; border-radius: 14px; padding: 0; cursor: pointer; font: inherit; color: inherit; text-align: left; overflow: hidden; aspect-ratio: 1; transition: background .2s; }
+.mc:hover { background: var(--soft-2); }
+.mc img { width: 100%; height: 100%; object-fit: contain; padding: 6%; transition: transform .35s; }
+.mc:hover img { transform: scale(1.05); }
+.mc b { position: absolute; left: 10px; bottom: 10px; font-size: 13px; font-weight: 500; background: #fff; border-radius: 999px; padding: 4px 11px; }
+.count { color: var(--muted); font-size: 13px; margin: 14px 0 0; }
 
-  footer { padding: 28px 0 40px; margin-top: 28px; border-top: 2px solid var(--line); text-align: center; }
-  footer .row { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; }
-  footer p { color: #6c8198; font-size: 14px; margin: 0; }
+/* contact */
+.contact { margin-top: 112px; border-top: 1px solid var(--ink); padding: 48px 0 56px; display: flex; flex-wrap: wrap; gap: 28px 40px; align-items: end; justify-content: space-between; }
+.contact h2 { font-size: clamp(34px, 5vw, 68px); letter-spacing: -.04em; line-height: 1; font-weight: 600; max-width: 12ch; }
+.contact .cta { display: flex; flex-wrap: wrap; gap: 10px; }
+footer { padding: 0 0 40px; color: var(--muted); font-size: 13px; }
+footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
 
-  #lightbox { position: fixed; inset: 0; z-index: 50; background: rgba(9,11,19,0.95); display: none; place-items: center; padding: 16px; cursor: zoom-out; }
-  #lightbox.open { display: grid; }
-  #lightbox img, #lightbox video { max-width: 100%; max-height: 88vh; border: 3px solid var(--line); border-radius: var(--radius); }
+/* dialogs */
+dialog { border: 0; border-radius: 20px; padding: 0; background: #fff; color: var(--ink); width: min(980px, calc(100vw - 24px)); box-shadow: 0 30px 80px rgba(0, 0, 0, .35); }
+dialog::backdrop { background: rgba(0, 0, 0, .6); }
+dialog .top { display: flex; align-items: center; gap: 12px; padding: 14px 18px; }
+dialog .top b { font-size: 18px; font-weight: 600; letter-spacing: -.02em; }
+dialog .top span { color: var(--muted); font-size: 13px; margin-right: auto; }
+dialog .top button { font: 500 14px var(--sans); border: 1px solid var(--line); background: #fff; border-radius: 999px; min-height: 36px; padding: 0 16px; cursor: pointer; }
+dialog .top button:hover { border-color: var(--ink); }
+dialog model-viewer { width: 100%; height: min(68vh, 600px); background: var(--soft); --poster-color: transparent; }
+dialog .foot { padding: 10px 18px 14px; color: var(--muted); font-size: 12px; }
+#lb { width: min(1400px, calc(100vw - 24px)); background: transparent; box-shadow: none; }
+#lb img, #lb video { width: 100%; max-height: 90vh; object-fit: contain; border-radius: 12px; }
+
+@media (max-width: 960px) {
+  .tiles { grid-template-columns: 1fr; }
+  .tile { aspect-ratio: 16 / 9; }
+  .grid.ui { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+  .wrap { padding: 0 16px; }
+  .nav .wrap { gap: 16px; } .nav a.l { display: none; }
+  .intro { padding: 44px 0 28px; }
+  section.s { padding-top: 56px; }
+  .grid, .grid.ui { grid-template-columns: 1fr; }
+  figure.feature { grid-column: auto; } figure.feature img { aspect-ratio: 16 / 9; }
+  .mgrid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .filters .lbl { width: 100%; }
+  .contact { margin-top: 72px; }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; } }
 </style>
 </head>
 <body>
 
-<div class="top">
+<header class="nav">
   <div class="wrap">
-    <div class="name">KINGJAY142p<small>After Hours Studios · Roblox developer</small></div>
-    <a class="btn" href="https://discord.com/users/767992133251629096" target="_blank" rel="noopener">Discord</a>
-    <a class="btn alt" href="https://www.roblox.com/games/94007788716602" target="_blank" rel="noopener">Play Odd Waters</a>
-    <a class="btn ghost" href="https://www.roblox.com/users/1424896813/profile" target="_blank" rel="noopener">Roblox</a>
+    <a class="brand" href="#top">KINGJAY142p</a>
+    <a class="l" href="#builds">Builds</a>
+    <a class="l" href="#models">Models</a>
+    <a class="l" href="#ui">UI</a>
+    <a class="pill" href="#contact">Contact</a>
   </div>
-</div>
+</header>
 
-<div class="wrap">
-  <div class="intro">
-    <h1>Scripting, building, 3D assets, UI and thumbnails<span>.</span> Open for commissions.</h1>
-    <ul class="facts">
-      <li>Latest game: <b>Odd Waters</b>, a fishing simulator</li>
-      <li><b>151</b> scripts</li>
-      <li><b>243</b> models</li>
-      <li><b>31</b> fish</li>
-      <li><b>5</b> areas built</li>
-      <li><b>24</b> passes and products</li>
-      <li>PC and mobile</li>
-    </ul>
-  </div>
-
-  <div class="tabs" role="group" aria-label="Filter the work">
-    <button class="tab" data-f="all" aria-pressed="true">All <small>64</small></button>
-    <button class="tab" data-f="script" aria-pressed="false">Gameplay &amp; systems <small>15</small></button>
-    <button class="tab" data-f="build" aria-pressed="false">Builds <small>9</small></button>
-    <button class="tab" data-f="model" aria-pressed="false">3D models <small>14</small></button>
-    <button class="tab" data-f="ui" aria-pressed="false">UI <small>21</small></button>
-    <button class="tab" data-f="art" aria-pressed="false">Thumbnails <small>5</small></button>
-  </div>
-
-  <div class="grid">
-    <figure class="big" data-c="art"><img src="assets/art-thumb-catch.jpg" alt="The big catch" loading="lazy"><figcaption><i>Thumbnail</i>The big catch</figcaption></figure>
-    <figure class="w2 vid" data-c="build"><video muted loop playsinline preload="none" poster="assets/vid-harbour.jpg" data-src="assets/vid-harbour.mp4" aria-label="Harbour fly-around"></video><span class="play">&#9654;</span><figcaption><i>Build</i>Harbour fly-around</figcaption></figure>
-    <figure class="w2 vid" data-c="script"><video muted loop playsinline preload="none" poster="assets/vid-catch-dock.jpg" data-src="assets/vid-catch-dock.mp4" aria-label="Cast, reel, catch"></video><span class="play">&#9654;</span><figcaption><i>Gameplay</i>Cast, reel, catch</figcaption></figure>
-    <figure class="w2 vid" data-c="script"><video muted loop playsinline preload="none" poster="assets/vid-catch-frozen.jpg" data-src="assets/vid-catch-frozen.mp4" aria-label="Frozen Lake catch"></video><span class="play">&#9654;</span><figcaption><i>Gameplay</i>Frozen Lake catch</figcaption></figure>
-    <figure class="w2 vid" data-c="script"><video muted loop playsinline preload="none" poster="assets/vid-catch-lava.jpg" data-src="assets/vid-catch-lava.mp4" aria-label="Lava Vent catch"></video><span class="play">&#9654;</span><figcaption><i>Gameplay</i>Lava Vent catch</figcaption></figure>
-    <figure class="w2 vid" data-c="script"><video muted loop playsinline preload="none" poster="assets/vid-catch-sewer.jpg" data-src="assets/vid-catch-sewer.mp4" aria-label="Sewer catch"></video><span class="play">&#9654;</span><figcaption><i>Gameplay</i>Sewer catch</figcaption></figure>
-    <figure class="w2 vid" data-c="script"><video muted loop playsinline preload="none" poster="assets/vid-meteors.jpg" data-src="assets/vid-meteors.mp4" aria-label="Meteor shower"></video><span class="play">&#9654;</span><figcaption><i>World event</i>Meteor shower</figcaption></figure>
-    <figure class="w2 vid" data-c="script"><video muted loop playsinline preload="none" poster="assets/vid-thunder.jpg" data-src="assets/vid-thunder.mp4" aria-label="Thunderstorm"></video><span class="play">&#9654;</span><figcaption><i>World event</i>Thunderstorm</figcaption></figure>
-    <figure class="w2 vid" data-c="script"><video muted loop playsinline preload="none" poster="assets/vid-aquarium.jpg" data-src="assets/vid-aquarium.mp4" aria-label="Aquarium that earns coins"></video><span class="play">&#9654;</span><figcaption><i>System</i>Aquarium that earns coins</figcaption></figure>
-    <figure class="w2 vid" data-c="script"><video muted loop playsinline preload="none" poster="assets/vid-rods.jpg" data-src="assets/vid-rods.mp4" aria-label="Rod effects"></video><span class="play">&#9654;</span><figcaption><i>System</i>Rod effects</figcaption></figure>
-    <figure class="w2 vid" data-c="script"><video muted loop playsinline preload="none" poster="assets/vid-run.jpg" data-src="assets/vid-run.mp4" aria-label="Rod on the back"></video><span class="play">&#9654;</span><figcaption><i>System</i>Rod on the back</figcaption></figure>
-    <figure class="w2 vid" data-c="script"><video muted loop playsinline preload="none" poster="assets/vid-rebirth.jpg" data-src="assets/vid-rebirth.mp4" aria-label="Rebirth"></video><span class="play">&#9654;</span><figcaption><i>System</i>Rebirth</figcaption></figure>
-    <figure class="w2 vid" data-c="script"><video muted loop playsinline preload="none" poster="assets/vid-sell.jpg" data-src="assets/vid-sell.mp4" aria-label="Selling fish"></video><span class="play">&#9654;</span><figcaption><i>System</i>Selling fish</figcaption></figure>
-    <figure class="w2 vid" data-c="script"><video muted loop playsinline preload="none" poster="assets/vid-auto-fish.jpg" data-src="assets/vid-auto-fish.mp4" aria-label="Auto fishing, hands off"></video><span class="play">&#9654;</span><figcaption><i>System</i>Auto fishing, hands off</figcaption></figure>
-    <figure class="w2 vid" data-c="script"><video muted loop playsinline preload="none" poster="assets/vid-tutorial-start.jpg" data-src="assets/vid-tutorial-start.mp4" aria-label="Tutorial: first rod and cast"></video><span class="play">&#9654;</span><figcaption><i>System</i>Tutorial: first rod and cast</figcaption></figure>
-    <figure class="w2 vid" data-c="script"><video muted loop playsinline preload="none" poster="assets/vid-tutorial-aquarium.jpg" data-src="assets/vid-tutorial-aquarium.mp4" aria-label="Tutorial: the aquarium"></video><span class="play">&#9654;</span><figcaption><i>System</i>Tutorial: the aquarium</figcaption></figure>
-    <figure class="" data-c="script"><img src="assets/ui-admin.jpg" alt="Admin tools" loading="lazy"><figcaption><i>System</i>Admin tools</figcaption></figure>
-    <figure class="w2 vid" data-c="build"><video muted loop playsinline preload="none" poster="assets/vid-frozen-zone.jpg" data-src="assets/vid-frozen-zone.mp4" aria-label="Frozen Lake"></video><span class="play">&#9654;</span><figcaption><i>Build</i>Frozen Lake</figcaption></figure>
-    <figure class="w2 vid" data-c="build"><video muted loop playsinline preload="none" poster="assets/vid-lava-zone.jpg" data-src="assets/vid-lava-zone.mp4" aria-label="Lava Vent"></video><span class="play">&#9654;</span><figcaption><i>Build</i>Lava Vent</figcaption></figure>
-    <figure class="w2 vid" data-c="build"><video muted loop playsinline preload="none" poster="assets/vid-sewer-zone.jpg" data-src="assets/vid-sewer-zone.mp4" aria-label="The Sewer"></video><span class="play">&#9654;</span><figcaption><i>Build</i>The Sewer</figcaption></figure>
-    <figure class="w2 vid" data-c="build"><video muted loop playsinline preload="none" poster="assets/vid-frozen-fly.jpg" data-src="assets/vid-frozen-fly.mp4" aria-label="Frozen Lake fly-through"></video><span class="play">&#9654;</span><figcaption><i>Build</i>Frozen Lake fly-through</figcaption></figure>
-    <figure class="" data-c="build"><img src="assets/build-harbour.jpg" alt="Harbour town" loading="lazy"><figcaption><i>Build</i>Harbour town</figcaption></figure>
-    <figure class="" data-c="build"><img src="assets/build-plaza.jpg" alt="Portal Plaza hub" loading="lazy"><figcaption><i>Build</i>Portal Plaza hub</figcaption></figure>
-    <figure class="" data-c="build"><img src="assets/build-sewer.jpg" alt="Sewer zone" loading="lazy"><figcaption><i>Build</i>Sewer zone</figcaption></figure>
-    <figure class="" data-c="build"><img src="assets/play-pier.jpg" alt="The bay" loading="lazy"><figcaption><i>Build</i>The bay</figcaption></figure>
-    <figure class="sheet" data-c="model"><img src="assets/sheet-fish-a.jpg" alt="Fish, set 1 of 2" loading="lazy"><figcaption><i>3D</i>Fish, set 1 of 2</figcaption></figure>
-    <figure class="sheet" data-c="model"><img src="assets/sheet-fish-b.jpg" alt="Fish, set 2 of 2" loading="lazy"><figcaption><i>3D</i>Fish, set 2 of 2</figcaption></figure>
-    <figure class="sheet" data-c="model"><img src="assets/sheet-rods.jpg" alt="10 rods and 6 skins" loading="lazy"><figcaption><i>3D</i>10 rods and 6 skins</figcaption></figure>
-    <figure class="sheet" data-c="model"><img src="assets/sheet-items.jpg" alt="Bait, chests, event rocks, junk" loading="lazy"><figcaption><i>3D</i>Bait, chests, event rocks, junk</figcaption></figure>
-    <figure class="sheet" data-c="model"><img src="assets/sheet-landmarks.jpg" alt="Harbour landmarks" loading="lazy"><figcaption><i>3D</i>Harbour landmarks</figcaption></figure>
-    <figure class="sheet" data-c="model"><img src="assets/sheet-props.jpg" alt="Harbour props and characters" loading="lazy"><figcaption><i>3D</i>Harbour props and characters</figcaption></figure>
-    <figure class="sheet" data-c="model"><img src="assets/sheet-aquarium.jpg" alt="Aquarium tanks and decor" loading="lazy"><figcaption><i>3D</i>Aquarium tanks and decor</figcaption></figure>
-    <figure class="sheet" data-c="model"><img src="assets/sheet-zones.jpg" alt="Zone props" loading="lazy"><figcaption><i>3D</i>Zone props</figcaption></figure>
-    <figure class="" data-c="model"><img src="assets/model-midas.jpg" alt="Midas Tide rod" loading="lazy"><figcaption><i>3D</i>Midas Tide rod</figcaption></figure>
-    <figure class="" data-c="model"><img src="assets/model-emberfang.jpg" alt="Emberfang rod" loading="lazy"><figcaption><i>3D</i>Emberfang rod</figcaption></figure>
-    <figure class="" data-c="model"><img src="assets/model-whisper.jpg" alt="Abyssal Whisper rod" loading="lazy"><figcaption><i>3D</i>Abyssal Whisper rod</figcaption></figure>
-    <figure class="" data-c="model"><img src="assets/model-moonveil.jpg" alt="Moonveil rod" loading="lazy"><figcaption><i>3D</i>Moonveil rod</figcaption></figure>
-    <figure class="" data-c="model"><img src="assets/model-sakura.jpg" alt="Sakura Drift rod" loading="lazy"><figcaption><i>3D</i>Sakura Drift rod</figcaption></figure>
-    <figure class="" data-c="model"><img src="assets/model-chests-rocks.jpg" alt="Chests and event rocks" loading="lazy"><figcaption><i>3D</i>Chests and event rocks</figcaption></figure>
-    <figure class="w2 vid" data-c="ui"><video muted loop playsinline preload="none" poster="assets/vid-ui-menus.jpg" data-src="assets/vid-ui-menus.mp4" aria-label="Menu animations"></video><span class="play">&#9654;</span><figcaption><i>UI</i>Menu animations</figcaption></figure>
-    <figure class="w2 vid" data-c="ui"><video muted loop playsinline preload="none" poster="assets/vid-shops.jpg" data-src="assets/vid-shops.mp4" aria-label="Shops in motion"></video><span class="play">&#9654;</span><figcaption><i>UI</i>Shops in motion</figcaption></figure>
-    <figure class="" data-c="ui"><img src="assets/ui-shop.jpg" alt="Shop" loading="lazy"><figcaption><i>UI</i>Shop</figcaption></figure>
-    <figure class="" data-c="ui"><img src="assets/ui-chests.jpg" alt="Treasure Chest odds" loading="lazy"><figcaption><i>UI</i>Treasure Chest odds</figcaption></figure>
-    <figure class="" data-c="ui"><img src="assets/ui-passes.jpg" alt="Gamepasses" loading="lazy"><figcaption><i>UI</i>Gamepasses</figcaption></figure>
-    <figure class="" data-c="ui"><img src="assets/ui-coins.jpg" alt="Coin packs" loading="lazy"><figcaption><i>UI</i>Coin packs</figcaption></figure>
-    <figure class="" data-c="ui"><img src="assets/ui-inventory.jpg" alt="Inventory" loading="lazy"><figcaption><i>UI</i>Inventory</figcaption></figure>
-    <figure class="" data-c="ui"><img src="assets/ui-rodshop.jpg" alt="Rod Shop" loading="lazy"><figcaption><i>UI</i>Rod Shop</figcaption></figure>
-    <figure class="" data-c="ui"><img src="assets/ui-skins.jpg" alt="Skin picker" loading="lazy"><figcaption><i>UI</i>Skin picker</figcaption></figure>
-    <figure class="" data-c="ui"><img src="assets/ui-index.jpg" alt="Fish Index" loading="lazy"><figcaption><i>UI</i>Fish Index</figcaption></figure>
-    <figure class="" data-c="ui"><img src="assets/ui-quests.jpg" alt="Quests" loading="lazy"><figcaption><i>UI</i>Quests</figcaption></figure>
-    <figure class="" data-c="ui"><img src="assets/ui-daily.jpg" alt="Daily rewards" loading="lazy"><figcaption><i>UI</i>Daily rewards</figcaption></figure>
-    <figure class="" data-c="ui"><img src="assets/ui-spin.jpg" alt="Spin wheel" loading="lazy"><figcaption><i>UI</i>Spin wheel</figcaption></figure>
-    <figure class="" data-c="ui"><img src="assets/ui-playtime.jpg" alt="Playtime rewards" loading="lazy"><figcaption><i>UI</i>Playtime rewards</figcaption></figure>
-    <figure class="" data-c="ui"><img src="assets/ui-aquarium.jpg" alt="Aquarium" loading="lazy"><figcaption><i>UI</i>Aquarium</figcaption></figure>
-    <figure class="" data-c="ui"><img src="assets/ui-reveal.jpg" alt="Chest reveal" loading="lazy"><figcaption><i>UI</i>Chest reveal</figcaption></figure>
-    <figure class="" data-c="ui"><img src="assets/ui-stats.jpg" alt="Stats and titles" loading="lazy"><figcaption><i>UI</i>Stats and titles</figcaption></figure>
-    <figure class="" data-c="ui"><img src="assets/ui-teleport.jpg" alt="Teleport" loading="lazy"><figcaption><i>UI</i>Teleport</figcaption></figure>
-    <figure class="" data-c="ui"><img src="assets/ui-group.jpg" alt="Group perk" loading="lazy"><figcaption><i>UI</i>Group perk</figcaption></figure>
-    <figure class="" data-c="ui"><img src="assets/ui-settings.jpg" alt="Settings" loading="lazy"><figcaption><i>UI</i>Settings</figcaption></figure>
-    <figure class="" data-c="ui"><img src="assets/ui-tablet.jpg" alt="Tablet layout" loading="lazy"><figcaption><i>UI</i>Tablet layout</figcaption></figure>
-    <figure class="" data-c="art"><img src="assets/art-thumb-zones.jpg" alt="Four zones" loading="lazy"><figcaption><i>Thumbnail</i>Four zones</figcaption></figure>
-    <figure class="" data-c="art"><img src="assets/art-thumb-rods.jpg" alt="Rods and loot" loading="lazy"><figcaption><i>Thumbnail</i>Rods and loot</figcaption></figure>
-    <figure class="" data-c="art"><img src="assets/art-thumb-meteor.jpg" alt="World events" loading="lazy"><figcaption><i>Thumbnail</i>World events</figcaption></figure>
-    <figure class="" data-c="art"><img src="assets/art-icon.jpg" alt="Game icon" loading="lazy"><figcaption><i>Icon</i>Game icon</figcaption></figure>
-  </div>
-
-  <div class="icons" data-c="art">
-    <div><img src="assets/icon-cosmetic-chest-closed.png" alt="cosmetic chest closed icon" loading="lazy"></div>
-    <div><img src="assets/icon-treasure.png" alt="treasure icon" loading="lazy"></div>
-    <div><img src="assets/icon-skin-sakura-drift.png" alt="skin sakura drift icon" loading="lazy"></div>
-    <div><img src="assets/icon-skin-moonveil.png" alt="skin moonveil icon" loading="lazy"></div>
-    <div><img src="assets/icon-skin-emberfang.png" alt="skin emberfang icon" loading="lazy"></div>
-    <div><img src="assets/icon-skin-abyssal-whisper-v2.png" alt="skin abyssal whisper v2 icon" loading="lazy"></div>
-    <div><img src="assets/icon-skin-midas-tide.png" alt="skin midas tide icon" loading="lazy"></div>
-    <div><img src="assets/icon-skin-void.png" alt="skin void icon" loading="lazy"></div>
-    <div><img src="assets/icon-potion-luck.png" alt="potion luck icon" loading="lazy"></div>
-    <div><img src="assets/icon-potion-super.png" alt="potion super icon" loading="lazy"></div>
-    <div><img src="assets/icon-product-vip.png" alt="product vip icon" loading="lazy"></div>
-    <div><img src="assets/icon-product-2x-luck.png" alt="product 2x luck icon" loading="lazy"></div>
-    <div><img src="assets/icon-product-2x-coins.png" alt="product 2x coins icon" loading="lazy"></div>
-    <div><img src="assets/icon-coins-large.png" alt="coins large icon" loading="lazy"></div>
-  </div>
-
-  <ul class="systems" data-c="script">
-    <li class="h">Systems scripted:</li>
-    <li>Fishing and reel minigame</li>
-    <li>Rarity, size and mutation rolls</li>
-    <li>Data saving</li>
-    <li>Gamepasses and products</li>
-    <li>Aquarium with offline income</li>
-    <li>Rebirth</li>
-    <li>Daily rewards, quests, spin wheel</li>
-    <li>Codes</li>
-    <li>World events</li>
-    <li>Tutorial</li>
-    <li>Auto fishing</li>
-    <li>Luck potions</li>
-    <li>Admin panel</li>
-    <li>Anti-exploit checks</li>
-  </ul>
-</div>
-
-<footer>
+<main id="top">
   <div class="wrap">
-    <div class="row">
-      <a class="btn" href="https://discord.com/users/767992133251629096" target="_blank" rel="noopener">Message me on Discord</a>
-      <a class="btn ghost" href="https://www.roblox.com/communities/419153316" target="_blank" rel="noopener">After Hours Studios</a>
+    <div class="intro">
+      <h1>Builds, models and UI for Roblox.</h1>
+      <p>Worlds, 3D assets and interfaces for games like Odd Waters and Cook a Dragon.</p>
     </div>
-    <p>KINGJAY142p · After Hours Studios · AI-assisted workflow</p>
+    <div class="tiles">
+      <a class="tile" href="#builds"><img src="assets/build-halloween-bayou.png" alt="Halloween Bayou build"><span>Builds<small>12</small></span></a>
+      <a class="tile models" href="#models"><img src="thumbs/rod_kraken.webp" alt="Kraken rod model"><span>Models<small>107</small></span></a>
+      <a class="tile" href="#ui"><img src="assets/ui-shop.jpg" alt="Shop interface" style="object-position:top"><span>UI<small>20</small></span></a>
+    </div>
   </div>
-</footer>
 
-<div id="lightbox"></div>
+  <section class="s" id="builds">
+    <div class="wrap">
+      <div class="head"><h2>Builds</h2></div>
+      <div class="bar"><div class="filters" data-target="bgrid" data-key="game" role="group" aria-label="Game"><span class="lbl">Game</span><button class="chip" type="button" data-f="all" aria-pressed="true">All<small>12</small></button><button class="chip" type="button" data-f="dragon" aria-pressed="false">Cook a Dragon<small>3</small></button><button class="chip" type="button" data-f="halloween" aria-pressed="false">Halloween<small>3</small></button><button class="chip" type="button" data-f="harbor" aria-pressed="false">Odd Waters<small>6</small></button></div></div>
+      <div class="grid" id="bgrid">
+<figure class="feature" data-zoom data-item data-game="halloween"><img src="assets/build-halloween-bayou.png" alt="Halloween Bayou, Halloween" loading="lazy"><figcaption>Halloween Bayou<i>Halloween</i></figcaption></figure>
+<figure data-zoom data-item data-game="halloween"><img src="assets/build-halloween-shop.png" alt="Candy Shop, Halloween" loading="lazy"><figcaption>Candy Shop<i>Halloween</i></figcaption></figure>
+<figure data-zoom data-item data-game="halloween"><img src="assets/build-halloween-closeup.png" alt="Graveyard at night, Halloween" loading="lazy"><figcaption>Graveyard at night<i>Halloween</i></figcaption></figure>
+<figure class="feature" data-zoom data-item data-game="dragon"><img src="assets/build-island-meadow.png" alt="Slime Meadow, Cook a Dragon" loading="lazy"><figcaption>Slime Meadow<i>Cook a Dragon</i></figcaption></figure>
+<figure data-zoom data-item data-game="dragon"><img src="assets/build-island-hearth.png" alt="Hearth Village, Cook a Dragon" loading="lazy"><figcaption>Hearth Village<i>Cook a Dragon</i></figcaption></figure>
+<figure data-zoom data-item data-game="dragon"><img src="assets/build-island-restaurants.png" alt="Restaurant row, Cook a Dragon" loading="lazy"><figcaption>Restaurant row<i>Cook a Dragon</i></figcaption></figure>
+<figure data-zoom data-item data-game="harbor"><video muted loop playsinline preload="none" poster="assets/vid-harbour.jpg" data-src="assets/vid-harbour.mp4" aria-label="Harbour fly-around"></video><span class="play" aria-hidden="true">&#9654;</span><figcaption>Harbour fly-around<i>Odd Waters</i></figcaption></figure>
+<figure data-zoom data-item data-game="harbor"><video muted loop playsinline preload="none" poster="assets/vid-frozen-zone.jpg" data-src="assets/vid-frozen-zone.mp4" aria-label="Frozen Lake"></video><span class="play" aria-hidden="true">&#9654;</span><figcaption>Frozen Lake<i>Odd Waters</i></figcaption></figure>
+<figure data-zoom data-item data-game="harbor"><video muted loop playsinline preload="none" poster="assets/vid-lava-zone.jpg" data-src="assets/vid-lava-zone.mp4" aria-label="Lava Vent"></video><span class="play" aria-hidden="true">&#9654;</span><figcaption>Lava Vent<i>Odd Waters</i></figcaption></figure>
+<figure data-zoom data-item data-game="harbor"><video muted loop playsinline preload="none" poster="assets/vid-sewer-zone.jpg" data-src="assets/vid-sewer-zone.mp4" aria-label="The Sewer"></video><span class="play" aria-hidden="true">&#9654;</span><figcaption>The Sewer<i>Odd Waters</i></figcaption></figure>
+<figure data-zoom data-item data-game="harbor"><img src="assets/build-harbour.jpg" alt="Harbour town, Odd Waters" loading="lazy"><figcaption>Harbour town<i>Odd Waters</i></figcaption></figure>
+<figure data-zoom data-item data-game="harbor"><img src="assets/build-plaza.jpg" alt="Portal Plaza, Odd Waters" loading="lazy"><figcaption>Portal Plaza<i>Odd Waters</i></figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="s" id="models">
+    <div class="wrap">
+      <div class="head"><h2>Models</h2></div>
+      <div class="bar">
+        <div class="filters" data-target="mgrid" data-key="type" role="group" aria-label="Type"><span class="lbl">Type</span><button class="chip" type="button" data-f="all" aria-pressed="true">All<small>107</small></button><button class="chip" type="button" data-f="Rods" aria-pressed="false">Rods<small>17</small></button><button class="chip" type="button" data-f="Creatures" aria-pressed="false">Creatures<small>35</small></button><button class="chip" type="button" data-f="Weapons" aria-pressed="false">Weapons<small>5</small></button><button class="chip" type="button" data-f="Buildings" aria-pressed="false">Buildings<small>21</small></button><button class="chip" type="button" data-f="Props" aria-pressed="false">Props<small>29</small></button></div>
+        <div class="filters" data-target="mgrid" data-key="game" role="group" aria-label="Game"><span class="lbl">Game</span><button class="chip" type="button" data-f="all" aria-pressed="true">All</button><button class="chip" type="button" data-f="dragon" aria-pressed="false">Cook a Dragon<small>30</small></button><button class="chip" type="button" data-f="halloween" aria-pressed="false">Halloween<small>22</small></button><button class="chip" type="button" data-f="harbor" aria-pressed="false">Odd Waters<small>55</small></button></div>
+      </div>
+      <div class="mgrid" id="mgrid">
+<button class="mc" type="button" data-item data-game="dragon" data-type="Weapons" data-name="Dragonbane Greatblade" data-meta="Cook a Dragon · Weapons" data-glb="models/dragon/WEAPON_DRAGONBANE_GREATBLADE.glb"><img src="thumbs/WEAPON_DRAGONBANE_GREATBLADE.webp" alt="Dragonbane Greatblade" loading="lazy" width="512" height="512"><b>Dragonbane Greatblade</b></button>
+<button class="mc" type="button" data-item data-game="halloween" data-type="Creatures" data-name="Ghost Koi" data-meta="Halloween · Creatures" data-glb="models/halloween/FISH_GHOSTKOI.glb"><img src="thumbs/FISH_GHOSTKOI.webp" alt="Ghost Koi" loading="lazy" width="512" height="512"><b>Ghost Koi</b></button>
+<button class="mc" type="button" data-item data-game="harbor" data-type="Rods" data-name="Celestial Rod" data-meta="Odd Waters · Rods" data-glb="models/harbor/rod_celestial.glb"><img src="thumbs/rod_celestial.webp" alt="Celestial Rod" loading="lazy" width="512" height="512"><b>Celestial Rod</b></button>
+<button class="mc" type="button" data-item data-game="dragon" data-type="Weapons" data-name="Glacier Warhammer" data-meta="Cook a Dragon · Weapons" data-glb="models/dragon/WEAPON_GLACIER_WARHAMMER.glb"><img src="thumbs/WEAPON_GLACIER_WARHAMMER.webp" alt="Glacier Warhammer" loading="lazy" width="512" height="512"><b>Glacier Warhammer</b></button>
+<button class="mc" type="button" data-item data-game="halloween" data-type="Creatures" data-name="Headless Kraken" data-meta="Halloween · Creatures" data-glb="models/halloween/FISH_HEADLESSKRAKEN.glb"><img src="thumbs/FISH_HEADLESSKRAKEN.webp" alt="Headless Kraken" loading="lazy" width="512" height="512"><b>Headless Kraken</b></button>
+<button class="mc" type="button" data-item data-game="harbor" data-type="Rods" data-name="Inferno Rod" data-meta="Odd Waters · Rods" data-glb="models/harbor/rod_inferno.glb"><img src="thumbs/rod_inferno.webp" alt="Inferno Rod" loading="lazy" width="512" height="512"><b>Inferno Rod</b></button>
+<button class="mc" type="button" data-item data-game="dragon" data-type="Weapons" data-name="Ironbark Greatsword" data-meta="Cook a Dragon · Weapons" data-glb="models/dragon/WEAPON_IRONBARK_GREATSWORD.glb"><img src="thumbs/WEAPON_IRONBARK_GREATSWORD.webp" alt="Ironbark Greatsword" loading="lazy" width="512" height="512"><b>Ironbark Greatsword</b></button>
+<button class="mc" type="button" data-item data-game="halloween" data-type="Creatures" data-name="Pumpkin Puffer" data-meta="Halloween · Creatures" data-glb="models/halloween/FISH_PUMPKINPUFFER.glb"><img src="thumbs/FISH_PUMPKINPUFFER.webp" alt="Pumpkin Puffer" loading="lazy" width="512" height="512"><b>Pumpkin Puffer</b></button>
+<button class="mc" type="button" data-item data-game="harbor" data-type="Rods" data-name="Kraken Rod" data-meta="Odd Waters · Rods" data-glb="models/harbor/rod_kraken.glb"><img src="thumbs/rod_kraken.webp" alt="Kraken Rod" loading="lazy" width="512" height="512"><b>Kraken Rod</b></button>
+<button class="mc" type="button" data-item data-game="dragon" data-type="Weapons" data-name="Magma Executioner" data-meta="Cook a Dragon · Weapons" data-glb="models/dragon/WEAPON_MAGMA_EXECUTIONER.glb"><img src="thumbs/WEAPON_MAGMA_EXECUTIONER.webp" alt="Magma Executioner" loading="lazy" width="512" height="512"><b>Magma Executioner</b></button>
+<button class="mc" type="button" data-item data-game="halloween" data-type="Creatures" data-name="Skeleton Bass" data-meta="Halloween · Creatures" data-glb="models/halloween/FISH_SKELETONBASS.glb"><img src="thumbs/FISH_SKELETONBASS.webp" alt="Skeleton Bass" loading="lazy" width="512" height="512"><b>Skeleton Bass</b></button>
+<button class="mc" type="button" data-item data-game="harbor" data-type="Rods" data-name="Sakura Rod" data-meta="Odd Waters · Rods" data-glb="models/harbor/rod_sakura.glb"><img src="thumbs/rod_sakura.webp" alt="Sakura Rod" loading="lazy" width="512" height="512"><b>Sakura Rod</b></button>
+<button class="mc" type="button" data-item data-game="dragon" data-type="Weapons" data-name="Sporecleaver Battleaxe" data-meta="Cook a Dragon · Weapons" data-glb="models/dragon/WEAPON_SPORECLEAVER_BATTLEAXE.glb"><img src="thumbs/WEAPON_SPORECLEAVER_BATTLEAXE.webp" alt="Sporecleaver Battleaxe" loading="lazy" width="512" height="512"><b>Sporecleaver Battleaxe</b></button>
+<button class="mc" type="button" data-item data-game="halloween" data-type="Creatures" data-name="Vampire Squid" data-meta="Halloween · Creatures" data-glb="models/halloween/FISH_VAMPIRESQUID.glb"><img src="thumbs/FISH_VAMPIRESQUID.webp" alt="Vampire Squid" loading="lazy" width="512" height="512"><b>Vampire Squid</b></button>
+<button class="mc" type="button" data-item data-game="harbor" data-type="Rods" data-name="Treasure Rod" data-meta="Odd Waters · Rods" data-glb="models/harbor/rod_treasure.glb"><img src="thumbs/rod_treasure.webp" alt="Treasure Rod" loading="lazy" width="512" height="512"><b>Treasure Rod</b></button>
+<button class="mc" type="button" data-item data-game="dragon" data-type="Creatures" data-name="Green Slime" data-meta="Cook a Dragon · Creatures" data-glb="models/dragon/MONSTER_GREENSLIME.glb"><img src="thumbs/MONSTER_GREENSLIME.webp" alt="Green Slime" loading="lazy" width="512" height="512"><b>Green Slime</b></button>
+<button class="mc" type="button" data-item data-game="halloween" data-type="Creatures" data-name="Witch Catfish" data-meta="Halloween · Creatures" data-glb="models/halloween/FISH_WITCHCATFISH.glb"><img src="thumbs/FISH_WITCHCATFISH.webp" alt="Witch Catfish" loading="lazy" width="512" height="512"><b>Witch Catfish</b></button>
+<button class="mc" type="button" data-item data-game="harbor" data-type="Rods" data-name="Void Rod Skin" data-meta="Odd Waters · Rods" data-glb="models/harbor/SKIN_VOID.glb"><img src="thumbs/SKIN_VOID.webp" alt="Void Rod Skin" loading="lazy" width="512" height="512"><b>Void Rod Skin</b></button>
+<button class="mc" type="button" data-item data-game="dragon" data-type="Creatures" data-name="Blue Slime" data-meta="Cook a Dragon · Creatures" data-glb="models/dragon/MONSTER_BLUESLIME.glb"><img src="thumbs/MONSTER_BLUESLIME.webp" alt="Blue Slime" loading="lazy" width="512" height="512"><b>Blue Slime</b></button>
+<button class="mc" type="button" data-item data-game="halloween" data-type="Creatures" data-name="Zombie Eel" data-meta="Halloween · Creatures" data-glb="models/halloween/FISH_ZOMBIEEEL.glb"><img src="thumbs/FISH_ZOMBIEEEL.webp" alt="Zombie Eel" loading="lazy" width="512" height="512"><b>Zombie Eel</b></button>
+<button class="mc" type="button" data-item data-game="harbor" data-type="Rods" data-name="Abyssal Rod" data-meta="Odd Waters · Rods" data-glb="models/harbor/ROD_ABYSSAL.glb"><img src="thumbs/ROD_ABYSSAL.webp" alt="Abyssal Rod" loading="lazy" width="512" height="512"><b>Abyssal Rod</b></button>
+<button class="mc" type="button" data-item data-game="dragon" data-type="Creatures" data-name="Gold Slime" data-meta="Cook a Dragon · Creatures" data-glb="models/dragon/MONSTER_GOLDSLIME.glb"><img src="thumbs/MONSTER_GOLDSLIME.webp" alt="Gold Slime" loading="lazy" width="512" height="512"><b>Gold Slime</b></button>
+<button class="mc" type="button" data-item data-game="halloween" data-type="Creatures" data-name="Candy Corn Tetra" data-meta="Halloween · Creatures" data-glb="models/halloween/FISH_CANDYCORNTETRA.glb"><img src="thumbs/FISH_CANDYCORNTETRA.webp" alt="Candy Corn Tetra" loading="lazy" width="512" height="512"><b>Candy Corn Tetra</b></button>
+<button class="mc" type="button" data-item data-game="harbor" data-type="Rods" data-name="Fortune Rod" data-meta="Odd Waters · Rods" data-glb="models/harbor/ROD_FORTUNE.glb"><img src="thumbs/ROD_FORTUNE.webp" alt="Fortune Rod" loading="lazy" width="512" height="512"><b>Fortune Rod</b></button>
+<button class="mc" type="button" data-item data-game="dragon" data-type="Creatures" data-name="Rainbow Slime" data-meta="Cook a Dragon · Creatures" data-glb="models/dragon/MONSTER_RAINBOWSLIME.glb"><img src="thumbs/MONSTER_RAINBOWSLIME.webp" alt="Rainbow Slime" loading="lazy" width="512" height="512"><b>Rainbow Slime</b></button>
+<button class="mc" type="button" data-item data-game="halloween" data-type="Creatures" data-name="Bayou Ghost" data-meta="Halloween · Creatures" data-glb="models/halloween/BAYOU_GHOST.glb"><img src="thumbs/BAYOU_GHOST.webp" alt="Bayou Ghost" loading="lazy" width="512" height="512"><b>Bayou Ghost</b></button>
+<button class="mc" type="button" data-item data-game="harbor" data-type="Rods" data-name="Magma Rod" data-meta="Odd Waters · Rods" data-glb="models/harbor/ROD_MAGMA.glb"><img src="thumbs/ROD_MAGMA.webp" alt="Magma Rod" loading="lazy" width="512" height="512"><b>Magma Rod</b></button>
+<button class="mc" type="button" data-item data-game="dragon" data-type="Creatures" data-name="Giant Slime" data-meta="Cook a Dragon · Creatures" data-glb="models/dragon/MONSTER_GIANTSLIME.glb"><img src="thumbs/MONSTER_GIANTSLIME.webp" alt="Giant Slime" loading="lazy" width="512" height="512"><b>Giant Slime</b></button>
+<button class="mc" type="button" data-item data-game="halloween" data-type="Creatures" data-name="Bayou Cat" data-meta="Halloween · Creatures" data-glb="models/halloween/BAYOU_CAT.glb"><img src="thumbs/BAYOU_CAT.webp" alt="Bayou Cat" loading="lazy" width="512" height="512"><b>Bayou Cat</b></button>
+<button class="mc" type="button" data-item data-game="harbor" data-type="Rods" data-name="Stormcaller Rod" data-meta="Odd Waters · Rods" data-glb="models/harbor/ROD_STORMCALLER.glb"><img src="thumbs/ROD_STORMCALLER.webp" alt="Stormcaller Rod" loading="lazy" width="512" height="512"><b>Stormcaller Rod</b></button>
+<button class="mc" type="button" data-item data-game="dragon" data-type="Creatures" data-name="Customer" data-meta="Cook a Dragon · Creatures" data-glb="models/dragon/NPC_CUSTOMER.glb"><img src="thumbs/NPC_CUSTOMER.webp" alt="Customer" loading="lazy" width="512" height="512"><b>Customer</b></button>
+<button class="mc" type="button" data-item data-game="halloween" data-type="Rods" data-name="Pumpkin Rod" data-meta="Halloween · Rods" data-glb="models/halloween/ROD_PUMPKIN.glb"><img src="thumbs/ROD_PUMPKIN.webp" alt="Pumpkin Rod" loading="lazy" width="512" height="512"><b>Pumpkin Rod</b></button>
+<button class="mc" type="button" data-item data-game="harbor" data-type="Rods" data-name="Sunrise Rod" data-meta="Odd Waters · Rods" data-glb="models/harbor/ROD_SUNRISE.glb"><img src="thumbs/ROD_SUNRISE.webp" alt="Sunrise Rod" loading="lazy" width="512" height="512"><b>Sunrise Rod</b></button>
+<button class="mc" type="button" data-item data-game="dragon" data-type="Buildings" data-name="Restaurant" data-meta="Cook a Dragon · Buildings" data-glb="models/dragon/REST_SHELL.glb"><img src="thumbs/REST_SHELL.webp" alt="Restaurant" loading="lazy" width="512" height="512"><b>Restaurant</b></button>
+<button class="mc" type="button" data-item data-game="halloween" data-type="Rods" data-name="Haunted Rod Skin" data-meta="Halloween · Rods" data-glb="models/halloween/SKIN_HAUNTED.glb"><img src="thumbs/SKIN_HAUNTED.webp" alt="Haunted Rod Skin" loading="lazy" width="512" height="512"><b>Haunted Rod Skin</b></button>
+<button class="mc" type="button" data-item data-game="harbor" data-type="Rods" data-name="Carbon Rod" data-meta="Odd Waters · Rods" data-glb="models/harbor/ROD_CARBON.glb"><img src="thumbs/ROD_CARBON.webp" alt="Carbon Rod" loading="lazy" width="512" height="512"><b>Carbon Rod</b></button>
+<button class="mc" type="button" data-item data-game="dragon" data-type="Buildings" data-name="Weapon Stall" data-meta="Cook a Dragon · Buildings" data-glb="models/dragon/SHOP_WEAPON_STALL.glb"><img src="thumbs/SHOP_WEAPON_STALL.webp" alt="Weapon Stall" loading="lazy" width="512" height="512"><b>Weapon Stall</b></button>
+<button class="mc" type="button" data-item data-game="halloween" data-type="Buildings" data-name="Mausoleum" data-meta="Halloween · Buildings" data-glb="models/halloween/BAYOU_MAUSOLEUM.glb"><img src="thumbs/BAYOU_MAUSOLEUM.webp" alt="Mausoleum" loading="lazy" width="512" height="512"><b>Mausoleum</b></button>
+<button class="mc" type="button" data-item data-game="harbor" data-type="Rods" data-name="Fiberglass Rod" data-meta="Odd Waters · Rods" data-glb="models/harbor/ROD_FIBERGLASS.glb"><img src="thumbs/ROD_FIBERGLASS.webp" alt="Fiberglass Rod" loading="lazy" width="512" height="512"><b>Fiberglass Rod</b></button>
+<button class="mc" type="button" data-item data-game="dragon" data-type="Buildings" data-name="Grove Tower" data-meta="Cook a Dragon · Buildings" data-glb="models/dragon/GROVE_TOWER.glb"><img src="thumbs/GROVE_TOWER.webp" alt="Grove Tower" loading="lazy" width="512" height="512"><b>Grove Tower</b></button>
+<button class="mc" type="button" data-item data-game="halloween" data-type="Buildings" data-name="Bayou Portal" data-meta="Halloween · Buildings" data-glb="models/halloween/BAYOU_PORTAL.glb"><img src="thumbs/BAYOU_PORTAL.webp" alt="Bayou Portal" loading="lazy" width="512" height="512"><b>Bayou Portal</b></button>
+<button class="mc" type="button" data-item data-game="harbor" data-type="Rods" data-name="Bamboo Rod" data-meta="Odd Waters · Rods" data-glb="models/harbor/ROD_BAMBOO.glb"><img src="thumbs/ROD_BAMBOO.webp" alt="Bamboo Rod" loading="lazy" width="512" height="512"><b>Bamboo Rod</b></button>
+<button class="mc" type="button" data-item data-game="dragon" data-type="Buildings" data-name="Ruin Arch" data-meta="Cook a Dragon · Buildings" data-glb="models/dragon/GROVE_RUIN_ARCH.glb"><img src="thumbs/GROVE_RUIN_ARCH.webp" alt="Ruin Arch" loading="lazy" width="512" height="512"><b>Ruin Arch</b></button>
+<button class="mc" type="button" data-item data-game="halloween" data-type="Buildings" data-name="Candy Shop" data-meta="Halloween · Buildings" data-glb="models/halloween/BAYOU_SHOP_STALL.glb"><img src="thumbs/BAYOU_SHOP_STALL.webp" alt="Candy Shop" loading="lazy" width="512" height="512"><b>Candy Shop</b></button>
+<button class="mc" type="button" data-item data-game="harbor" data-type="Rods" data-name="Stick Rod" data-meta="Odd Waters · Rods" data-glb="models/harbor/ROD_STICK.glb"><img src="thumbs/ROD_STICK.webp" alt="Stick Rod" loading="lazy" width="512" height="512"><b>Stick Rod</b></button>
+<button class="mc" type="button" data-item data-game="dragon" data-type="Buildings" data-name="Cauldron Fountain" data-meta="Cook a Dragon · Buildings" data-glb="models/dragon/HUB_FOUNTAIN.glb"><img src="thumbs/HUB_FOUNTAIN.webp" alt="Cauldron Fountain" loading="lazy" width="512" height="512"><b>Cauldron Fountain</b></button>
+<button class="mc" type="button" data-item data-game="halloween" data-type="Buildings" data-name="Lantern Tower" data-meta="Halloween · Buildings" data-glb="models/halloween/BAYOU_LANTERN_TOWER.glb"><img src="thumbs/BAYOU_LANTERN_TOWER.webp" alt="Lantern Tower" loading="lazy" width="512" height="512"><b>Lantern Tower</b></button>
+<button class="mc" type="button" data-item data-game="harbor" data-type="Creatures" data-name="Aurora Sturgeon" data-meta="Odd Waters · Creatures" data-glb="models/harbor/FISH_AURORASTURGEON.glb"><img src="thumbs/FISH_AURORASTURGEON.webp" alt="Aurora Sturgeon" loading="lazy" width="512" height="512"><b>Aurora Sturgeon</b></button>
+<button class="mc" type="button" data-item data-game="dragon" data-type="Buildings" data-name="Arch Gate" data-meta="Cook a Dragon · Buildings" data-glb="models/dragon/HUB_ARCH_GATE.glb"><img src="thumbs/HUB_ARCH_GATE.webp" alt="Arch Gate" loading="lazy" width="512" height="512"><b>Arch Gate</b></button>
+<button class="mc" type="button" data-item data-game="halloween" data-type="Props" data-name="Dead Tree" data-meta="Halloween · Props" data-glb="models/halloween/BAYOU_DEAD_TREE.glb"><img src="thumbs/BAYOU_DEAD_TREE.webp" alt="Dead Tree" loading="lazy" width="512" height="512"><b>Dead Tree</b></button>
+<button class="mc" type="button" data-item data-game="harbor" data-type="Creatures" data-name="Core Leviathan" data-meta="Odd Waters · Creatures" data-glb="models/harbor/FISH_CORELEVIATHAN.glb"><img src="thumbs/FISH_CORELEVIATHAN.webp" alt="Core Leviathan" loading="lazy" width="512" height="512"><b>Core Leviathan</b></button>
+<button class="mc" type="button" data-item data-game="dragon" data-type="Buildings" data-name="Well" data-meta="Cook a Dragon · Buildings" data-glb="models/dragon/GROVE_WELL.glb"><img src="thumbs/GROVE_WELL.webp" alt="Well" loading="lazy" width="512" height="512"><b>Well</b></button>
+<button class="mc" type="button" data-item data-game="halloween" data-type="Props" data-name="Pumpkin" data-meta="Halloween · Props" data-glb="models/halloween/BAYOU_PUMPKIN.glb"><img src="thumbs/BAYOU_PUMPKIN.webp" alt="Pumpkin" loading="lazy" width="512" height="512"><b>Pumpkin</b></button>
+<button class="mc" type="button" data-item data-game="harbor" data-type="Creatures" data-name="Crystal Squid" data-meta="Odd Waters · Creatures" data-glb="models/harbor/FISH_CRYSTALSQUID.glb"><img src="thumbs/FISH_CRYSTALSQUID.webp" alt="Crystal Squid" loading="lazy" width="512" height="512"><b>Crystal Squid</b></button>
+<button class="mc" type="button" data-item data-game="dragon" data-type="Props" data-name="Stove" data-meta="Cook a Dragon · Props" data-glb="models/dragon/PROP_STOVE.glb"><img src="thumbs/PROP_STOVE.webp" alt="Stove" loading="lazy" width="512" height="512"><b>Stove</b></button>
+<button class="mc" type="button" data-item data-game="halloween" data-type="Props" data-name="Gravestone" data-meta="Halloween · Props" data-glb="models/halloween/BAYOU_GRAVESTONE_A.glb"><img src="thumbs/BAYOU_GRAVESTONE_A.webp" alt="Gravestone" loading="lazy" width="512" height="512"><b>Gravestone</b></button>
+<button class="mc" type="button" data-item data-game="harbor" data-type="Creatures" data-name="Frozen Titan" data-meta="Odd Waters · Creatures" data-glb="models/harbor/FISH_FROZENTITAN.glb"><img src="thumbs/FISH_FROZENTITAN.webp" alt="Frozen Titan" loading="lazy" width="512" height="512"><b>Frozen Titan</b></button>
+<button class="mc" type="button" data-item data-game="dragon" data-type="Props" data-name="Fridge" data-meta="Cook a Dragon · Props" data-glb="models/dragon/PROP_FRIDGE.glb"><img src="thumbs/PROP_FRIDGE.webp" alt="Fridge" loading="lazy" width="512" height="512"><b>Fridge</b></button>
+<button class="mc" type="button" data-item data-game="halloween" data-type="Props" data-name="Treasure Chest" data-meta="Halloween · Props" data-glb="models/halloween/BAYOU_CHEST.glb"><img src="thumbs/BAYOU_CHEST.webp" alt="Treasure Chest" loading="lazy" width="512" height="512"><b>Treasure Chest</b></button>
+<button class="mc" type="button" data-item data-game="harbor" data-type="Creatures" data-name="Sewer Gator Gar" data-meta="Odd Waters · Creatures" data-glb="models/harbor/FISH_GATORGAR.glb"><img src="thumbs/FISH_GATORGAR.webp" alt="Sewer Gator Gar" loading="lazy" width="512" height="512"><b>Sewer Gator Gar</b></button>
+<button class="mc" type="button" data-item data-game="dragon" data-type="Props" data-name="Prep Counter" data-meta="Cook a Dragon · Props" data-glb="models/dragon/PROP_PREP_COUNTER.glb"><img src="thumbs/PROP_PREP_COUNTER.webp" alt="Prep Counter" loading="lazy" width="512" height="512"><b>Prep Counter</b></button>
+<button class="mc" type="button" data-item data-game="halloween" data-type="Props" data-name="Prize Wheel" data-meta="Halloween · Props" data-glb="models/halloween/BAYOU_WHEEL.glb"><img src="thumbs/BAYOU_WHEEL.webp" alt="Prize Wheel" loading="lazy" width="512" height="512"><b>Prize Wheel</b></button>
+<button class="mc" type="button" data-item data-game="harbor" data-type="Creatures" data-name="Koi" data-meta="Odd Waters · Creatures" data-glb="models/harbor/FISH_KOI.glb"><img src="thumbs/FISH_KOI.webp" alt="Koi" loading="lazy" width="512" height="512"><b>Koi</b></button>
+<button class="mc" type="button" data-item data-game="dragon" data-type="Props" data-name="Sell Counter" data-meta="Cook a Dragon · Props" data-glb="models/dragon/PROP_SELL_COUNTER.glb"><img src="thumbs/PROP_SELL_COUNTER.webp" alt="Sell Counter" loading="lazy" width="512" height="512"><b>Sell Counter</b></button>
+<button class="mc" type="button" data-item data-game="halloween" data-type="Props" data-name="Cobweb" data-meta="Halloween · Props" data-glb="models/halloween/BAYOU_COBWEB.glb"><img src="thumbs/BAYOU_COBWEB.webp" alt="Cobweb" loading="lazy" width="512" height="512"><b>Cobweb</b></button>
+<button class="mc" type="button" data-item data-game="harbor" data-type="Creatures" data-name="Molten Serpent" data-meta="Odd Waters · Creatures" data-glb="models/harbor/FISH_MOLTENSERPENT.glb"><img src="thumbs/FISH_MOLTENSERPENT.webp" alt="Molten Serpent" loading="lazy" width="512" height="512"><b>Molten Serpent</b></button>
+<button class="mc" type="button" data-item data-game="dragon" data-type="Props" data-name="Menu Board" data-meta="Cook a Dragon · Props" data-glb="models/dragon/PROP_MENU_BOARD.glb"><img src="thumbs/PROP_MENU_BOARD.webp" alt="Menu Board" loading="lazy" width="512" height="512"><b>Menu Board</b></button>
+<button class="mc" type="button" data-item data-game="harbor" data-type="Creatures" data-name="Moon Koi" data-meta="Odd Waters · Creatures" data-glb="models/harbor/FISH_MOONKOI.glb"><img src="thumbs/FISH_MOONKOI.webp" alt="Moon Koi" loading="lazy" width="512" height="512"><b>Moon Koi</b></button>
+<button class="mc" type="button" data-item data-game="dragon" data-type="Props" data-name="Lantern Post" data-meta="Cook a Dragon · Props" data-glb="models/dragon/PROP_LANTERN_POST.glb"><img src="thumbs/PROP_LANTERN_POST.webp" alt="Lantern Post" loading="lazy" width="512" height="512"><b>Lantern Post</b></button>
+<button class="mc" type="button" data-item data-game="harbor" data-type="Creatures" data-name="Mutant Hatchling" data-meta="Odd Waters · Creatures" data-glb="models/harbor/FISH_MUTANTHATCHLING.glb"><img src="thumbs/FISH_MUTANTHATCHLING.webp" alt="Mutant Hatchling" loading="lazy" width="512" height="512"><b>Mutant Hatchling</b></button>
+<button class="mc" type="button" data-item data-game="dragon" data-type="Props" data-name="Jelly Cart" data-meta="Cook a Dragon · Props" data-glb="models/dragon/GROVE_CART.glb"><img src="thumbs/GROVE_CART.webp" alt="Jelly Cart" loading="lazy" width="512" height="512"><b>Jelly Cart</b></button>
+<button class="mc" type="button" data-item data-game="harbor" data-type="Creatures" data-name="Obsidian Ray" data-meta="Odd Waters · Creatures" data-glb="models/harbor/FISH_OBSIDIANRAY.glb"><img src="thumbs/FISH_OBSIDIANRAY.webp" alt="Obsidian Ray" loading="lazy" width="512" height="512"><b>Obsidian Ray</b></button>
+<button class="mc" type="button" data-item data-game="dragon" data-type="Props" data-name="Training Rig" data-meta="Cook a Dragon · Props" data-glb="models/dragon/TRAINING_RIG.glb"><img src="thumbs/TRAINING_RIG.webp" alt="Training Rig" loading="lazy" width="512" height="512"><b>Training Rig</b></button>
+<button class="mc" type="button" data-item data-game="harbor" data-type="Creatures" data-name="Phoenix Koi" data-meta="Odd Waters · Creatures" data-glb="models/harbor/FISH_PHOENIXKOI.glb"><img src="thumbs/FISH_PHOENIXKOI.webp" alt="Phoenix Koi" loading="lazy" width="512" height="512"><b>Phoenix Koi</b></button>
+<button class="mc" type="button" data-item data-game="dragon" data-type="Props" data-name="Loot Sack" data-meta="Cook a Dragon · Props" data-glb="models/dragon/SACK_TIER5.glb"><img src="thumbs/SACK_TIER5.webp" alt="Loot Sack" loading="lazy" width="512" height="512"><b>Loot Sack</b></button>
+<button class="mc" type="button" data-item data-game="harbor" data-type="Creatures" data-name="Plumber's Pike" data-meta="Odd Waters · Creatures" data-glb="models/harbor/FISH_PLUMBERPIKE.glb"><img src="thumbs/FISH_PLUMBERPIKE.webp" alt="Plumber's Pike" loading="lazy" width="512" height="512"><b>Plumber's Pike</b></button>
+<button class="mc" type="button" data-item data-game="dragon" data-type="Props" data-name="Grove Tree" data-meta="Cook a Dragon · Props" data-glb="models/dragon/GROVE_TREE.glb"><img src="thumbs/GROVE_TREE.webp" alt="Grove Tree" loading="lazy" width="512" height="512"><b>Grove Tree</b></button>
+<button class="mc" type="button" data-item data-game="harbor" data-type="Creatures" data-name="Storm Narwhal" data-meta="Odd Waters · Creatures" data-glb="models/harbor/FISH_STORMNARWHAL.glb"><img src="thumbs/FISH_STORMNARWHAL.webp" alt="Storm Narwhal" loading="lazy" width="512" height="512"><b>Storm Narwhal</b></button>
+<button class="mc" type="button" data-item data-game="dragon" data-type="Props" data-name="Hearth Tree" data-meta="Cook a Dragon · Props" data-glb="models/dragon/HEARTH_TREE.glb"><img src="thumbs/HEARTH_TREE.webp" alt="Hearth Tree" loading="lazy" width="512" height="512"><b>Hearth Tree</b></button>
+<button class="mc" type="button" data-item data-game="harbor" data-type="Creatures" data-name="Dock King Catfish" data-meta="Odd Waters · Creatures" data-glb="models/harbor/FISH_CATFISH.glb"><img src="thumbs/FISH_CATFISH.webp" alt="Dock King Catfish" loading="lazy" width="512" height="512"><b>Dock King Catfish</b></button>
+<button class="mc" type="button" data-item data-game="dragon" data-type="Props" data-name="Mossy Boulder" data-meta="Cook a Dragon · Props" data-glb="models/dragon/GROVE_BOULDER_MOSSY.glb"><img src="thumbs/GROVE_BOULDER_MOSSY.webp" alt="Mossy Boulder" loading="lazy" width="512" height="512"><b>Mossy Boulder</b></button>
+<button class="mc" type="button" data-item data-game="harbor" data-type="Creatures" data-name="Rubber Duck" data-meta="Odd Waters · Creatures" data-glb="models/harbor/FISH_RUBBERDUCK.glb"><img src="thumbs/FISH_RUBBERDUCK.webp" alt="Rubber Duck" loading="lazy" width="512" height="512"><b>Rubber Duck</b></button>
+<button class="mc" type="button" data-item data-game="harbor" data-type="Creatures" data-name="Snowball Puffer" data-meta="Odd Waters · Creatures" data-glb="models/harbor/FISH_SNOWPUFFER.glb"><img src="thumbs/FISH_SNOWPUFFER.webp" alt="Snowball Puffer" loading="lazy" width="512" height="512"><b>Snowball Puffer</b></button>
+<button class="mc" type="button" data-item data-game="harbor" data-type="Creatures" data-name="Magma Grouper" data-meta="Odd Waters · Creatures" data-glb="models/harbor/FISH_MAGMAGROUPER.glb"><img src="thumbs/FISH_MAGMAGROUPER.webp" alt="Magma Grouper" loading="lazy" width="512" height="512"><b>Magma Grouper</b></button>
+<button class="mc" type="button" data-item data-game="harbor" data-type="Creatures" data-name="Rainbow Trout" data-meta="Odd Waters · Creatures" data-glb="models/harbor/FISH_TROUT.glb"><img src="thumbs/FISH_TROUT.webp" alt="Rainbow Trout" loading="lazy" width="512" height="512"><b>Rainbow Trout</b></button>
+<button class="mc" type="button" data-item data-game="harbor" data-type="Creatures" data-name="Harbour Cat" data-meta="Odd Waters · Creatures" data-glb="models/harbor/HARBOR_CAT.glb"><img src="thumbs/HARBOR_CAT.webp" alt="Harbour Cat" loading="lazy" width="512" height="512"><b>Harbour Cat</b></button>
+<button class="mc" type="button" data-item data-game="harbor" data-type="Buildings" data-name="Lighthouse" data-meta="Odd Waters · Buildings" data-glb="models/harbor/LIGHTHOUSE.glb"><img src="thumbs/LIGHTHOUSE.webp" alt="Lighthouse" loading="lazy" width="512" height="512"><b>Lighthouse</b></button>
+<button class="mc" type="button" data-item data-game="harbor" data-type="Buildings" data-name="Grand Aquarium" data-meta="Odd Waters · Buildings" data-glb="models/harbor/GRAND_AQUARIUM.glb"><img src="thumbs/GRAND_AQUARIUM.webp" alt="Grand Aquarium" loading="lazy" width="512" height="512"><b>Grand Aquarium</b></button>
+<button class="mc" type="button" data-item data-game="harbor" data-type="Buildings" data-name="Hall of Records" data-meta="Odd Waters · Buildings" data-glb="models/harbor/HALL_OF_RECORDS.glb"><img src="thumbs/HALL_OF_RECORDS.webp" alt="Hall of Records" loading="lazy" width="512" height="512"><b>Hall of Records</b></button>
+<button class="mc" type="button" data-item data-game="harbor" data-type="Buildings" data-name="Town Clock" data-meta="Odd Waters · Buildings" data-glb="models/harbor/TOWN_CLOCK.glb"><img src="thumbs/TOWN_CLOCK.webp" alt="Town Clock" loading="lazy" width="512" height="512"><b>Town Clock</b></button>
+<button class="mc" type="button" data-item data-game="harbor" data-type="Buildings" data-name="Boathouse" data-meta="Odd Waters · Buildings" data-glb="models/harbor/BOATHOUSE.glb"><img src="thumbs/BOATHOUSE.webp" alt="Boathouse" loading="lazy" width="512" height="512"><b>Boathouse</b></button>
+<button class="mc" type="button" data-item data-game="harbor" data-type="Buildings" data-name="Harbour Crane" data-meta="Odd Waters · Buildings" data-glb="models/harbor/HARBOR_CRANE.glb"><img src="thumbs/HARBOR_CRANE.webp" alt="Harbour Crane" loading="lazy" width="512" height="512"><b>Harbour Crane</b></button>
+<button class="mc" type="button" data-item data-game="harbor" data-type="Buildings" data-name="Ice Hut" data-meta="Odd Waters · Buildings" data-glb="models/harbor/FROZEN_ICE_HUT.glb"><img src="thumbs/FROZEN_ICE_HUT.webp" alt="Ice Hut" loading="lazy" width="512" height="512"><b>Ice Hut</b></button>
+<button class="mc" type="button" data-item data-game="harbor" data-type="Buildings" data-name="Sewer Shack" data-meta="Odd Waters · Buildings" data-glb="models/harbor/SEWER_SHACK.glb"><img src="thumbs/SEWER_SHACK.webp" alt="Sewer Shack" loading="lazy" width="512" height="512"><b>Sewer Shack</b></button>
+<button class="mc" type="button" data-item data-game="harbor" data-type="Buildings" data-name="Camp Tent" data-meta="Odd Waters · Buildings" data-glb="models/harbor/PLAZA_TENT.glb"><img src="thumbs/PLAZA_TENT.webp" alt="Camp Tent" loading="lazy" width="512" height="512"><b>Camp Tent</b></button>
+<button class="mc" type="button" data-item data-game="harbor" data-type="Buildings" data-name="Portal Pod" data-meta="Odd Waters · Buildings" data-glb="models/harbor/PORTAL_POD.glb"><img src="thumbs/PORTAL_POD.webp" alt="Portal Pod" loading="lazy" width="512" height="512"><b>Portal Pod</b></button>
+<button class="mc" type="button" data-item data-game="harbor" data-type="Props" data-name="Fishing Boat" data-meta="Odd Waters · Props" data-glb="models/harbor/FISHING_BOAT.glb"><img src="thumbs/FISHING_BOAT.webp" alt="Fishing Boat" loading="lazy" width="512" height="512"><b>Fishing Boat</b></button>
+<button class="mc" type="button" data-item data-game="harbor" data-type="Props" data-name="Sailboat" data-meta="Odd Waters · Props" data-glb="models/harbor/SAILBOAT.glb"><img src="thumbs/SAILBOAT.webp" alt="Sailboat" loading="lazy" width="512" height="512"><b>Sailboat</b></button>
+<button class="mc" type="button" data-item data-game="harbor" data-type="Props" data-name="Sunken Ship" data-meta="Odd Waters · Props" data-glb="models/harbor/AQ_SUNKEN_SHIP.glb"><img src="thumbs/AQ_SUNKEN_SHIP.webp" alt="Sunken Ship" loading="lazy" width="512" height="512"><b>Sunken Ship</b></button>
+<button class="mc" type="button" data-item data-game="harbor" data-type="Props" data-name="Tank Castle" data-meta="Odd Waters · Props" data-glb="models/harbor/AQ_CASTLE.glb"><img src="thumbs/AQ_CASTLE.webp" alt="Tank Castle" loading="lazy" width="512" height="512"><b>Tank Castle</b></button>
+<button class="mc" type="button" data-item data-game="harbor" data-type="Props" data-name="Giant Duck" data-meta="Odd Waters · Props" data-glb="models/harbor/SEWER_DUCK_STATUE.glb"><img src="thumbs/SEWER_DUCK_STATUE.webp" alt="Giant Duck" loading="lazy" width="512" height="512"><b>Giant Duck</b></button>
+<button class="mc" type="button" data-item data-game="harbor" data-type="Props" data-name="Snowman" data-meta="Odd Waters · Props" data-glb="models/harbor/FROZEN_SNOWMAN.glb"><img src="thumbs/FROZEN_SNOWMAN.webp" alt="Snowman" loading="lazy" width="512" height="512"><b>Snowman</b></button>
+<button class="mc" type="button" data-item data-game="harbor" data-type="Props" data-name="Skull Rock" data-meta="Odd Waters · Props" data-glb="models/harbor/LAVA_SKULL_ROCK.glb"><img src="thumbs/LAVA_SKULL_ROCK.webp" alt="Skull Rock" loading="lazy" width="512" height="512"><b>Skull Rock</b></button>
+<button class="mc" type="button" data-item data-game="harbor" data-type="Props" data-name="Ice Arch" data-meta="Odd Waters · Props" data-glb="models/harbor/FROZEN_ICE_ARCH.glb"><img src="thumbs/FROZEN_ICE_ARCH.webp" alt="Ice Arch" loading="lazy" width="512" height="512"><b>Ice Arch</b></button>
+<button class="mc" type="button" data-item data-game="harbor" data-type="Props" data-name="Mine Cart" data-meta="Odd Waters · Props" data-glb="models/harbor/LAVA_MINECART.glb"><img src="thumbs/LAVA_MINECART.webp" alt="Mine Cart" loading="lazy" width="512" height="512"><b>Mine Cart</b></button>
+<button class="mc" type="button" data-item data-game="harbor" data-type="Props" data-name="Enchant Altar" data-meta="Odd Waters · Props" data-glb="models/harbor/PROP_ENCHANT_ALTAR.glb"><img src="thumbs/PROP_ENCHANT_ALTAR.webp" alt="Enchant Altar" loading="lazy" width="512" height="512"><b>Enchant Altar</b></button>
+<button class="mc" type="button" data-item data-game="harbor" data-type="Props" data-name="Brazier" data-meta="Odd Waters · Props" data-glb="models/harbor/LAVA_BRAZIER.glb"><img src="thumbs/LAVA_BRAZIER.webp" alt="Brazier" loading="lazy" width="512" height="512"><b>Brazier</b></button>
+      </div>
+      <p class="count" id="mgrid-count">107 shown · click any model to view it in 3D</p>
+    </div>
+  </section>
+
+  <section class="s" id="ui">
+    <div class="wrap">
+      <div class="head"><h2>UI</h2></div>
+      <div class="grid">
+        <figure class="clip" data-zoom><video muted loop playsinline preload="none" poster="assets/vid-dragon-weapon-shop.jpg" data-src="assets/vid-dragon-weapon-shop.mp4" aria-label="Weapon Shop animation"></video><span class="play" aria-hidden="true">&#9654;</span><figcaption>Weapon Shop<i>Cook a Dragon</i></figcaption></figure>
+        <figure class="clip" data-zoom><video muted loop playsinline preload="none" poster="assets/vid-halloween-shop.jpg" data-src="assets/vid-halloween-shop.mp4" aria-label="Candy Shop animation"></video><span class="play" aria-hidden="true">&#9654;</span><figcaption>Candy Shop<i>Odd Waters Halloween</i></figcaption></figure>
+      </div>
+      <div class="grid ui" style="margin-top:var(--gap)">
+        <figure data-zoom><img src="assets/ui-shop.jpg" alt="Shop interface, Odd Waters" loading="lazy"><figcaption>Shop<i>Odd Waters</i></figcaption></figure>
+        <figure data-zoom><img src="assets/ui-rodshop.jpg" alt="Rod Shop interface, Odd Waters" loading="lazy"><figcaption>Rod Shop<i>Odd Waters</i></figcaption></figure>
+        <figure data-zoom><img src="assets/ui-inventory.jpg" alt="Inventory interface, Odd Waters" loading="lazy"><figcaption>Inventory<i>Odd Waters</i></figcaption></figure>
+        <figure data-zoom><img src="assets/ui-index.jpg" alt="Fish Index interface, Odd Waters" loading="lazy"><figcaption>Fish Index<i>Odd Waters</i></figcaption></figure>
+        <figure data-zoom><img src="assets/ui-skins.jpg" alt="Skin picker interface, Odd Waters" loading="lazy"><figcaption>Skin picker<i>Odd Waters</i></figcaption></figure>
+        <figure data-zoom><img src="assets/ui-chests.jpg" alt="Chest odds interface, Odd Waters" loading="lazy"><figcaption>Chest odds<i>Odd Waters</i></figcaption></figure>
+        <figure data-zoom><img src="assets/ui-reveal.jpg" alt="Chest reveal interface, Odd Waters" loading="lazy"><figcaption>Chest reveal<i>Odd Waters</i></figcaption></figure>
+        <figure data-zoom><img src="assets/ui-daily.jpg" alt="Daily rewards interface, Odd Waters" loading="lazy"><figcaption>Daily rewards<i>Odd Waters</i></figcaption></figure>
+        <figure data-zoom><img src="assets/ui-spin.jpg" alt="Spin wheel interface, Odd Waters" loading="lazy"><figcaption>Spin wheel<i>Odd Waters</i></figcaption></figure>
+        <figure data-zoom><img src="assets/ui-quests.jpg" alt="Quests interface, Odd Waters" loading="lazy"><figcaption>Quests<i>Odd Waters</i></figcaption></figure>
+        <figure data-zoom><img src="assets/ui-passes.jpg" alt="Gamepasses interface, Odd Waters" loading="lazy"><figcaption>Gamepasses<i>Odd Waters</i></figcaption></figure>
+        <figure data-zoom><img src="assets/ui-coins.jpg" alt="Coin packs interface, Odd Waters" loading="lazy"><figcaption>Coin packs<i>Odd Waters</i></figcaption></figure>
+        <figure data-zoom><img src="assets/ui-aquarium.jpg" alt="Aquarium interface, Odd Waters" loading="lazy"><figcaption>Aquarium<i>Odd Waters</i></figcaption></figure>
+        <figure data-zoom><img src="assets/ui-playtime.jpg" alt="Playtime rewards interface, Odd Waters" loading="lazy"><figcaption>Playtime rewards<i>Odd Waters</i></figcaption></figure>
+        <figure data-zoom><img src="assets/ui-stats.jpg" alt="Stats and titles interface, Odd Waters" loading="lazy"><figcaption>Stats and titles<i>Odd Waters</i></figcaption></figure>
+        <figure data-zoom><img src="assets/ui-teleport.jpg" alt="Teleport interface, Odd Waters" loading="lazy"><figcaption>Teleport<i>Odd Waters</i></figcaption></figure>
+        <figure data-zoom><img src="assets/ui-group.jpg" alt="Group perk interface, Odd Waters" loading="lazy"><figcaption>Group perk<i>Odd Waters</i></figcaption></figure>
+        <figure data-zoom><img src="assets/ui-settings.jpg" alt="Settings interface, Odd Waters" loading="lazy"><figcaption>Settings<i>Odd Waters</i></figcaption></figure>
+        <figure data-zoom><img src="assets/ui-tablet.jpg" alt="Tablet layout interface, Odd Waters" loading="lazy"><figcaption>Tablet layout<i>Odd Waters</i></figcaption></figure>
+        <figure data-zoom><img src="assets/ui-admin.jpg" alt="Admin panel interface, Odd Waters" loading="lazy"><figcaption>Admin panel<i>Odd Waters</i></figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <div class="contact" id="contact">
+      <h2>Let's work together.</h2>
+      <div class="cta">
+        <a class="pill" href="https://discord.com/users/767992133251629096" target="_blank" rel="noopener">Message on Discord</a>
+        <a class="pill ghost" href="https://www.roblox.com/games/94007788716602" target="_blank" rel="noopener">Play Odd Waters</a>
+        <a class="pill ghost" href="https://www.roblox.com/users/1424896813/profile" target="_blank" rel="noopener">Roblox profile</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer><div class="wrap"><span>KINGJAY142p · After Hours Studios</span><span>AI-assisted workflow</span></div></footer>
+
+<dialog id="md" aria-labelledby="md-name">
+  <div class="top"><b id="md-name"></b><span id="md-meta"></span><button type="button" id="md-close">Close</button></div>
+  <model-viewer id="md-viewer" alt="" camera-controls auto-rotate rotation-per-second="20deg" camera-orbit="30deg 72deg auto" shadow-intensity="0.6" environment-image="neutral" interaction-prompt="none"></model-viewer>
+  <div class="foot">Drag to rotate · scroll or pinch to zoom</div>
+</dialog>
+<dialog id="lb" aria-label="Enlarged view"></dialog>
 
 <script>
-  // filter tabs
-  var tabs = document.querySelectorAll('.tab');
-  var items = document.querySelectorAll('[data-c]');
-  tabs.forEach(function (tab) {
-    tab.addEventListener('click', function () {
-      var f = tab.dataset.f;
-      tabs.forEach(function (t) { t.setAttribute('aria-pressed', t === tab ? 'true' : 'false'); });
-      items.forEach(function (el) { el.classList.toggle('hide', f !== 'all' && el.dataset.c !== f); });
+(function () {
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+  var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+
+  // filters: each .filters[data-target][data-key] narrows items in its target by data-<key>; several rows combine
+  var state = {};
+  $$('.filters').forEach(function (row) {
+    var tid = row.dataset.target, key = row.dataset.key, btns = $$('.chip', row);
+    state[tid] = state[tid] || {};
+    btns.forEach(function (b) {
+      b.addEventListener('click', function () {
+        btns.forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+        state[tid][key] = b.dataset.f;
+        var shown = 0;
+        $$('#' + tid + ' [data-item]').forEach(function (el) {
+          var ok = Object.keys(state[tid]).every(function (k) { return state[tid][k] === 'all' || el.dataset[k] === state[tid][k]; });
+          el.classList.toggle('hide', !ok); if (ok) shown++;
+        });
+        var c = $('#' + tid + '-count'); if (c) c.textContent = shown + ' shown';
+      });
     });
   });
-  // clips load and play only while they are on screen
+
+  // 3D viewer dialog
+  var md = $('#md'), mv = $('#md-viewer');
+  $$('.mc').forEach(function (c) {
+    c.addEventListener('click', function () {
+      $('#md-name').textContent = c.dataset.name; $('#md-meta').textContent = c.dataset.meta;
+      mv.setAttribute('alt', '3D model of ' + c.dataset.name); mv.src = c.dataset.glb; md.showModal();
+    });
+  });
+  $('#md-close').addEventListener('click', function () { md.close(); });
+  md.addEventListener('click', function (e) { if (e.target === md) md.close(); });
+  md.addEventListener('close', function () { mv.removeAttribute('src'); });
+
+  // clips play only while on screen
   var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if ('IntersectionObserver' in window && !still) {
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
         var v = e.target;
-        if (e.isIntersecting) { if (!v.getAttribute('src')) v.src = v.dataset.src; v.play().catch(function () {}); }
-        else { v.pause(); }
+        if (e.isIntersecting) { if (!v.getAttribute('src')) v.src = v.dataset.src; v.play().catch(function () {}); } else { v.pause(); }
       });
     }, { threshold: 0.35 });
-    document.querySelectorAll('figure video').forEach(function (v) { io.observe(v); });
+    $$('video[data-src]').forEach(function (v) { io.observe(v); });
   }
-  // click to enlarge (images and clips)
-  var box = document.getElementById('lightbox');
-  function closeBox() { box.classList.remove('open'); box.replaceChildren(); }
-  document.querySelectorAll('figure').forEach(function (fig) {
-    fig.addEventListener('click', function () {
-      var v = fig.querySelector('video');
-      var el;
-      if (v) {
-        el = document.createElement('video');
-        el.src = v.dataset.src; el.poster = v.poster; el.controls = true; el.autoplay = true; el.loop = true; el.muted = true; el.playsInline = true;
-        el.addEventListener('click', function (ev) { ev.stopPropagation(); });
-      } else {
-        var img = fig.querySelector('img');
-        el = document.createElement('img');
-        el.src = img.src; el.alt = img.alt;
-      }
-      box.replaceChildren(el);
-      box.classList.add('open');
+
+  // lightbox
+  var lb = $('#lb');
+  $$('figure[data-zoom]').forEach(function (f) {
+    f.addEventListener('click', function () {
+      var v = $('video', f), el;
+      if (v) { el = document.createElement('video'); el.src = v.dataset.src || v.src; el.poster = v.poster; el.controls = true; el.autoplay = true; el.loop = true; el.muted = true; el.playsInline = true; el.addEventListener('click', function (e) { e.stopPropagation(); }); }
+      else { var img = $('img', f); el = document.createElement('img'); el.src = img.currentSrc || img.src; el.alt = img.alt; }
+      lb.replaceChildren(el); lb.showModal();
     });
   });
-  box.addEventListener('click', closeBox);
-  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeBox(); });
+  lb.addEventListener('click', function () { lb.close(); });
+  lb.addEventListener('close', function () { lb.replaceChildren(); });
+})();
 </script>
 </body>
 </html>
