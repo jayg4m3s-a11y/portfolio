@@ -7,148 +7,202 @@
 <meta name="description" content="Portfolio of KINGJAY142p: Roblox 3D models (low, medium and high poly), low-poly builds and game UI.">
 <meta property="og:title" content="KINGJAY142p · Roblox 3D Models, Builds and UI">
 <meta property="og:image" content="assets/build-ember-entrance.jpg">
-<meta name="theme-color" content="#0d0c0b">
+<meta name="theme-color" content="#0a0a0a">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@500;600;700&family=Inter+Tight:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
 <script type="module" src="https://unpkg.com/@google/model-viewer@3.5.0/dist/model-viewer.min.js"></script>
 <style>
 :root {
-  --bg: #0d0c0b; --surface: #151311; --card: #1b1916; --card-2: #23201c; --line: rgba(241, 236, 228, .09);
-  --ink: #f1ece4; --muted: #8f877c; --accent: #ff6b35; --accent-2: #ffb36b;
-  --sans: "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif; --serif: "Instrument Serif", Georgia, serif;
-  --max: 1440px; --gap: 14px; --r: 18px; --ease: cubic-bezier(.2, .7, .1, 1);
+  --bg: #0a0a0a; --card: #1c1c1b; --card-2: #121212; --ink: #f2f1ee; --muted: #8a8780; --line: rgba(242, 241, 238, .1);
+  --dark: #151514; --accent: #ff5a1f; --on-accent: #120700;
+  --sans: "Inter Tight", system-ui, -apple-system, "Segoe UI", sans-serif; --display: "Funnel Display", "Inter Tight", system-ui, sans-serif;
+  --max: 1520px; --gap: 14px; --r: 14px; --ease: cubic-bezier(.19, 1, .22, 1); --step: clamp(10px, 1.6vw, 24px);
 }
+.dark { --bg: #151514; --card: #232322; --card-2: #1a1a19; --ink: #f2f1ee; --muted: #8d8983; --line: rgba(242, 241, 238, .1); color: var(--ink); }
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+html { scroll-padding-top: 80px; }
 body { margin: 0; background: var(--bg); color: var(--ink); font: 400 16px/1.55 var(--sans); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+body.loading { overflow: hidden; }
 img, video { display: block; max-width: 100%; }
 a { color: inherit; text-decoration: none; }
 h1, h2, h3, p { margin: 0; }
 button { font: inherit; color: inherit; }
-em { font-family: var(--serif); font-style: italic; font-weight: 400; color: var(--accent-2); letter-spacing: 0; }
-.wrap { max-width: var(--max); margin: 0 auto; padding: 0 clamp(16px, 3vw, 40px); }
+sup { font: 500 .26em/1 var(--sans); letter-spacing: 0; vertical-align: top; margin-left: .25em; position: relative; top: .55em; color: var(--muted); }
+.wrap { max-width: var(--max); margin: 0 auto; padding: 0 clamp(16px, 3vw, 44px); }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
 .hide { display: none !important; }
-::selection { background: var(--accent); color: #140a05; }
-.grain { position: fixed; inset: 0; pointer-events: none; z-index: 60; opacity: .05;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+::selection { background: var(--accent); color: var(--on-accent); }
 
-/* reveal on scroll */
-.rv { opacity: 0; transform: translateY(28px); transition: opacity .9s var(--ease), transform .9s var(--ease); transition-delay: calc(var(--i, 0) * 70ms); }
-.rv.in { opacity: 1; transform: none; }
+/* preloader: counts to 100 over thin column lines, then wipes up */
+.pre { position: fixed; inset: 0; z-index: 100; background: #0a0a0a; color: #f2f1ee; transition: clip-path 1.1s var(--ease); clip-path: inset(0 0 0 0); }
+.pre i { position: absolute; top: 0; bottom: 0; width: 1px; background: rgba(242, 241, 238, .1); }
+.pre i:nth-child(1) { left: 25%; } .pre i:nth-child(2) { left: 50%; } .pre i:nth-child(3) { left: 75%; } .pre i:nth-child(4) { left: 100%; }
+.pre .pl { position: absolute; left: clamp(16px, 3vw, 44px); bottom: clamp(20px, 4vw, 44px); font-size: 14px; color: #8d8983; }
+.pre b { position: absolute; right: clamp(16px, 3vw, 44px); bottom: clamp(8px, 2vw, 24px); font: 600 clamp(80px, 16vw, 240px)/.8 var(--display); letter-spacing: -.05em; }
+.pre b::after { content: "%"; font-size: .3em; color: var(--accent); margin-left: .05em; }
+.pre.done { clip-path: inset(0 0 100% 0); }
+
+/* custom cursor (mouse only) */
+.cur { position: fixed; left: 0; top: 0; z-index: 90; width: 12px; height: 12px; margin: -6px 0 0 -6px; border-radius: 50%; background: var(--accent); pointer-events: none; display: grid; place-items: center; transition: width .5s var(--ease), height .5s var(--ease), margin .5s var(--ease), opacity .3s; opacity: 0; }
+.cur span { font-size: 13px; font-weight: 600; color: var(--on-accent); opacity: 0; transform: scale(.6); transition: .4s var(--ease); }
+.cur.on { opacity: 1; }
+.cur.big { width: 86px; height: 86px; margin: -43px 0 0 -43px; }
+.cur.big span { opacity: 1; transform: none; }
+@media (hover: none) { .cur { display: none; } }
+
+/* reveals */
+.up { opacity: 0; transform: translateY(46px); transition: opacity 1.2s var(--ease), transform 1.2s var(--ease); transition-delay: calc(var(--i, 0) * 60ms); }
+.up.in { opacity: 1; transform: none; }
+.split .w { display: inline-block; overflow: hidden; vertical-align: top; padding-bottom: .08em; margin-bottom: -.08em; }
+.split .w > span { display: inline-block; transform: translateY(105%); transition: transform 1.3s var(--ease); transition-delay: calc(var(--i, 0) * 45ms); }
+.split.in .w > span { transform: none; }
+.fx.up, .r { clip-path: inset(10% 4% 10% 4% round var(--r)); transition: clip-path 1.4s var(--ease), opacity 1.2s var(--ease), transform 1.2s var(--ease); }
+.fx.up.in, .reel.in .r { clip-path: inset(0 0 0 0 round var(--r)); }
+
+/* rolling text: the label and its copy one line below roll up on hover */
+[data-t] { display: inline-block; overflow: hidden; height: 1.55em; line-height: 1.55em; vertical-align: top; }
+.rl { display: block; text-shadow: 0 1.55em 0 currentColor; transition: transform .6s var(--ease); }
+a:hover .rl { transform: translateY(-1.55em); }
 
 /* nav */
-.nav { position: fixed; inset: 0 0 auto; z-index: 40; transition: transform .5s var(--ease), background .4s; }
-.nav.scrolled { background: rgba(13, 12, 11, .72); backdrop-filter: blur(14px) saturate(1.2); -webkit-backdrop-filter: blur(14px) saturate(1.2); border-bottom: 1px solid var(--line); }
+.nav { position: fixed; inset: 0 0 auto; z-index: 40; transition: transform .7s var(--ease), background .4s, color .4s; }
+.nav.scrolled { background: rgba(10, 10, 10, .72); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid rgba(242, 241, 238, .08); }
+.nav.on-dark { background: rgba(21, 21, 20, .78); }
 .nav.away { transform: translateY(-100%); }
-.nav .wrap { display: flex; align-items: center; gap: 24px; height: 68px; }
-.brand { font-weight: 800; letter-spacing: -.02em; font-size: 18px; margin-right: auto; }
+.nav .wrap { display: flex; align-items: center; gap: 28px; height: 72px; }
+.brand { font: 700 20px var(--display); letter-spacing: -.03em; margin-right: auto; }
 .brand span { color: var(--accent); }
-.nav nav { display: flex; gap: 26px; }
-.nav nav a { position: relative; font-size: 14px; font-weight: 500; color: var(--muted); transition: color .3s; }
-.nav nav a::after { content: ""; position: absolute; left: 0; right: 0; bottom: -4px; height: 1px; background: var(--accent); transform: scaleX(0); transform-origin: right; transition: transform .45s var(--ease); }
-.nav nav a:hover, .nav nav a.on { color: var(--ink); }
-.nav nav a:hover::after, .nav nav a.on::after { transform: scaleX(1); transform-origin: left; }
-.btn { display: inline-flex; align-items: center; gap: 10px; min-height: 48px; padding: 0 24px; border-radius: 999px; background: var(--accent); color: #160b05; font-weight: 700; font-size: 15px; border: 1px solid var(--accent); transition: transform .4s var(--ease), background .3s, color .3s; }
-.btn:hover { transform: translateY(-2px); background: var(--accent-2); border-color: var(--accent-2); }
-.btn span { transition: transform .4s var(--ease); }
-.btn:hover span { transform: translateX(4px); }
-.btn.sm { min-height: 40px; padding: 0 18px; font-size: 14px; }
+.nav nav { display: flex; gap: 30px; font-size: 15px; font-weight: 500; }
+.nav nav a { position: relative; transition: color .4s; }
+.nav nav a.on { color: var(--accent); }
+.btn { display: inline-flex; align-items: center; gap: 10px; min-height: 52px; padding: 0 26px; border-radius: 999px; background: var(--ink); color: var(--bg); font-weight: 600; font-size: 15px; border: 1px solid var(--ink); transition: background .4s, color .4s, border-color .4s; }
+.btn:hover { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+.btn i { font-style: normal; transition: transform .5s var(--ease); }
+.btn:hover i { transform: translateX(5px); }
+.btn.sm { min-height: 42px; padding: 0 20px; font-size: 14px; }
 .btn.ghost { background: transparent; color: var(--ink); border-color: var(--line); }
-.btn.ghost:hover { border-color: var(--ink); background: transparent; }
+.btn.ghost:hover { border-color: var(--ink); background: var(--ink); color: var(--bg); }
+.nav.on-dark .btn.sm { background: #f2f1ee; color: #0e0e0e; border-color: #f2f1ee; }
+.nav.on-dark .btn.sm:hover { background: var(--accent); border-color: var(--accent); }
 
 /* hero */
-.hero { padding-top: clamp(104px, 14vh, 150px); }
-.eyebrow { font-size: 13px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
-.eyebrow::before { content: ""; display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); margin-right: 10px; vertical-align: 1px; box-shadow: 0 0 12px var(--accent); }
-.hero h1 { font-size: clamp(38px, 6.2vw, 96px); line-height: .98; letter-spacing: -.045em; font-weight: 700; margin: 18px 0 clamp(28px, 4vw, 48px); max-width: 16ch; }
-.reel { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); grid-template-rows: 1fr 1fr; gap: var(--gap); height: min(62vh, 640px); }
-.r { position: relative; overflow: hidden; border-radius: var(--r); background: var(--card); isolation: isolate; }
+.hero { padding-top: clamp(110px, 15vh, 160px); }
+.hrow { display: flex; justify-content: space-between; gap: 16px; }
+.eyebrow { font-size: 13px; font-weight: 500; letter-spacing: .02em; color: var(--muted); }
+.eyebrow::before { content: ""; display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); margin-right: 10px; vertical-align: 1px; }
+.eyebrow.right::before { display: none; }
+.hero h1 { font: 600 clamp(44px, 8.4vw, 150px)/.92 var(--display); letter-spacing: -.055em; margin: 22px 0 clamp(30px, 4vw, 56px); max-width: 13ch; }
+.reel { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); grid-template-rows: 1fr 1fr; gap: var(--gap); height: min(66vh, 700px); }
+.r { position: relative; overflow: hidden; border-radius: var(--r); background: var(--card-2); isolation: isolate; }
 .r.big { grid-row: span 2; }
-.r > img, .r > video { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--ease); }
-.r:hover > img, .r:hover > video { transform: scale(1.04); }
-.r > span:last-child { position: absolute; left: 14px; bottom: 14px; display: inline-flex; gap: 8px; align-items: baseline; padding: 8px 16px; border-radius: 999px; background: rgba(13, 12, 11, .62); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); font-weight: 700; }
-.r small { color: var(--accent-2); font-weight: 600; }
-.r::after { content: "↗"; position: absolute; top: 14px; right: 14px; width: 38px; height: 38px; display: grid; place-items: center; border-radius: 50%; background: var(--ink); color: var(--bg); font-weight: 700; transform: scale(.6); opacity: 0; transition: .45s var(--ease); }
-.r:hover::after { transform: none; opacity: 1; }
-.r.mdl { background: radial-gradient(circle at 50% 60%, #2e241c, var(--card) 70%); }
+.pz { position: absolute; inset: -8% 0; display: block; transform: translateY(var(--p, 0px)); will-change: transform; }
+.pz > img, .pz > video { width: 100%; height: 100%; object-fit: cover; transform: scale(1.04); transition: transform 1.6s var(--ease); }
+.r:hover .pz > img, .r:hover .pz > video { transform: scale(1.1); }
+.lab { position: absolute; left: 18px; bottom: 14px; font: 600 clamp(28px, 3vw, 46px)/1 var(--display); letter-spacing: -.04em; color: #fff; text-shadow: 0 2px 24px rgba(0, 0, 0, .35); }
+.lab sup { color: rgba(255, 255, 255, .8); }
+.r.mdl { background: radial-gradient(circle at 50% 58%, #262625, var(--card-2) 72%); }
+.r.mdl .lab { color: var(--ink); text-shadow: none; }
+.r.mdl .lab sup { color: var(--muted); }
 .spin { position: absolute; inset: 0; }
-.spin img { position: absolute; inset: 8% 18%; width: 64%; height: 84%; object-fit: contain; opacity: 0; animation: cycle 12s infinite; animation-delay: calc(var(--d) * 3s); }
-@keyframes cycle { 0% { opacity: 0; transform: translateY(14px) scale(.96); } 5%, 22% { opacity: 1; transform: none; } 27%, 100% { opacity: 0; transform: translateY(-10px) scale(1.02); } }
+.spin img { position: absolute; inset: 6% 16% 16%; width: 68%; height: 78%; object-fit: contain; opacity: 0; animation: cycle 12s infinite; animation-delay: calc(var(--d) * 3s); }
+@keyframes cycle { 0% { opacity: 0; transform: translateY(18px) scale(.94); } 5%, 22% { opacity: 1; transform: none; } 27%, 100% { opacity: 0; transform: translateY(-12px) scale(1.03); } }
+
+/* marquee */
+.marq { overflow: hidden; padding: clamp(40px, 6vw, 80px) 0 0; white-space: nowrap; }
+.mq { display: inline-flex; align-items: center; gap: clamp(18px, 2.4vw, 40px); font: 600 clamp(40px, 7vw, 120px)/1 var(--display); letter-spacing: -.05em; will-change: transform; transform: translateX(var(--x, 0px)); }
+.mq b { color: var(--accent); font-size: .5em; font-weight: 400; }
+.marq.big { padding: clamp(60px, 9vw, 130px) 0 clamp(30px, 4vw, 50px); }
+.marq.big .mq { font-size: clamp(60px, 13vw, 220px); }
+.marq.big .mq span { -webkit-text-stroke: 1px rgba(242, 241, 238, .35); color: transparent; }
+
+/* stepped voxel edge between light and dark sections */
+.steps { display: flex; align-items: flex-end; height: calc(var(--step) * 4); margin-top: clamp(80px, 10vw, 140px); }
+.steps i { flex: 1; height: calc(var(--step) * var(--h)); background: var(--dark); transform: scaleY(0); transform-origin: bottom; transition: transform 1s var(--ease); transition-delay: calc(var(--i) * 35ms); }
+.steps.in i { transform: none; }
+.steps.bottom { align-items: flex-start; margin-top: 0; }
+.steps.bottom i { transform-origin: top; }
+.contact .steps.top { margin-top: 0; background: #0a0a0a; }
 
 /* sections */
-.s { padding-top: clamp(96px, 12vw, 160px); }
-.shead { display: flex; align-items: end; justify-content: space-between; gap: 24px; flex-wrap: wrap; padding-bottom: 28px; border-bottom: 1px solid var(--line); margin-bottom: 28px; }
-.shead h2 { font-size: clamp(44px, 7vw, 112px); line-height: .9; letter-spacing: -.05em; font-weight: 700; }
-.shead p { color: var(--muted); max-width: 36ch; }
+.s { padding-top: clamp(90px, 11vw, 160px); }
+.s.dark { background: var(--bg); padding-bottom: clamp(30px, 4vw, 60px); }
+.steps.top + .s.dark { padding-top: clamp(40px, 6vw, 90px); }
+.shead { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 340px); align-items: end; gap: 24px; padding-bottom: 28px; border-bottom: 1px solid var(--line); margin-bottom: 28px; }
+.shead h2 { font: 600 clamp(56px, 11vw, 190px)/.85 var(--display); letter-spacing: -.06em; }
+.shead p { color: var(--muted); }
 
 /* filters */
-.bar { display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; }
+.bar { display: flex; flex-direction: column; gap: 10px; margin-bottom: 26px; }
 .seg { display: flex; flex-wrap: wrap; gap: 8px; }
-.chip { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 18px; border-radius: 999px; border: 1px solid var(--line); background: transparent; cursor: pointer; font-size: 14px; font-weight: 600; color: var(--muted); transition: .35s var(--ease); }
+.chip { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 18px; border-radius: 999px; border: 1px solid var(--line); background: transparent; cursor: pointer; font-size: 14px; font-weight: 500; color: var(--muted); transition: .5s var(--ease); }
 .chip small { font-size: 12px; opacity: .7; }
-.chip:hover { color: var(--ink); border-color: rgba(241, 236, 228, .3); }
+.chip:hover { color: var(--ink); border-color: var(--ink); }
 .chip[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
 .seg.sub .chip { min-height: 38px; font-size: 13px; padding: 0 14px; }
-.seg.sub .chip[aria-pressed="true"] { background: rgba(255, 107, 53, .14); color: var(--accent-2); border-color: rgba(255, 107, 53, .5); }
+.seg.sub .chip[aria-pressed="true"] { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
 
 /* model grid */
-.mgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(200px, 100%), 1fr)); gap: var(--gap); }
+.mgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(210px, 100%), 1fr)); gap: var(--gap); }
 .mc { display: flex; flex-direction: column; padding: 0; border: 0; background: none; cursor: pointer; text-align: left; }
-.mc.out { opacity: 0 !important; transform: scale(.96) !important; }
-.mc .ph { position: relative; aspect-ratio: 1; border-radius: var(--r); overflow: hidden; background: radial-gradient(circle at 50% 62%, var(--card-2), var(--card) 72%); border: 1px solid var(--line); transition: border-color .4s; }
-.mc .ph img { width: 100%; height: 100%; object-fit: contain; padding: 6%; transition: transform .8s var(--ease); }
-.mc:hover .ph { border-color: rgba(255, 107, 53, .45); }
-.mc:hover .ph img { transform: scale(1.07) rotate(-2deg); }
-.mc .ph::after { content: "View in 3D"; position: absolute; left: 50%; bottom: 12px; translate: -50% 8px; opacity: 0; padding: 6px 12px; border-radius: 999px; background: var(--accent); color: #160b05; font-size: 12px; font-weight: 700; transition: .4s var(--ease); white-space: nowrap; }
-.mc:hover .ph::after { translate: -50% 0; opacity: 1; }
-.cap { display: flex; justify-content: space-between; gap: 10px; padding: 10px 4px 0; font-size: 14px; }
+.mc.out { opacity: 0 !important; transform: translateY(16px) !important; }
+.mc .ph { position: relative; aspect-ratio: 1; border-radius: var(--r); overflow: hidden; background: radial-gradient(circle at 50% 58%, var(--card), var(--card-2) 78%); }
+.mc .ph img { width: 100%; height: 100%; object-fit: contain; padding: 7%; transition: transform 1.2s var(--ease); }
+.mc:hover .ph img { transform: scale(1.08) translateY(-2%); }
+.cap { display: flex; justify-content: space-between; gap: 10px; padding: 12px 2px 0; font-size: 14px; }
 .cap b { font-weight: 600; }
 .cap i { font-style: normal; color: var(--muted); font-size: 12px; white-space: nowrap; padding-top: 2px; }
-.count { color: var(--muted); font-size: 13px; margin-top: 20px; }
+.more { display: flex; flex-direction: column; align-items: center; gap: 10px; margin-top: 32px; }
+.count { color: var(--muted); font-size: 13px; margin: 0; }
 
 /* builds + ui */
-.build { margin-bottom: clamp(48px, 7vw, 96px); }
-.build header { display: flex; align-items: baseline; flex-wrap: wrap; gap: 10px 14px; margin-bottom: 16px; }
-.build .no { font-size: 13px; color: var(--accent); font-weight: 700; }
-.build h3 { font-size: clamp(24px, 3vw, 36px); letter-spacing: -.03em; font-weight: 700; }
-.tag { font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 999px; border: 1px solid var(--line); color: var(--muted); }
-.tag.hot { color: #160b05; background: var(--accent); border-color: var(--accent); }
+.build { margin-bottom: clamp(56px, 8vw, 110px); }
+.build header { display: flex; align-items: baseline; flex-wrap: wrap; gap: 10px 16px; margin-bottom: 18px; padding-top: 18px; border-top: 1px solid var(--line); }
+.build .no { font-size: 13px; color: var(--accent); font-weight: 600; }
+.build h3 { font: 600 clamp(28px, 3.6vw, 52px)/1 var(--display); letter-spacing: -.045em; }
+.tag { font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 999px; border: 1px solid var(--line); color: var(--muted); }
+.tag.hot { color: var(--on-accent); background: var(--accent); border-color: var(--accent); }
 .build .game { margin-left: auto; color: var(--muted); font-size: 14px; }
 .bgrid, .ugrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gap); }
 .bgrid { grid-template-columns: repeat(var(--c, 3), minmax(0, 1fr)); }
 .bgrid .lead, .ugrid .lead { grid-column: 1 / -1; }
 .ugrid.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-.fx { position: relative; margin: 0; overflow: hidden; border-radius: var(--r); background: var(--card); cursor: zoom-in; }
-.fx img, .fx video { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; transition: transform 1.1s var(--ease), filter .6s; }
+.fx { position: relative; margin: 0; overflow: hidden; border-radius: var(--r); background: var(--card-2); cursor: pointer; }
+.fx img, .fx video { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; transform: scale(1.08); transition: transform 1.6s var(--ease); }
+.fx.in img, .fx.in video { transform: scale(1); }
 .fx.lead img, .fx.lead video { aspect-ratio: 21 / 9; }
-.fx:hover img, .fx:hover video { transform: scale(1.035); }
-.fx figcaption { position: absolute; left: 12px; bottom: 12px; padding: 6px 12px; border-radius: 999px; background: rgba(13, 12, 11, .62); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); font-size: 13px; font-weight: 600; translate: 0 6px; opacity: 0; transition: .45s var(--ease); }
-.fx figcaption i { font-style: normal; color: var(--muted); margin-left: 6px; }
+.fx.in:hover img, .fx.in:hover video { transform: scale(1.05); }
+.fx figcaption { position: absolute; left: 14px; bottom: 14px; padding: 7px 13px; border-radius: 999px; background: rgba(255, 255, 255, .92); color: #0e0e0e; font-size: 13px; font-weight: 600; translate: 0 8px; opacity: 0; transition: .6s var(--ease); }
+.fx figcaption i { font-style: normal; color: #6e6b66; margin-left: 6px; }
 .fx:hover figcaption, .fx.lead figcaption { translate: 0; opacity: 1; }
 
 /* contact */
-.contact { margin-top: clamp(40px, 6vw, 80px); padding: clamp(96px, 14vw, 180px) 0; border-top: 1px solid var(--line); background: radial-gradient(ellipse at 20% 100%, rgba(255, 107, 53, .16), transparent 55%); }
-.contact h2 { font-size: clamp(38px, 6vw, 92px); line-height: .98; letter-spacing: -.045em; font-weight: 700; margin: 18px 0 40px; max-width: 15ch; }
+.contact { background: var(--bg); margin-top: clamp(40px, 6vw, 80px); }
+.contact > .wrap { padding-top: clamp(80px, 11vw, 150px); }
+.contact h2 { font: 600 clamp(44px, 7.6vw, 130px)/.92 var(--display); letter-spacing: -.055em; margin: 22px 0 44px; max-width: 14ch; }
 .cta { display: flex; flex-wrap: wrap; gap: 12px; }
+.contact .btn:not(.ghost) { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+.contact .btn:not(.ghost):hover { background: #f2f1ee; border-color: #f2f1ee; color: #0a0a0a; }
 footer { border-top: 1px solid var(--line); padding: 26px 0; color: var(--muted); font-size: 13px; }
 footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
 footer a:hover { color: var(--ink); }
 
 /* dialogs */
 dialog { border: 0; padding: 0; color: var(--ink); background: transparent; }
-dialog::backdrop { background: rgba(8, 7, 6, .82); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
-dialog[open] { animation: pop .5s var(--ease); }
-@keyframes pop { from { opacity: 0; transform: translateY(16px) scale(.97); } }
-#md { width: min(920px, 94vw); background: var(--surface); border: 1px solid var(--line); border-radius: 22px; overflow: hidden; }
-.dtop { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 16px 18px 0 22px; }
-.dtop b { display: block; font-size: 20px; letter-spacing: -.02em; }
-.dtop span { color: var(--muted); font-size: 13px; }
-.x { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--line); background: transparent; cursor: pointer; transition: .3s; }
-.x:hover { background: var(--ink); color: var(--bg); }
-#md-viewer { width: 100%; height: min(68vh, 620px); background: radial-gradient(circle at 50% 60%, var(--card-2), var(--surface) 70%); --poster-color: transparent; }
-.dfoot { color: var(--muted); font-size: 12px; text-align: center; padding: 0 0 14px; }
+dialog::backdrop { background: rgba(14, 14, 14, .7); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+dialog[open] { animation: pop .7s var(--ease); }
+@keyframes pop { from { opacity: 0; transform: translateY(24px) scale(.97); } }
+#md { width: min(940px, 94vw); background: #121212; color: #f2f1ee; border: 1px solid rgba(242, 241, 238, .1); border-radius: 22px; overflow: hidden; }
+.dtop { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 18px 18px 0 24px; }
+.dtop b { display: block; font: 600 26px/1.1 var(--display); letter-spacing: -.03em; }
+.dtop span { color: #8a8780; font-size: 13px; }
+.x { width: 46px; height: 46px; border-radius: 50%; border: 1px solid rgba(242, 241, 238, .15); background: transparent; cursor: pointer; transition: .4s var(--ease); }
+.x:hover { background: #f2f1ee; color: #0a0a0a; transform: rotate(90deg); }
+#md-viewer { width: 100%; height: min(68vh, 620px); background: radial-gradient(circle at 50% 58%, #262625, #121212 75%); --poster-color: transparent; }
+.dfoot { color: #8a8780; font-size: 12px; text-align: center; padding: 10px 0 16px; }
 #lb { max-width: 94vw; max-height: 92vh; cursor: zoom-out; }
 #lb img, #lb video { max-width: 94vw; max-height: 92vh; border-radius: 14px; }
 
@@ -156,435 +210,441 @@ dialog[open] { animation: pop .5s var(--ease); }
   .reel { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: auto auto; height: auto; }
   .r.big { grid-column: 1 / -1; grid-row: auto; aspect-ratio: 16 / 9; }
   .r { aspect-ratio: 1; }
+  .shead { grid-template-columns: minmax(0, 1fr); }
   .bgrid, .ugrid, .ugrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .fx.lead img, .fx.lead video { aspect-ratio: 16 / 9; }
 }
 @media (max-width: 600px) {
-  .nav nav { display: none; }
+  .nav nav, .eyebrow.right { display: none; }
   .mgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
   .bgrid, .ugrid, .ugrid.three { grid-template-columns: minmax(0, 1fr); }
   .build .game { margin-left: 0; width: 100%; }
   .cap { flex-direction: column; gap: 0; }
   .fx figcaption { opacity: 1; translate: 0; }
+  .lab { font-size: 24px; left: 12px; bottom: 10px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-  .rv { opacity: 1; transform: none; transition: none; }
+  .pre { display: none; } body.loading { overflow: auto; }
+  .up, .split .w > span, .steps i { opacity: 1; transform: none; transition: none; }
+  .fx.up, .r { clip-path: none; }
+  .fx img, .fx video { transform: none; }
   .spin img { animation: none; } .spin img:first-child { opacity: 1; }
+  .mq { transform: none !important; }
   *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
 }
-.more { display: flex; flex-direction: column; align-items: center; gap: 10px; margin-top: 28px; }
-.more .count { margin: 0; }
 </style>
 </head>
-<body>
-<div class="grain" aria-hidden="true"></div>
+<body class="loading">
+<div class="pre" id="pre" aria-hidden="true"><i></i><i></i><i></i><i></i><span class="pl">Loading the work</span><b id="pre-n">0</b></div>
+<div class="cur" id="cur" aria-hidden="true"><span>View</span></div>
 
 <header class="nav" id="nav">
   <div class="wrap">
     <a class="brand" href="#top">KINGJAY<span>142p</span></a>
     <nav aria-label="Sections">
-      <a href="#models">Models</a><a href="#builds">Builds</a><a href="#ui">UI</a>
+      <a href="#models"><span data-t="Models">Models</span></a><a href="#builds"><span data-t="Builds">Builds</span></a><a href="#ui"><span data-t="UI">UI</span></a>
     </nav>
-    <a class="btn sm" href="#contact">Contact</a>
+    <a class="btn sm" href="#contact"><span data-t="Contact">Contact</span></a>
   </div>
 </header>
 
 <main id="top">
   <section class="hero wrap">
-    <p class="eyebrow rv">Roblox 3D artist · builder · UI designer</p>
-    <h1 class="rv" style="--i:1">Models, worlds and UI <em>made to be played.</em></h1>
-    <div class="reel rv" style="--i:2">
-      <a class="r big" href="#builds"><video muted loop playsinline autoplay preload="metadata" poster="assets/vid-ember-hollow.jpg" src="assets/vid-ember-hollow.mp4" aria-label="Ember Hollow fly-through"></video><span>Builds<small>3</small></span></a>
-      <a class="r mdl" href="#models"><span class="spin"><img src="thumbs/workbench-WORKBENCH_V2.webp" alt="" style="--d:0"><img src="thumbs/halloween-FISH_HEADLESSKRAKEN.webp" alt="" style="--d:1"><img src="thumbs/voxel-SHOP_WEAPON_STALL.webp" alt="" style="--d:2"><img src="thumbs/smooth-GROVE_TOWER.webp" alt="" style="--d:3"></span><span>Models<small>126</small></span></a>
-      <a class="r" href="#ui"><img src="assets/ui-r022-c2-10-banner-rainbow-gifts-header.jpg" alt="Egg shop interface"><span>UI<small>24</small></span></a>
+    <div class="hrow"><p class="eyebrow up">Roblox 3D artist · builder · UI designer</p><p class="eyebrow up right">Available for commissions</p></div>
+    <h1 class="split">Models, worlds and UI made to be played.</h1>
+    <div class="reel up">
+      <a class="r big" href="#builds"><span class="pz"><video muted loop playsinline autoplay preload="metadata" poster="assets/vid-ember-hollow.jpg" src="assets/vid-ember-hollow.mp4" aria-label="Ember Hollow fly-through"></video></span><span class="lab">Builds<sup>3</sup></span></a>
+      <a class="r mdl" href="#models"><span class="spin"><img src="thumbs/workbench-WORKBENCH_V2.webp" alt="" style="--d:0"><img src="thumbs/halloween-FISH_HEADLESSKRAKEN.webp" alt="" style="--d:1"><img src="thumbs/voxel-SHOP_WEAPON_STALL.webp" alt="" style="--d:2"><img src="thumbs/smooth-GROVE_TOWER.webp" alt="" style="--d:3"></span><span class="lab">Models<sup>126</sup></span></a>
+      <a class="r" href="#ui"><span class="pz"><img src="assets/ui-r022-c2-10-banner-rainbow-gifts-header.jpg" alt="Egg shop interface"></span><span class="lab">UI<sup>24</sup></span></a>
     </div>
   </section>
 
+  <div class="marq" aria-hidden="true"><div class="mq"><span>Low poly</span><b>✦</b><span>Medium poly</span><b>✦</b><span>High poly</span><b>✦</b><span>Worlds</span><b>✦</b><span>Game UI</span><b>✦</b><span>Low poly</span><b>✦</b><span>Medium poly</span><b>✦</b><span>High poly</span><b>✦</b><span>Worlds</span><b>✦</b><span>Game UI</span><b>✦</b><span>Low poly</span><b>✦</b><span>Medium poly</span><b>✦</b><span>High poly</span><b>✦</b><span>Worlds</span><b>✦</b><span>Game UI</span><b>✦</b></div></div>
+
   <section class="s" id="models">
     <div class="wrap">
-      <div class="shead rv"><h2>Models</h2><p>126 game-ready models. Click any one to spin it in 3D.</p></div>
-      <div class="bar rv">
+      <div class="shead"><h2 class="split">Models<sup>126</sup></h2><p class="up">Game-ready models from Claude Design, sorted by poly count. Click any one to spin it in 3D.</p></div>
+      <div class="bar up">
         <div class="seg" role="group" aria-label="Poly count"><button class="chip" type="button" data-key="tier" data-f="all" aria-pressed="true">All<small>126</small></button><button class="chip" type="button" data-key="tier" data-f="low" aria-pressed="false">Low poly<small>42</small></button><button class="chip" type="button" data-key="tier" data-f="medium" aria-pressed="false">Medium poly<small>61</small></button><button class="chip" type="button" data-key="tier" data-f="high" aria-pressed="false">High poly<small>23</small></button></div>
         <div class="seg sub" role="group" aria-label="Collection"><button class="chip" type="button" data-key="set" data-f="all" aria-pressed="true">All sets</button><button class="chip" type="button" data-key="set" data-f="halloween" aria-pressed="false">Halloween update<small>29</small></button><button class="chip" type="button" data-key="set" data-f="voxel" aria-pressed="false">Cook a Dragon · voxel<small>51</small></button><button class="chip" type="button" data-key="set" data-f="smooth" aria-pressed="false">Cook a Dragon · smooth<small>45</small></button><button class="chip" type="button" data-key="set" data-f="workbench" aria-pressed="false">Workbench v2<small>1</small></button></div>
       </div>
       <div class="mgrid" id="mgrid">
-<button class="mc rv" style="--i:0" type="button" data-item data-tier="high" data-set="halloween" data-name="Headless Kraken" data-meta="Halloween update · High poly · 63,492 tris" data-glb="models/halloween/FISH_HEADLESSKRAKEN.glb">
+<button class="mc up" style="--i:0" type="button" data-item data-tier="high" data-set="halloween" data-name="Headless Kraken" data-meta="Halloween update · High poly · 63,492 tris" data-glb="models/halloween/FISH_HEADLESSKRAKEN.glb">
   <span class="ph"><img src="thumbs/halloween-FISH_HEADLESSKRAKEN.webp" alt="Headless Kraken" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Headless Kraken</b><i>Halloween · 63k tris</i></span></button>
-<button class="mc rv" style="--i:1" type="button" data-item data-tier="high" data-set="voxel" data-name="Restaurant" data-meta="Cook a Dragon · voxel · High poly · 18,720 tris" data-glb="models/voxel/REST_SHELL.glb">
+<button class="mc up" style="--i:1" type="button" data-item data-tier="high" data-set="voxel" data-name="Restaurant" data-meta="Cook a Dragon · voxel · High poly · 18,720 tris" data-glb="models/voxel/REST_SHELL.glb">
   <span class="ph"><img src="thumbs/voxel-REST_SHELL.webp" alt="Restaurant" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Restaurant</b><i>Voxel · 19k tris</i></span></button>
-<button class="mc rv" style="--i:2" type="button" data-item data-tier="high" data-set="smooth" data-name="Grove Tower" data-meta="Cook a Dragon · smooth · High poly · 38,776 tris" data-glb="models/smooth/GROVE_TOWER.glb">
+<button class="mc up" style="--i:2" type="button" data-item data-tier="high" data-set="smooth" data-name="Grove Tower" data-meta="Cook a Dragon · smooth · High poly · 38,776 tris" data-glb="models/smooth/GROVE_TOWER.glb">
   <span class="ph"><img src="thumbs/smooth-GROVE_TOWER.webp" alt="Grove Tower" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Grove Tower</b><i>Smooth · 39k tris</i></span></button>
-<button class="mc rv" style="--i:3" type="button" data-item data-tier="high" data-set="workbench" data-name="Workbench v2" data-meta="Workbench v2 · High poly · 74,146 tris" data-glb="models/workbench/WORKBENCH_V2.glb">
+<button class="mc up" style="--i:3" type="button" data-item data-tier="high" data-set="workbench" data-name="Workbench v2" data-meta="Workbench v2 · High poly · 74,146 tris" data-glb="models/workbench/WORKBENCH_V2.glb">
   <span class="ph"><img src="thumbs/workbench-WORKBENCH_V2.webp" alt="Workbench v2" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Workbench v2</b><i>Workbench · 74k tris</i></span></button>
-<button class="mc rv" style="--i:4" type="button" data-item data-tier="high" data-set="halloween" data-name="Vampire Squid" data-meta="Halloween update · High poly · 53,936 tris" data-glb="models/halloween/FISH_VAMPIRESQUID.glb">
+<button class="mc up" style="--i:4" type="button" data-item data-tier="high" data-set="halloween" data-name="Vampire Squid" data-meta="Halloween update · High poly · 53,936 tris" data-glb="models/halloween/FISH_VAMPIRESQUID.glb">
   <span class="ph"><img src="thumbs/halloween-FISH_VAMPIRESQUID.webp" alt="Vampire Squid" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Vampire Squid</b><i>Halloween · 54k tris</i></span></button>
-<button class="mc rv" style="--i:5" type="button" data-item data-tier="high" data-set="voxel" data-name="Weapon Stall" data-meta="Cook a Dragon · voxel · High poly · 16,776 tris" data-glb="models/voxel/SHOP_WEAPON_STALL.glb">
+<button class="mc up" style="--i:5" type="button" data-item data-tier="high" data-set="voxel" data-name="Weapon Stall" data-meta="Cook a Dragon · voxel · High poly · 16,776 tris" data-glb="models/voxel/SHOP_WEAPON_STALL.glb">
   <span class="ph"><img src="thumbs/voxel-SHOP_WEAPON_STALL.webp" alt="Weapon Stall" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Weapon Stall</b><i>Voxel · 17k tris</i></span></button>
-<button class="mc rv" style="--i:6" type="button" data-item data-tier="high" data-set="smooth" data-name="Restaurant" data-meta="Cook a Dragon · smooth · High poly · 22,416 tris" data-glb="models/smooth/REST_SHELL.glb">
+<button class="mc up" style="--i:6" type="button" data-item data-tier="high" data-set="smooth" data-name="Restaurant" data-meta="Cook a Dragon · smooth · High poly · 22,416 tris" data-glb="models/smooth/REST_SHELL.glb">
   <span class="ph"><img src="thumbs/smooth-REST_SHELL.webp" alt="Restaurant" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Restaurant</b><i>Smooth · 22k tris</i></span></button>
-<button class="mc rv" style="--i:7" type="button" data-item data-tier="high" data-set="halloween" data-name="Haunted Rod Skin" data-meta="Halloween update · High poly · 53,208 tris" data-glb="models/halloween/SKIN_HAUNTED.glb">
+<button class="mc up" style="--i:7" type="button" data-item data-tier="high" data-set="halloween" data-name="Haunted Rod Skin" data-meta="Halloween update · High poly · 53,208 tris" data-glb="models/halloween/SKIN_HAUNTED.glb">
   <span class="ph"><img src="thumbs/halloween-SKIN_HAUNTED.webp" alt="Haunted Rod Skin" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Haunted Rod Skin</b><i>Halloween · 53k tris</i></span></button>
-<button class="mc rv" style="--i:0" type="button" data-item data-tier="medium" data-set="voxel" data-name="Cauldron Fountain" data-meta="Cook a Dragon · voxel · Medium poly · 13,984 tris" data-glb="models/voxel/HUB_FOUNTAIN.glb">
+<button class="mc up" style="--i:0" type="button" data-item data-tier="medium" data-set="voxel" data-name="Cauldron Fountain" data-meta="Cook a Dragon · voxel · Medium poly · 13,984 tris" data-glb="models/voxel/HUB_FOUNTAIN.glb">
   <span class="ph"><img src="thumbs/voxel-HUB_FOUNTAIN.webp" alt="Cauldron Fountain" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Cauldron Fountain</b><i>Voxel · 14k tris</i></span></button>
-<button class="mc rv" style="--i:1" type="button" data-item data-tier="high" data-set="smooth" data-name="Pond Rim" data-meta="Cook a Dragon · smooth · High poly · 18,212 tris" data-glb="models/smooth/GROVE_POND_RIM.glb">
+<button class="mc up" style="--i:1" type="button" data-item data-tier="high" data-set="smooth" data-name="Pond Rim" data-meta="Cook a Dragon · smooth · High poly · 18,212 tris" data-glb="models/smooth/GROVE_POND_RIM.glb">
   <span class="ph"><img src="thumbs/smooth-GROVE_POND_RIM.webp" alt="Pond Rim" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Pond Rim</b><i>Smooth · 18k tris</i></span></button>
-<button class="mc rv" style="--i:2" type="button" data-item data-tier="high" data-set="halloween" data-name="Dead Tree" data-meta="Halloween update · High poly · 50,892 tris" data-glb="models/halloween/BAYOU_DEAD_TREE.glb">
+<button class="mc up" style="--i:2" type="button" data-item data-tier="high" data-set="halloween" data-name="Dead Tree" data-meta="Halloween update · High poly · 50,892 tris" data-glb="models/halloween/BAYOU_DEAD_TREE.glb">
   <span class="ph"><img src="thumbs/halloween-BAYOU_DEAD_TREE.webp" alt="Dead Tree" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Dead Tree</b><i>Halloween · 51k tris</i></span></button>
-<button class="mc rv" style="--i:3" type="button" data-item data-tier="medium" data-set="voxel" data-name="Grove Tower" data-meta="Cook a Dragon · voxel · Medium poly · 11,332 tris" data-glb="models/voxel/GROVE_TOWER.glb">
+<button class="mc up" style="--i:3" type="button" data-item data-tier="medium" data-set="voxel" data-name="Grove Tower" data-meta="Cook a Dragon · voxel · Medium poly · 11,332 tris" data-glb="models/voxel/GROVE_TOWER.glb">
   <span class="ph"><img src="thumbs/voxel-GROVE_TOWER.webp" alt="Grove Tower" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Grove Tower</b><i>Voxel · 11k tris</i></span></button>
-<button class="mc rv" style="--i:4" type="button" data-item data-tier="high" data-set="smooth" data-name="Cauldron Fountain" data-meta="Cook a Dragon · smooth · High poly · 18,082 tris" data-glb="models/smooth/HUB_FOUNTAIN.glb">
+<button class="mc up" style="--i:4" type="button" data-item data-tier="high" data-set="smooth" data-name="Cauldron Fountain" data-meta="Cook a Dragon · smooth · High poly · 18,082 tris" data-glb="models/smooth/HUB_FOUNTAIN.glb">
   <span class="ph"><img src="thumbs/smooth-HUB_FOUNTAIN.webp" alt="Cauldron Fountain" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Cauldron Fountain</b><i>Smooth · 18k tris</i></span></button>
-<button class="mc rv" style="--i:5" type="button" data-item data-tier="high" data-set="halloween" data-name="Pumpkin Rod" data-meta="Halloween update · High poly · 49,028 tris" data-glb="models/halloween/ROD_PUMPKIN.glb">
+<button class="mc up" style="--i:5" type="button" data-item data-tier="high" data-set="halloween" data-name="Pumpkin Rod" data-meta="Halloween update · High poly · 49,028 tris" data-glb="models/halloween/ROD_PUMPKIN.glb">
   <span class="ph"><img src="thumbs/halloween-ROD_PUMPKIN.webp" alt="Pumpkin Rod" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Pumpkin Rod</b><i>Halloween · 49k tris</i></span></button>
-<button class="mc rv" style="--i:6" type="button" data-item data-tier="medium" data-set="voxel" data-name="Pond Rim" data-meta="Cook a Dragon · voxel · Medium poly · 8,540 tris" data-glb="models/voxel/GROVE_POND_RIM.glb">
+<button class="mc up" style="--i:6" type="button" data-item data-tier="medium" data-set="voxel" data-name="Pond Rim" data-meta="Cook a Dragon · voxel · Medium poly · 8,540 tris" data-glb="models/voxel/GROVE_POND_RIM.glb">
   <span class="ph"><img src="thumbs/voxel-GROVE_POND_RIM.webp" alt="Pond Rim" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Pond Rim</b><i>Voxel · 8.5k tris</i></span></button>
-<button class="mc rv" style="--i:7" type="button" data-item data-tier="high" data-set="smooth" data-name="Ruin Arch" data-meta="Cook a Dragon · smooth · High poly · 16,088 tris" data-glb="models/smooth/GROVE_RUIN_ARCH.glb">
+<button class="mc up" style="--i:7" type="button" data-item data-tier="high" data-set="smooth" data-name="Ruin Arch" data-meta="Cook a Dragon · smooth · High poly · 16,088 tris" data-glb="models/smooth/GROVE_RUIN_ARCH.glb">
   <span class="ph"><img src="thumbs/smooth-GROVE_RUIN_ARCH.webp" alt="Ruin Arch" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Ruin Arch</b><i>Smooth · 16k tris</i></span></button>
-<button class="mc rv" style="--i:0" type="button" data-item data-tier="high" data-set="halloween" data-name="Witch Catfish" data-meta="Halloween update · High poly · 47,116 tris" data-glb="models/halloween/FISH_WITCHCATFISH.glb">
+<button class="mc up" style="--i:0" type="button" data-item data-tier="high" data-set="halloween" data-name="Witch Catfish" data-meta="Halloween update · High poly · 47,116 tris" data-glb="models/halloween/FISH_WITCHCATFISH.glb">
   <span class="ph"><img src="thumbs/halloween-FISH_WITCHCATFISH.webp" alt="Witch Catfish" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Witch Catfish</b><i>Halloween · 47k tris</i></span></button>
-<button class="mc rv" style="--i:1" type="button" data-item data-tier="medium" data-set="voxel" data-name="Giant Slime" data-meta="Cook a Dragon · voxel · Medium poly · 6,940 tris" data-glb="models/voxel/MONSTER_GIANTSLIME.glb">
+<button class="mc up" style="--i:1" type="button" data-item data-tier="medium" data-set="voxel" data-name="Giant Slime" data-meta="Cook a Dragon · voxel · Medium poly · 6,940 tris" data-glb="models/voxel/MONSTER_GIANTSLIME.glb">
   <span class="ph"><img src="thumbs/voxel-MONSTER_GIANTSLIME.webp" alt="Giant Slime" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Giant Slime</b><i>Voxel · 6.9k tris</i></span></button>
-<button class="mc rv" style="--i:2" type="button" data-item data-tier="high" data-set="smooth" data-name="Jelly Cart" data-meta="Cook a Dragon · smooth · High poly · 15,592 tris" data-glb="models/smooth/GROVE_CART.glb">
+<button class="mc up" style="--i:2" type="button" data-item data-tier="high" data-set="smooth" data-name="Jelly Cart" data-meta="Cook a Dragon · smooth · High poly · 15,592 tris" data-glb="models/smooth/GROVE_CART.glb">
   <span class="ph"><img src="thumbs/smooth-GROVE_CART.webp" alt="Jelly Cart" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Jelly Cart</b><i>Smooth · 16k tris</i></span></button>
-<button class="mc rv" style="--i:3" type="button" data-item data-tier="high" data-set="halloween" data-name="Zombie Eel" data-meta="Halloween update · High poly · 41,212 tris" data-glb="models/halloween/FISH_ZOMBIEEEL.glb">
+<button class="mc up" style="--i:3" type="button" data-item data-tier="high" data-set="halloween" data-name="Zombie Eel" data-meta="Halloween update · High poly · 41,212 tris" data-glb="models/halloween/FISH_ZOMBIEEEL.glb">
   <span class="ph"><img src="thumbs/halloween-FISH_ZOMBIEEEL.webp" alt="Zombie Eel" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Zombie Eel</b><i>Halloween · 41k tris</i></span></button>
-<button class="mc rv" style="--i:4" type="button" data-item data-tier="medium" data-set="voxel" data-name="Rainbow Slime" data-meta="Cook a Dragon · voxel · Medium poly · 5,268 tris" data-glb="models/voxel/MONSTER_RAINBOWSLIME.glb">
+<button class="mc up" style="--i:4" type="button" data-item data-tier="medium" data-set="voxel" data-name="Rainbow Slime" data-meta="Cook a Dragon · voxel · Medium poly · 5,268 tris" data-glb="models/voxel/MONSTER_RAINBOWSLIME.glb">
   <span class="ph"><img src="thumbs/voxel-MONSTER_RAINBOWSLIME.webp" alt="Rainbow Slime" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Rainbow Slime</b><i>Voxel · 5.3k tris</i></span></button>
-<button class="mc rv" style="--i:5" type="button" data-item data-tier="medium" data-set="smooth" data-name="Courtyard" data-meta="Cook a Dragon · smooth · Medium poly · 12,320 tris" data-glb="models/smooth/GROVE_COURTYARD.glb">
+<button class="mc up" style="--i:5" type="button" data-item data-tier="medium" data-set="smooth" data-name="Courtyard" data-meta="Cook a Dragon · smooth · Medium poly · 12,320 tris" data-glb="models/smooth/GROVE_COURTYARD.glb">
   <span class="ph"><img src="thumbs/smooth-GROVE_COURTYARD.webp" alt="Courtyard" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Courtyard</b><i>Smooth · 12k tris</i></span></button>
-<button class="mc rv" style="--i:6" type="button" data-item data-tier="high" data-set="halloween" data-name="Skeleton Bass" data-meta="Halloween update · High poly · 39,992 tris" data-glb="models/halloween/FISH_SKELETONBASS.glb">
+<button class="mc up" style="--i:6" type="button" data-item data-tier="high" data-set="halloween" data-name="Skeleton Bass" data-meta="Halloween update · High poly · 39,992 tris" data-glb="models/halloween/FISH_SKELETONBASS.glb">
   <span class="ph"><img src="thumbs/halloween-FISH_SKELETONBASS.webp" alt="Skeleton Bass" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Skeleton Bass</b><i>Halloween · 40k tris</i></span></button>
-<button class="mc rv" style="--i:7" type="button" data-item data-tier="medium" data-set="voxel" data-name="Gold Slime" data-meta="Cook a Dragon · voxel · Medium poly · 5,044 tris" data-glb="models/voxel/MONSTER_GOLDSLIME.glb">
+<button class="mc up" style="--i:7" type="button" data-item data-tier="medium" data-set="voxel" data-name="Gold Slime" data-meta="Cook a Dragon · voxel · Medium poly · 5,044 tris" data-glb="models/voxel/MONSTER_GOLDSLIME.glb">
   <span class="ph"><img src="thumbs/voxel-MONSTER_GOLDSLIME.webp" alt="Gold Slime" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Gold Slime</b><i>Voxel · 5.0k tris</i></span></button>
-<button class="mc rv" style="--i:0" type="button" data-item data-tier="medium" data-set="smooth" data-name="Hearth Tree" data-meta="Cook a Dragon · smooth · Medium poly · 11,084 tris" data-glb="models/smooth/HEARTH_TREE.glb">
+<button class="mc up" style="--i:0" type="button" data-item data-tier="medium" data-set="smooth" data-name="Hearth Tree" data-meta="Cook a Dragon · smooth · Medium poly · 11,084 tris" data-glb="models/smooth/HEARTH_TREE.glb">
   <span class="ph"><img src="thumbs/smooth-HEARTH_TREE.webp" alt="Hearth Tree" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Hearth Tree</b><i>Smooth · 11k tris</i></span></button>
-<button class="mc rv" style="--i:1" type="button" data-item data-tier="high" data-set="halloween" data-name="Candy Shop" data-meta="Halloween update · High poly · 37,500 tris" data-glb="models/halloween/BAYOU_SHOP_STALL.glb">
+<button class="mc up" style="--i:1" type="button" data-item data-tier="high" data-set="halloween" data-name="Candy Shop" data-meta="Halloween update · High poly · 37,500 tris" data-glb="models/halloween/BAYOU_SHOP_STALL.glb">
   <span class="ph"><img src="thumbs/halloween-BAYOU_SHOP_STALL.webp" alt="Candy Shop" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Candy Shop</b><i>Halloween · 38k tris</i></span></button>
-<button class="mc rv" style="--i:2" type="button" data-item data-tier="medium" data-set="voxel" data-name="Well" data-meta="Cook a Dragon · voxel · Medium poly · 4,884 tris" data-glb="models/voxel/GROVE_WELL.glb">
+<button class="mc up" style="--i:2" type="button" data-item data-tier="medium" data-set="voxel" data-name="Well" data-meta="Cook a Dragon · voxel · Medium poly · 4,884 tris" data-glb="models/voxel/GROVE_WELL.glb">
   <span class="ph"><img src="thumbs/voxel-GROVE_WELL.webp" alt="Well" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Well</b><i>Voxel · 4.9k tris</i></span></button>
-<button class="mc rv" style="--i:3" type="button" data-item data-tier="medium" data-set="smooth" data-name="Well" data-meta="Cook a Dragon · smooth · Medium poly · 9,609 tris" data-glb="models/smooth/GROVE_WELL.glb">
+<button class="mc up" style="--i:3" type="button" data-item data-tier="medium" data-set="smooth" data-name="Well" data-meta="Cook a Dragon · smooth · Medium poly · 9,609 tris" data-glb="models/smooth/GROVE_WELL.glb">
   <span class="ph"><img src="thumbs/smooth-GROVE_WELL.webp" alt="Well" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Well</b><i>Smooth · 9.6k tris</i></span></button>
-<button class="mc rv" style="--i:4" type="button" data-item data-tier="high" data-set="halloween" data-name="Candy Corn Tetra" data-meta="Halloween update · High poly · 34,188 tris" data-glb="models/halloween/FISH_CANDYCORNTETRA.glb">
+<button class="mc up" style="--i:4" type="button" data-item data-tier="high" data-set="halloween" data-name="Candy Corn Tetra" data-meta="Halloween update · High poly · 34,188 tris" data-glb="models/halloween/FISH_CANDYCORNTETRA.glb">
   <span class="ph"><img src="thumbs/halloween-FISH_CANDYCORNTETRA.webp" alt="Candy Corn Tetra" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Candy Corn Tetra</b><i>Halloween · 34k tris</i></span></button>
-<button class="mc rv" style="--i:5" type="button" data-item data-tier="medium" data-set="voxel" data-name="Blue Slime" data-meta="Cook a Dragon · voxel · Medium poly · 4,884 tris" data-glb="models/voxel/MONSTER_BLUESLIME.glb">
+<button class="mc up" style="--i:5" type="button" data-item data-tier="medium" data-set="voxel" data-name="Blue Slime" data-meta="Cook a Dragon · voxel · Medium poly · 4,884 tris" data-glb="models/voxel/MONSTER_BLUESLIME.glb">
   <span class="ph"><img src="thumbs/voxel-MONSTER_BLUESLIME.webp" alt="Blue Slime" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Blue Slime</b><i>Voxel · 4.9k tris</i></span></button>
-<button class="mc rv" style="--i:6" type="button" data-item data-tier="medium" data-set="smooth" data-name="Grove Tree" data-meta="Cook a Dragon · smooth · Medium poly · 9,458 tris" data-glb="models/smooth/GROVE_TREE.glb">
+<button class="mc up" style="--i:6" type="button" data-item data-tier="medium" data-set="smooth" data-name="Grove Tree" data-meta="Cook a Dragon · smooth · Medium poly · 9,458 tris" data-glb="models/smooth/GROVE_TREE.glb">
   <span class="ph"><img src="thumbs/smooth-GROVE_TREE.webp" alt="Grove Tree" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Grove Tree</b><i>Smooth · 9.5k tris</i></span></button>
-<button class="mc rv" style="--i:7" type="button" data-item data-tier="high" data-set="halloween" data-name="Ghost Koi" data-meta="Halloween update · High poly · 30,672 tris" data-glb="models/halloween/FISH_GHOSTKOI.glb">
+<button class="mc up" style="--i:7" type="button" data-item data-tier="high" data-set="halloween" data-name="Ghost Koi" data-meta="Halloween update · High poly · 30,672 tris" data-glb="models/halloween/FISH_GHOSTKOI.glb">
   <span class="ph"><img src="thumbs/halloween-FISH_GHOSTKOI.webp" alt="Ghost Koi" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Ghost Koi</b><i>Halloween · 31k tris</i></span></button>
-<button class="mc rv" style="--i:0" type="button" data-item data-tier="medium" data-set="voxel" data-name="Green Slime" data-meta="Cook a Dragon · voxel · Medium poly · 4,884 tris" data-glb="models/voxel/MONSTER_GREENSLIME.glb">
+<button class="mc up" style="--i:0" type="button" data-item data-tier="medium" data-set="voxel" data-name="Green Slime" data-meta="Cook a Dragon · voxel · Medium poly · 4,884 tris" data-glb="models/voxel/MONSTER_GREENSLIME.glb">
   <span class="ph"><img src="thumbs/voxel-MONSTER_GREENSLIME.webp" alt="Green Slime" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Green Slime</b><i>Voxel · 4.9k tris</i></span></button>
-<button class="mc rv" style="--i:1" type="button" data-item data-tier="medium" data-set="smooth" data-name="Hearth Tree v2" data-meta="Cook a Dragon · smooth · Medium poly · 9,367 tris" data-glb="models/smooth/HEARTH_TREE_V2.glb">
+<button class="mc up" style="--i:1" type="button" data-item data-tier="medium" data-set="smooth" data-name="Hearth Tree v2" data-meta="Cook a Dragon · smooth · Medium poly · 9,367 tris" data-glb="models/smooth/HEARTH_TREE_V2.glb">
   <span class="ph"><img src="thumbs/smooth-HEARTH_TREE_V2.webp" alt="Hearth Tree v2" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Hearth Tree v2</b><i>Smooth · 9.4k tris</i></span></button>
-<button class="mc rv" style="--i:2" type="button" data-item data-tier="high" data-set="halloween" data-name="Lantern Tower" data-meta="Halloween update · High poly · 28,260 tris" data-glb="models/halloween/BAYOU_LANTERN_TOWER.glb">
+<button class="mc up" style="--i:2" type="button" data-item data-tier="high" data-set="halloween" data-name="Lantern Tower" data-meta="Halloween update · High poly · 28,260 tris" data-glb="models/halloween/BAYOU_LANTERN_TOWER.glb">
   <span class="ph"><img src="thumbs/halloween-BAYOU_LANTERN_TOWER.webp" alt="Lantern Tower" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Lantern Tower</b><i>Halloween · 28k tris</i></span></button>
-<button class="mc rv" style="--i:3" type="button" data-item data-tier="medium" data-set="voxel" data-name="Ruin Arch" data-meta="Cook a Dragon · voxel · Medium poly · 4,440 tris" data-glb="models/voxel/GROVE_RUIN_ARCH.glb">
+<button class="mc up" style="--i:3" type="button" data-item data-tier="medium" data-set="voxel" data-name="Ruin Arch" data-meta="Cook a Dragon · voxel · Medium poly · 4,440 tris" data-glb="models/voxel/GROVE_RUIN_ARCH.glb">
   <span class="ph"><img src="thumbs/voxel-GROVE_RUIN_ARCH.webp" alt="Ruin Arch" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Ruin Arch</b><i>Voxel · 4.4k tris</i></span></button>
-<button class="mc rv" style="--i:4" type="button" data-item data-tier="medium" data-set="smooth" data-name="Stove" data-meta="Cook a Dragon · smooth · Medium poly · 8,904 tris" data-glb="models/smooth/PROP_STOVE.glb">
+<button class="mc up" style="--i:4" type="button" data-item data-tier="medium" data-set="smooth" data-name="Stove" data-meta="Cook a Dragon · smooth · Medium poly · 8,904 tris" data-glb="models/smooth/PROP_STOVE.glb">
   <span class="ph"><img src="thumbs/smooth-PROP_STOVE.webp" alt="Stove" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Stove</b><i>Smooth · 8.9k tris</i></span></button>
-<button class="mc rv" style="--i:5" type="button" data-item data-tier="high" data-set="halloween" data-name="Black Cat" data-meta="Halloween update · High poly · 15,248 tris" data-glb="models/halloween/BAYOU_CAT.glb">
+<button class="mc up" style="--i:5" type="button" data-item data-tier="high" data-set="halloween" data-name="Black Cat" data-meta="Halloween update · High poly · 15,248 tris" data-glb="models/halloween/BAYOU_CAT.glb">
   <span class="ph"><img src="thumbs/halloween-BAYOU_CAT.webp" alt="Black Cat" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Black Cat</b><i>Halloween · 15k tris</i></span></button>
-<button class="mc rv" style="--i:6" type="button" data-item data-tier="medium" data-set="voxel" data-name="Jelly Cart" data-meta="Cook a Dragon · voxel · Medium poly · 4,284 tris" data-glb="models/voxel/GROVE_CART.glb">
+<button class="mc up" style="--i:6" type="button" data-item data-tier="medium" data-set="voxel" data-name="Jelly Cart" data-meta="Cook a Dragon · voxel · Medium poly · 4,284 tris" data-glb="models/voxel/GROVE_CART.glb">
   <span class="ph"><img src="thumbs/voxel-GROVE_CART.webp" alt="Jelly Cart" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Jelly Cart</b><i>Voxel · 4.3k tris</i></span></button>
-<button class="mc rv" style="--i:7" type="button" data-item data-tier="medium" data-set="smooth" data-name="Grove Tree v2" data-meta="Cook a Dragon · smooth · Medium poly · 7,858 tris" data-glb="models/smooth/GROVE_TREE_V2.glb">
+<button class="mc up" style="--i:7" type="button" data-item data-tier="medium" data-set="smooth" data-name="Grove Tree v2" data-meta="Cook a Dragon · smooth · Medium poly · 7,858 tris" data-glb="models/smooth/GROVE_TREE_V2.glb">
   <span class="ph"><img src="thumbs/smooth-GROVE_TREE_V2.webp" alt="Grove Tree v2" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Grove Tree v2</b><i>Smooth · 7.9k tris</i></span></button>
-<button class="mc rv" style="--i:0" type="button" data-item data-tier="high" data-set="halloween" data-name="Barrel" data-meta="Halloween update · High poly · 15,052 tris" data-glb="models/halloween/BAYOU_BARREL.glb">
+<button class="mc up" style="--i:0" type="button" data-item data-tier="high" data-set="halloween" data-name="Barrel" data-meta="Halloween update · High poly · 15,052 tris" data-glb="models/halloween/BAYOU_BARREL.glb">
   <span class="ph"><img src="thumbs/halloween-BAYOU_BARREL.webp" alt="Barrel" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Barrel</b><i>Halloween · 15k tris</i></span></button>
-<button class="mc rv" style="--i:1" type="button" data-item data-tier="medium" data-set="voxel" data-name="Grove Bush" data-meta="Cook a Dragon · voxel · Medium poly · 4,040 tris" data-glb="models/voxel/GROVE_BUSH.glb">
+<button class="mc up" style="--i:1" type="button" data-item data-tier="medium" data-set="voxel" data-name="Grove Bush" data-meta="Cook a Dragon · voxel · Medium poly · 4,040 tris" data-glb="models/voxel/GROVE_BUSH.glb">
   <span class="ph"><img src="thumbs/voxel-GROVE_BUSH.webp" alt="Grove Bush" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Grove Bush</b><i>Voxel · 4.0k tris</i></span></button>
-<button class="mc rv" style="--i:2" type="button" data-item data-tier="medium" data-set="smooth" data-name="Grove Tree v3" data-meta="Cook a Dragon · smooth · Medium poly · 7,568 tris" data-glb="models/smooth/GROVE_TREE_V3.glb">
+<button class="mc up" style="--i:2" type="button" data-item data-tier="medium" data-set="smooth" data-name="Grove Tree v3" data-meta="Cook a Dragon · smooth · Medium poly · 7,568 tris" data-glb="models/smooth/GROVE_TREE_V3.glb">
   <span class="ph"><img src="thumbs/smooth-GROVE_TREE_V3.webp" alt="Grove Tree v3" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Grove Tree v3</b><i>Smooth · 7.6k tris</i></span></button>
-<button class="mc rv" style="--i:3" type="button" data-item data-tier="medium" data-set="halloween" data-name="Chest" data-meta="Halloween update · Medium poly · 12,412 tris" data-glb="models/halloween/BAYOU_CHEST.glb">
+<button class="mc up" style="--i:3" type="button" data-item data-tier="medium" data-set="halloween" data-name="Chest" data-meta="Halloween update · Medium poly · 12,412 tris" data-glb="models/halloween/BAYOU_CHEST.glb">
   <span class="ph"><img src="thumbs/halloween-BAYOU_CHEST.webp" alt="Chest" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Chest</b><i>Halloween · 12k tris</i></span></button>
-<button class="mc rv" style="--i:4" type="button" data-item data-tier="medium" data-set="voxel" data-name="Arch Gate" data-meta="Cook a Dragon · voxel · Medium poly · 3,992 tris" data-glb="models/voxel/HUB_ARCH_GATE.glb">
+<button class="mc up" style="--i:4" type="button" data-item data-tier="medium" data-set="voxel" data-name="Arch Gate" data-meta="Cook a Dragon · voxel · Medium poly · 3,992 tris" data-glb="models/voxel/HUB_ARCH_GATE.glb">
   <span class="ph"><img src="thumbs/voxel-HUB_ARCH_GATE.webp" alt="Arch Gate" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Arch Gate</b><i>Voxel · 4.0k tris</i></span></button>
-<button class="mc rv" style="--i:5" type="button" data-item data-tier="medium" data-set="smooth" data-name="Fence Broken" data-meta="Cook a Dragon · smooth · Medium poly · 7,542 tris" data-glb="models/smooth/PROP_FENCE_BROKEN.glb">
+<button class="mc up" style="--i:5" type="button" data-item data-tier="medium" data-set="smooth" data-name="Fence Broken" data-meta="Cook a Dragon · smooth · Medium poly · 7,542 tris" data-glb="models/smooth/PROP_FENCE_BROKEN.glb">
   <span class="ph"><img src="thumbs/smooth-PROP_FENCE_BROKEN.webp" alt="Fence Broken" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Fence Broken</b><i>Smooth · 7.5k tris</i></span></button>
-<button class="mc rv" style="--i:6" type="button" data-item data-tier="medium" data-set="halloween" data-name="Wheel" data-meta="Halloween update · Medium poly · 12,356 tris" data-glb="models/halloween/BAYOU_WHEEL.glb">
+<button class="mc up" style="--i:6" type="button" data-item data-tier="medium" data-set="halloween" data-name="Wheel" data-meta="Halloween update · Medium poly · 12,356 tris" data-glb="models/halloween/BAYOU_WHEEL.glb">
   <span class="ph"><img src="thumbs/halloween-BAYOU_WHEEL.webp" alt="Wheel" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Wheel</b><i>Halloween · 12k tris</i></span></button>
-<button class="mc rv" style="--i:7" type="button" data-item data-tier="medium" data-set="voxel" data-name="Log" data-meta="Cook a Dragon · voxel · Medium poly · 3,440 tris" data-glb="models/voxel/GROVE_LOG.glb">
+<button class="mc up" style="--i:7" type="button" data-item data-tier="medium" data-set="voxel" data-name="Log" data-meta="Cook a Dragon · voxel · Medium poly · 3,440 tris" data-glb="models/voxel/GROVE_LOG.glb">
   <span class="ph"><img src="thumbs/voxel-GROVE_LOG.webp" alt="Log" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Log</b><i>Voxel · 3.4k tris</i></span></button>
-<button class="mc rv" style="--i:0" type="button" data-item data-tier="medium" data-set="smooth" data-name="Slime Statue" data-meta="Cook a Dragon · smooth · Medium poly · 6,816 tris" data-glb="models/smooth/GROVE_SLIME_STATUE.glb">
+<button class="mc up" style="--i:0" type="button" data-item data-tier="medium" data-set="smooth" data-name="Slime Statue" data-meta="Cook a Dragon · smooth · Medium poly · 6,816 tris" data-glb="models/smooth/GROVE_SLIME_STATUE.glb">
   <span class="ph"><img src="thumbs/smooth-GROVE_SLIME_STATUE.webp" alt="Slime Statue" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Slime Statue</b><i>Smooth · 6.8k tris</i></span></button>
-<button class="mc rv" style="--i:1" type="button" data-item data-tier="medium" data-set="halloween" data-name="Bayou Portal" data-meta="Halloween update · Medium poly · 12,348 tris" data-glb="models/halloween/BAYOU_PORTAL.glb">
+<button class="mc up" style="--i:1" type="button" data-item data-tier="medium" data-set="halloween" data-name="Bayou Portal" data-meta="Halloween update · Medium poly · 12,348 tris" data-glb="models/halloween/BAYOU_PORTAL.glb">
   <span class="ph"><img src="thumbs/halloween-BAYOU_PORTAL.webp" alt="Bayou Portal" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Bayou Portal</b><i>Halloween · 12k tris</i></span></button>
-<button class="mc rv" style="--i:2" type="button" data-item data-tier="medium" data-set="voxel" data-name="Glacier Warhammer" data-meta="Cook a Dragon · voxel · Medium poly · 3,420 tris" data-glb="models/voxel/WEAPON_GLACIER_WARHAMMER.glb">
+<button class="mc up" style="--i:2" type="button" data-item data-tier="medium" data-set="voxel" data-name="Glacier Warhammer" data-meta="Cook a Dragon · voxel · Medium poly · 3,420 tris" data-glb="models/voxel/WEAPON_GLACIER_WARHAMMER.glb">
   <span class="ph"><img src="thumbs/voxel-WEAPON_GLACIER_WARHAMMER.webp" alt="Glacier Warhammer" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Glacier Warhammer</b><i>Voxel · 3.4k tris</i></span></button>
-<button class="mc rv" style="--i:3" type="button" data-item data-tier="medium" data-set="smooth" data-name="Boulder Mossy" data-meta="Cook a Dragon · smooth · Medium poly · 5,952 tris" data-glb="models/smooth/GROVE_BOULDER_MOSSY.glb">
+<button class="mc up" style="--i:3" type="button" data-item data-tier="medium" data-set="smooth" data-name="Boulder Mossy" data-meta="Cook a Dragon · smooth · Medium poly · 5,952 tris" data-glb="models/smooth/GROVE_BOULDER_MOSSY.glb">
   <span class="ph"><img src="thumbs/smooth-GROVE_BOULDER_MOSSY.webp" alt="Boulder Mossy" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Boulder Mossy</b><i>Smooth · 6.0k tris</i></span></button>
-<button class="mc rv" style="--i:4" type="button" data-item data-tier="medium" data-set="halloween" data-name="Pumpkin Puffer" data-meta="Halloween update · Medium poly · 10,244 tris" data-glb="models/halloween/FISH_PUMPKINPUFFER.glb">
+<button class="mc up" style="--i:4" type="button" data-item data-tier="medium" data-set="halloween" data-name="Pumpkin Puffer" data-meta="Halloween update · Medium poly · 10,244 tris" data-glb="models/halloween/FISH_PUMPKINPUFFER.glb">
   <span class="ph"><img src="thumbs/halloween-FISH_PUMPKINPUFFER.webp" alt="Pumpkin Puffer" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Pumpkin Puffer</b><i>Halloween · 10k tris</i></span></button>
-<button class="mc rv" style="--i:5" type="button" data-item data-tier="medium" data-set="voxel" data-name="Hearth Tree" data-meta="Cook a Dragon · voxel · Medium poly · 3,408 tris" data-glb="models/voxel/HEARTH_TREE.glb">
+<button class="mc up" style="--i:5" type="button" data-item data-tier="medium" data-set="voxel" data-name="Hearth Tree" data-meta="Cook a Dragon · voxel · Medium poly · 3,408 tris" data-glb="models/voxel/HEARTH_TREE.glb">
   <span class="ph"><img src="thumbs/voxel-HEARTH_TREE.webp" alt="Hearth Tree" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Hearth Tree</b><i>Voxel · 3.4k tris</i></span></button>
-<button class="mc rv" style="--i:6" type="button" data-item data-tier="medium" data-set="smooth" data-name="Table" data-meta="Cook a Dragon · smooth · Medium poly · 5,949 tris" data-glb="models/smooth/PROP_TABLE.glb">
+<button class="mc up" style="--i:6" type="button" data-item data-tier="medium" data-set="smooth" data-name="Table" data-meta="Cook a Dragon · smooth · Medium poly · 5,949 tris" data-glb="models/smooth/PROP_TABLE.glb">
   <span class="ph"><img src="thumbs/smooth-PROP_TABLE.webp" alt="Table" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Table</b><i>Smooth · 5.9k tris</i></span></button>
-<button class="mc rv" style="--i:7" type="button" data-item data-tier="medium" data-set="halloween" data-name="Pumpkin" data-meta="Halloween update · Medium poly · 9,724 tris" data-glb="models/halloween/BAYOU_PUMPKIN.glb">
+<button class="mc up" style="--i:7" type="button" data-item data-tier="medium" data-set="halloween" data-name="Pumpkin" data-meta="Halloween update · Medium poly · 9,724 tris" data-glb="models/halloween/BAYOU_PUMPKIN.glb">
   <span class="ph"><img src="thumbs/halloween-BAYOU_PUMPKIN.webp" alt="Pumpkin" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Pumpkin</b><i>Halloween · 9.7k tris</i></span></button>
-<button class="mc rv" style="--i:0" type="button" data-item data-tier="medium" data-set="voxel" data-name="Grove Tree" data-meta="Cook a Dragon · voxel · Medium poly · 3,180 tris" data-glb="models/voxel/GROVE_TREE.glb">
+<button class="mc up" style="--i:0" type="button" data-item data-tier="medium" data-set="voxel" data-name="Grove Tree" data-meta="Cook a Dragon · voxel · Medium poly · 3,180 tris" data-glb="models/voxel/GROVE_TREE.glb">
   <span class="ph"><img src="thumbs/voxel-GROVE_TREE.webp" alt="Grove Tree" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Grove Tree</b><i>Voxel · 3.2k tris</i></span></button>
-<button class="mc rv" style="--i:1" type="button" data-item data-tier="medium" data-set="smooth" data-name="Customer" data-meta="Cook a Dragon · smooth · Medium poly · 5,896 tris" data-glb="models/smooth/NPC_CUSTOMER.glb">
+<button class="mc up" style="--i:1" type="button" data-item data-tier="medium" data-set="smooth" data-name="Customer" data-meta="Cook a Dragon · smooth · Medium poly · 5,896 tris" data-glb="models/smooth/NPC_CUSTOMER.glb">
   <span class="ph"><img src="thumbs/smooth-NPC_CUSTOMER.webp" alt="Customer" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Customer</b><i>Smooth · 5.9k tris</i></span></button>
-<button class="mc rv" style="--i:2" type="button" data-item data-tier="medium" data-set="halloween" data-name="Mausoleum" data-meta="Halloween update · Medium poly · 9,712 tris" data-glb="models/halloween/BAYOU_MAUSOLEUM.glb">
+<button class="mc up" style="--i:2" type="button" data-item data-tier="medium" data-set="halloween" data-name="Mausoleum" data-meta="Halloween update · Medium poly · 9,712 tris" data-glb="models/halloween/BAYOU_MAUSOLEUM.glb">
   <span class="ph"><img src="thumbs/halloween-BAYOU_MAUSOLEUM.webp" alt="Mausoleum" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Mausoleum</b><i>Halloween · 9.7k tris</i></span></button>
-<button class="mc rv" style="--i:3" type="button" data-item data-tier="medium" data-set="voxel" data-name="Stove" data-meta="Cook a Dragon · voxel · Medium poly · 3,168 tris" data-glb="models/voxel/PROP_STOVE.glb">
+<button class="mc up" style="--i:3" type="button" data-item data-tier="medium" data-set="voxel" data-name="Stove" data-meta="Cook a Dragon · voxel · Medium poly · 3,168 tris" data-glb="models/voxel/PROP_STOVE.glb">
   <span class="ph"><img src="thumbs/voxel-PROP_STOVE.webp" alt="Stove" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Stove</b><i>Voxel · 3.2k tris</i></span></button>
-<button class="mc rv" style="--i:4" type="button" data-item data-tier="medium" data-set="smooth" data-name="Counter Dressing" data-meta="Cook a Dragon · smooth · Medium poly · 5,504 tris" data-glb="models/smooth/PROP_COUNTER_DRESSING.glb">
+<button class="mc up" style="--i:4" type="button" data-item data-tier="medium" data-set="smooth" data-name="Counter Dressing" data-meta="Cook a Dragon · smooth · Medium poly · 5,504 tris" data-glb="models/smooth/PROP_COUNTER_DRESSING.glb">
   <span class="ph"><img src="thumbs/smooth-PROP_COUNTER_DRESSING.webp" alt="Counter Dressing" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Counter Dressing</b><i>Smooth · 5.5k tris</i></span></button>
-<button class="mc rv" style="--i:5" type="button" data-item data-tier="medium" data-set="halloween" data-name="Bench" data-meta="Halloween update · Medium poly · 9,560 tris" data-glb="models/halloween/BAYOU_BENCH.glb">
+<button class="mc up" style="--i:5" type="button" data-item data-tier="medium" data-set="halloween" data-name="Bench" data-meta="Halloween update · Medium poly · 9,560 tris" data-glb="models/halloween/BAYOU_BENCH.glb">
   <span class="ph"><img src="thumbs/halloween-BAYOU_BENCH.webp" alt="Bench" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Bench</b><i>Halloween · 9.6k tris</i></span></button>
-<button class="mc rv" style="--i:6" type="button" data-item data-tier="low" data-set="voxel" data-name="Sporecleaver Battleaxe" data-meta="Cook a Dragon · voxel · Low poly · 2,720 tris" data-glb="models/voxel/WEAPON_SPORECLEAVER_BATTLEAXE.glb">
+<button class="mc up" style="--i:6" type="button" data-item data-tier="low" data-set="voxel" data-name="Sporecleaver Battleaxe" data-meta="Cook a Dragon · voxel · Low poly · 2,720 tris" data-glb="models/voxel/WEAPON_SPORECLEAVER_BATTLEAXE.glb">
   <span class="ph"><img src="thumbs/voxel-WEAPON_SPORECLEAVER_BATTLEAXE.webp" alt="Sporecleaver Battleaxe" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Sporecleaver Battleaxe</b><i>Voxel · 2.7k tris</i></span></button>
-<button class="mc rv" style="--i:7" type="button" data-item data-tier="medium" data-set="smooth" data-name="Restaurant Entrance" data-meta="Cook a Dragon · smooth · Medium poly · 5,504 tris" data-glb="models/smooth/REST_ENTRANCE.glb">
+<button class="mc up" style="--i:7" type="button" data-item data-tier="medium" data-set="smooth" data-name="Restaurant Entrance" data-meta="Cook a Dragon · smooth · Medium poly · 5,504 tris" data-glb="models/smooth/REST_ENTRANCE.glb">
   <span class="ph"><img src="thumbs/smooth-REST_ENTRANCE.webp" alt="Restaurant Entrance" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Restaurant Entrance</b><i>Smooth · 5.5k tris</i></span></button>
-<button class="mc rv" style="--i:0" type="button" data-item data-tier="medium" data-set="halloween" data-name="Bat Sign" data-meta="Halloween update · Medium poly · 8,264 tris" data-glb="models/halloween/BAYOU_BAT_SIGN.glb">
+<button class="mc up" style="--i:0" type="button" data-item data-tier="medium" data-set="halloween" data-name="Bat Sign" data-meta="Halloween update · Medium poly · 8,264 tris" data-glb="models/halloween/BAYOU_BAT_SIGN.glb">
   <span class="ph"><img src="thumbs/halloween-BAYOU_BAT_SIGN.webp" alt="Bat Sign" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Bat Sign</b><i>Halloween · 8.3k tris</i></span></button>
-<button class="mc rv" style="--i:1" type="button" data-item data-tier="low" data-set="voxel" data-name="Dragonbane Greatblade" data-meta="Cook a Dragon · voxel · Low poly · 2,692 tris" data-glb="models/voxel/WEAPON_DRAGONBANE_GREATBLADE.glb">
+<button class="mc up" style="--i:1" type="button" data-item data-tier="low" data-set="voxel" data-name="Dragonbane Greatblade" data-meta="Cook a Dragon · voxel · Low poly · 2,692 tris" data-glb="models/voxel/WEAPON_DRAGONBANE_GREATBLADE.glb">
   <span class="ph"><img src="thumbs/voxel-WEAPON_DRAGONBANE_GREATBLADE.webp" alt="Dragonbane Greatblade" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Dragonbane Greatblade</b><i>Voxel · 2.7k tris</i></span></button>
-<button class="mc rv" style="--i:2" type="button" data-item data-tier="medium" data-set="smooth" data-name="Log" data-meta="Cook a Dragon · smooth · Medium poly · 5,384 tris" data-glb="models/smooth/GROVE_LOG.glb">
+<button class="mc up" style="--i:2" type="button" data-item data-tier="medium" data-set="smooth" data-name="Log" data-meta="Cook a Dragon · smooth · Medium poly · 5,384 tris" data-glb="models/smooth/GROVE_LOG.glb">
   <span class="ph"><img src="thumbs/smooth-GROVE_LOG.webp" alt="Log" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Log</b><i>Smooth · 5.4k tris</i></span></button>
-<button class="mc rv" style="--i:3" type="button" data-item data-tier="medium" data-set="halloween" data-name="Gravestone A" data-meta="Halloween update · Medium poly · 7,486 tris" data-glb="models/halloween/BAYOU_GRAVESTONE_A.glb">
+<button class="mc up" style="--i:3" type="button" data-item data-tier="medium" data-set="halloween" data-name="Gravestone A" data-meta="Halloween update · Medium poly · 7,486 tris" data-glb="models/halloween/BAYOU_GRAVESTONE_A.glb">
   <span class="ph"><img src="thumbs/halloween-BAYOU_GRAVESTONE_A.webp" alt="Gravestone A" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Gravestone A</b><i>Halloween · 7.5k tris</i></span></button>
-<button class="mc rv" style="--i:4" type="button" data-item data-tier="low" data-set="voxel" data-name="Boulder Mossy" data-meta="Cook a Dragon · voxel · Low poly · 2,688 tris" data-glb="models/voxel/GROVE_BOULDER_MOSSY.glb">
+<button class="mc up" style="--i:4" type="button" data-item data-tier="low" data-set="voxel" data-name="Boulder Mossy" data-meta="Cook a Dragon · voxel · Low poly · 2,688 tris" data-glb="models/voxel/GROVE_BOULDER_MOSSY.glb">
   <span class="ph"><img src="thumbs/voxel-GROVE_BOULDER_MOSSY.webp" alt="Boulder Mossy" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Boulder Mossy</b><i>Voxel · 2.7k tris</i></span></button>
-<button class="mc rv" style="--i:5" type="button" data-item data-tier="medium" data-set="smooth" data-name="Grove Bush" data-meta="Cook a Dragon · smooth · Medium poly · 4,936 tris" data-glb="models/smooth/GROVE_BUSH.glb">
+<button class="mc up" style="--i:5" type="button" data-item data-tier="medium" data-set="smooth" data-name="Grove Bush" data-meta="Cook a Dragon · smooth · Medium poly · 4,936 tris" data-glb="models/smooth/GROVE_BUSH.glb">
   <span class="ph"><img src="thumbs/smooth-GROVE_BUSH.webp" alt="Grove Bush" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Grove Bush</b><i>Smooth · 4.9k tris</i></span></button>
-<button class="mc rv" style="--i:6" type="button" data-item data-tier="medium" data-set="halloween" data-name="Lamp" data-meta="Halloween update · Medium poly · 7,328 tris" data-glb="models/halloween/BAYOU_LAMP.glb">
+<button class="mc up" style="--i:6" type="button" data-item data-tier="medium" data-set="halloween" data-name="Lamp" data-meta="Halloween update · Medium poly · 7,328 tris" data-glb="models/halloween/BAYOU_LAMP.glb">
   <span class="ph"><img src="thumbs/halloween-BAYOU_LAMP.webp" alt="Lamp" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Lamp</b><i>Halloween · 7.3k tris</i></span></button>
-<button class="mc rv" style="--i:7" type="button" data-item data-tier="low" data-set="voxel" data-name="Table" data-meta="Cook a Dragon · voxel · Low poly · 2,468 tris" data-glb="models/voxel/PROP_TABLE.glb">
+<button class="mc up" style="--i:7" type="button" data-item data-tier="low" data-set="voxel" data-name="Table" data-meta="Cook a Dragon · voxel · Low poly · 2,468 tris" data-glb="models/voxel/PROP_TABLE.glb">
   <span class="ph"><img src="thumbs/voxel-PROP_TABLE.webp" alt="Table" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Table</b><i>Voxel · 2.5k tris</i></span></button>
-<button class="mc rv" style="--i:0" type="button" data-item data-tier="medium" data-set="smooth" data-name="Gold Slime" data-meta="Cook a Dragon · smooth · Medium poly · 4,472 tris" data-glb="models/smooth/MONSTER_GOLDSLIME.glb">
+<button class="mc up" style="--i:0" type="button" data-item data-tier="medium" data-set="smooth" data-name="Gold Slime" data-meta="Cook a Dragon · smooth · Medium poly · 4,472 tris" data-glb="models/smooth/MONSTER_GOLDSLIME.glb">
   <span class="ph"><img src="thumbs/smooth-MONSTER_GOLDSLIME.webp" alt="Gold Slime" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Gold Slime</b><i>Smooth · 4.5k tris</i></span></button>
-<button class="mc rv" style="--i:1" type="button" data-item data-tier="medium" data-set="halloween" data-name="Ghost" data-meta="Halloween update · Medium poly · 7,078 tris" data-glb="models/halloween/BAYOU_GHOST.glb">
+<button class="mc up" style="--i:1" type="button" data-item data-tier="medium" data-set="halloween" data-name="Ghost" data-meta="Halloween update · Medium poly · 7,078 tris" data-glb="models/halloween/BAYOU_GHOST.glb">
   <span class="ph"><img src="thumbs/halloween-BAYOU_GHOST.webp" alt="Ghost" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Ghost</b><i>Halloween · 7.1k tris</i></span></button>
-<button class="mc rv" style="--i:2" type="button" data-item data-tier="low" data-set="voxel" data-name="Prep Counter" data-meta="Cook a Dragon · voxel · Low poly · 2,452 tris" data-glb="models/voxel/PROP_PREP_COUNTER.glb">
+<button class="mc up" style="--i:2" type="button" data-item data-tier="low" data-set="voxel" data-name="Prep Counter" data-meta="Cook a Dragon · voxel · Low poly · 2,452 tris" data-glb="models/voxel/PROP_PREP_COUNTER.glb">
   <span class="ph"><img src="thumbs/voxel-PROP_PREP_COUNTER.webp" alt="Prep Counter" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Prep Counter</b><i>Voxel · 2.5k tris</i></span></button>
-<button class="mc rv" style="--i:3" type="button" data-item data-tier="medium" data-set="smooth" data-name="Sell Counter" data-meta="Cook a Dragon · smooth · Medium poly · 4,296 tris" data-glb="models/smooth/PROP_SELL_COUNTER.glb">
+<button class="mc up" style="--i:3" type="button" data-item data-tier="medium" data-set="smooth" data-name="Sell Counter" data-meta="Cook a Dragon · smooth · Medium poly · 4,296 tris" data-glb="models/smooth/PROP_SELL_COUNTER.glb">
   <span class="ph"><img src="thumbs/smooth-PROP_SELL_COUNTER.webp" alt="Sell Counter" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Sell Counter</b><i>Smooth · 4.3k tris</i></span></button>
-<button class="mc rv" style="--i:4" type="button" data-item data-tier="medium" data-set="halloween" data-name="Rock" data-meta="Halloween update · Medium poly · 6,858 tris" data-glb="models/halloween/BAYOU_ROCK.glb">
+<button class="mc up" style="--i:4" type="button" data-item data-tier="medium" data-set="halloween" data-name="Rock" data-meta="Halloween update · Medium poly · 6,858 tris" data-glb="models/halloween/BAYOU_ROCK.glb">
   <span class="ph"><img src="thumbs/halloween-BAYOU_ROCK.webp" alt="Rock" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Rock</b><i>Halloween · 6.9k tris</i></span></button>
-<button class="mc rv" style="--i:5" type="button" data-item data-tier="low" data-set="voxel" data-name="Training Rig" data-meta="Cook a Dragon · voxel · Low poly · 2,360 tris" data-glb="models/voxel/TRAINING_RIG.glb">
+<button class="mc up" style="--i:5" type="button" data-item data-tier="low" data-set="voxel" data-name="Training Rig" data-meta="Cook a Dragon · voxel · Low poly · 2,360 tris" data-glb="models/voxel/TRAINING_RIG.glb">
   <span class="ph"><img src="thumbs/voxel-TRAINING_RIG.webp" alt="Training Rig" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Training Rig</b><i>Voxel · 2.4k tris</i></span></button>
-<button class="mc rv" style="--i:6" type="button" data-item data-tier="medium" data-set="smooth" data-name="Arch Gate" data-meta="Cook a Dragon · smooth · Medium poly · 4,200 tris" data-glb="models/smooth/HUB_ARCH_GATE.glb">
+<button class="mc up" style="--i:6" type="button" data-item data-tier="medium" data-set="smooth" data-name="Arch Gate" data-meta="Cook a Dragon · smooth · Medium poly · 4,200 tris" data-glb="models/smooth/HUB_ARCH_GATE.glb">
   <span class="ph"><img src="thumbs/smooth-HUB_ARCH_GATE.webp" alt="Arch Gate" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Arch Gate</b><i>Smooth · 4.2k tris</i></span></button>
-<button class="mc rv" style="--i:7" type="button" data-item data-tier="medium" data-set="halloween" data-name="Cobweb" data-meta="Halloween update · Medium poly · 6,800 tris" data-glb="models/halloween/BAYOU_COBWEB.glb">
+<button class="mc up" style="--i:7" type="button" data-item data-tier="medium" data-set="halloween" data-name="Cobweb" data-meta="Halloween update · Medium poly · 6,800 tris" data-glb="models/halloween/BAYOU_COBWEB.glb">
   <span class="ph"><img src="thumbs/halloween-BAYOU_COBWEB.webp" alt="Cobweb" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Cobweb</b><i>Halloween · 6.8k tris</i></span></button>
-<button class="mc rv" style="--i:0" type="button" data-item data-tier="low" data-set="voxel" data-name="Ironbark Greatsword" data-meta="Cook a Dragon · voxel · Low poly · 2,332 tris" data-glb="models/voxel/WEAPON_IRONBARK_GREATSWORD.glb">
+<button class="mc up" style="--i:0" type="button" data-item data-tier="low" data-set="voxel" data-name="Ironbark Greatsword" data-meta="Cook a Dragon · voxel · Low poly · 2,332 tris" data-glb="models/voxel/WEAPON_IRONBARK_GREATSWORD.glb">
   <span class="ph"><img src="thumbs/voxel-WEAPON_IRONBARK_GREATSWORD.webp" alt="Ironbark Greatsword" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Ironbark Greatsword</b><i>Voxel · 2.3k tris</i></span></button>
-<button class="mc rv" style="--i:1" type="button" data-item data-tier="medium" data-set="smooth" data-name="Blue Slime" data-meta="Cook a Dragon · smooth · Medium poly · 4,137 tris" data-glb="models/smooth/MONSTER_BLUESLIME.glb">
+<button class="mc up" style="--i:1" type="button" data-item data-tier="medium" data-set="smooth" data-name="Blue Slime" data-meta="Cook a Dragon · smooth · Medium poly · 4,137 tris" data-glb="models/smooth/MONSTER_BLUESLIME.glb">
   <span class="ph"><img src="thumbs/smooth-MONSTER_BLUESLIME.webp" alt="Blue Slime" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Blue Slime</b><i>Smooth · 4.1k tris</i></span></button>
-<button class="mc rv" style="--i:2" type="button" data-item data-tier="medium" data-set="halloween" data-name="Gravestone B" data-meta="Halloween update · Medium poly · 6,252 tris" data-glb="models/halloween/BAYOU_GRAVESTONE_B.glb">
+<button class="mc up" style="--i:2" type="button" data-item data-tier="medium" data-set="halloween" data-name="Gravestone B" data-meta="Halloween update · Medium poly · 6,252 tris" data-glb="models/halloween/BAYOU_GRAVESTONE_B.glb">
   <span class="ph"><img src="thumbs/halloween-BAYOU_GRAVESTONE_B.webp" alt="Gravestone B" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Gravestone B</b><i>Halloween · 6.3k tris</i></span></button>
-<button class="mc rv" style="--i:3" type="button" data-item data-tier="low" data-set="voxel" data-name="Loot Sack IV" data-meta="Cook a Dragon · voxel · Low poly · 2,260 tris" data-glb="models/voxel/SACK_TIER4.glb">
+<button class="mc up" style="--i:3" type="button" data-item data-tier="low" data-set="voxel" data-name="Loot Sack IV" data-meta="Cook a Dragon · voxel · Low poly · 2,260 tris" data-glb="models/voxel/SACK_TIER4.glb">
   <span class="ph"><img src="thumbs/voxel-SACK_TIER4.webp" alt="Loot Sack IV" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Loot Sack IV</b><i>Voxel · 2.3k tris</i></span></button>
-<button class="mc rv" style="--i:4" type="button" data-item data-tier="medium" data-set="smooth" data-name="Green Slime" data-meta="Cook a Dragon · smooth · Medium poly · 4,137 tris" data-glb="models/smooth/MONSTER_GREENSLIME.glb">
+<button class="mc up" style="--i:4" type="button" data-item data-tier="medium" data-set="smooth" data-name="Green Slime" data-meta="Cook a Dragon · smooth · Medium poly · 4,137 tris" data-glb="models/smooth/MONSTER_GREENSLIME.glb">
   <span class="ph"><img src="thumbs/smooth-MONSTER_GREENSLIME.webp" alt="Green Slime" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Green Slime</b><i>Smooth · 4.1k tris</i></span></button>
-<button class="mc rv" style="--i:5" type="button" data-item data-tier="medium" data-set="halloween" data-name="Pedestal" data-meta="Halloween update · Medium poly · 5,140 tris" data-glb="models/halloween/BAYOU_PEDESTAL.glb">
+<button class="mc up" style="--i:5" type="button" data-item data-tier="medium" data-set="halloween" data-name="Pedestal" data-meta="Halloween update · Medium poly · 5,140 tris" data-glb="models/halloween/BAYOU_PEDESTAL.glb">
   <span class="ph"><img src="thumbs/halloween-BAYOU_PEDESTAL.webp" alt="Pedestal" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Pedestal</b><i>Halloween · 5.1k tris</i></span></button>
-<button class="mc rv" style="--i:6" type="button" data-item data-tier="low" data-set="voxel" data-name="Fence Broken" data-meta="Cook a Dragon · voxel · Low poly · 2,180 tris" data-glb="models/voxel/PROP_FENCE_BROKEN.glb">
+<button class="mc up" style="--i:6" type="button" data-item data-tier="low" data-set="voxel" data-name="Fence Broken" data-meta="Cook a Dragon · voxel · Low poly · 2,180 tris" data-glb="models/voxel/PROP_FENCE_BROKEN.glb">
   <span class="ph"><img src="thumbs/voxel-PROP_FENCE_BROKEN.webp" alt="Fence Broken" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Fence Broken</b><i>Voxel · 2.2k tris</i></span></button>
-<button class="mc rv" style="--i:7" type="button" data-item data-tier="medium" data-set="smooth" data-name="Rainbow Slime" data-meta="Cook a Dragon · smooth · Medium poly · 4,137 tris" data-glb="models/smooth/MONSTER_RAINBOWSLIME.glb">
+<button class="mc up" style="--i:7" type="button" data-item data-tier="medium" data-set="smooth" data-name="Rainbow Slime" data-meta="Cook a Dragon · smooth · Medium poly · 4,137 tris" data-glb="models/smooth/MONSTER_RAINBOWSLIME.glb">
   <span class="ph"><img src="thumbs/smooth-MONSTER_RAINBOWSLIME.webp" alt="Rainbow Slime" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Rainbow Slime</b><i>Smooth · 4.1k tris</i></span></button>
-<button class="mc rv" style="--i:0" type="button" data-item data-tier="low" data-set="voxel" data-name="Pot Tree" data-meta="Cook a Dragon · voxel · Low poly · 2,064 tris" data-glb="models/voxel/PROP_POT_TREE.glb">
+<button class="mc up" style="--i:0" type="button" data-item data-tier="low" data-set="voxel" data-name="Pot Tree" data-meta="Cook a Dragon · voxel · Low poly · 2,064 tris" data-glb="models/voxel/PROP_POT_TREE.glb">
   <span class="ph"><img src="thumbs/voxel-PROP_POT_TREE.webp" alt="Pot Tree" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Pot Tree</b><i>Voxel · 2.1k tris</i></span></button>
-<button class="mc rv" style="--i:1" type="button" data-item data-tier="medium" data-set="smooth" data-name="Hearth Bush" data-meta="Cook a Dragon · smooth · Medium poly · 4,086 tris" data-glb="models/smooth/HEARTH_BUSH.glb">
+<button class="mc up" style="--i:1" type="button" data-item data-tier="medium" data-set="smooth" data-name="Hearth Bush" data-meta="Cook a Dragon · smooth · Medium poly · 4,086 tris" data-glb="models/smooth/HEARTH_BUSH.glb">
   <span class="ph"><img src="thumbs/smooth-HEARTH_BUSH.webp" alt="Hearth Bush" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Hearth Bush</b><i>Smooth · 4.1k tris</i></span></button>
-<button class="mc rv" style="--i:2" type="button" data-item data-tier="low" data-set="voxel" data-name="Counter Dressing" data-meta="Cook a Dragon · voxel · Low poly · 2,044 tris" data-glb="models/voxel/PROP_COUNTER_DRESSING.glb">
+<button class="mc up" style="--i:2" type="button" data-item data-tier="low" data-set="voxel" data-name="Counter Dressing" data-meta="Cook a Dragon · voxel · Low poly · 2,044 tris" data-glb="models/voxel/PROP_COUNTER_DRESSING.glb">
   <span class="ph"><img src="thumbs/voxel-PROP_COUNTER_DRESSING.webp" alt="Counter Dressing" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Counter Dressing</b><i>Voxel · 2.0k tris</i></span></button>
-<button class="mc rv" style="--i:3" type="button" data-item data-tier="medium" data-set="smooth" data-name="Giant Slime" data-meta="Cook a Dragon · smooth · Medium poly · 4,028 tris" data-glb="models/smooth/MONSTER_GIANTSLIME.glb">
+<button class="mc up" style="--i:3" type="button" data-item data-tier="medium" data-set="smooth" data-name="Giant Slime" data-meta="Cook a Dragon · smooth · Medium poly · 4,028 tris" data-glb="models/smooth/MONSTER_GIANTSLIME.glb">
   <span class="ph"><img src="thumbs/smooth-MONSTER_GIANTSLIME.webp" alt="Giant Slime" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Giant Slime</b><i>Smooth · 4.0k tris</i></span></button>
-<button class="mc rv" style="--i:4" type="button" data-item data-tier="low" data-set="voxel" data-name="Fridge" data-meta="Cook a Dragon · voxel · Low poly · 1,848 tris" data-glb="models/voxel/PROP_FRIDGE.glb">
+<button class="mc up" style="--i:4" type="button" data-item data-tier="low" data-set="voxel" data-name="Fridge" data-meta="Cook a Dragon · voxel · Low poly · 1,848 tris" data-glb="models/voxel/PROP_FRIDGE.glb">
   <span class="ph"><img src="thumbs/voxel-PROP_FRIDGE.webp" alt="Fridge" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Fridge</b><i>Voxel · 1.8k tris</i></span></button>
-<button class="mc rv" style="--i:5" type="button" data-item data-tier="medium" data-set="smooth" data-name="Pot Tree" data-meta="Cook a Dragon · smooth · Medium poly · 3,814 tris" data-glb="models/smooth/PROP_POT_TREE.glb">
+<button class="mc up" style="--i:5" type="button" data-item data-tier="medium" data-set="smooth" data-name="Pot Tree" data-meta="Cook a Dragon · smooth · Medium poly · 3,814 tris" data-glb="models/smooth/PROP_POT_TREE.glb">
   <span class="ph"><img src="thumbs/smooth-PROP_POT_TREE.webp" alt="Pot Tree" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Pot Tree</b><i>Smooth · 3.8k tris</i></span></button>
-<button class="mc rv" style="--i:6" type="button" data-item data-tier="low" data-set="voxel" data-name="Customer" data-meta="Cook a Dragon · voxel · Low poly · 1,808 tris" data-glb="models/voxel/NPC_CUSTOMER.glb">
+<button class="mc up" style="--i:6" type="button" data-item data-tier="low" data-set="voxel" data-name="Customer" data-meta="Cook a Dragon · voxel · Low poly · 1,808 tris" data-glb="models/voxel/NPC_CUSTOMER.glb">
   <span class="ph"><img src="thumbs/voxel-NPC_CUSTOMER.webp" alt="Customer" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Customer</b><i>Voxel · 1.8k tris</i></span></button>
-<button class="mc rv" style="--i:7" type="button" data-item data-tier="medium" data-set="smooth" data-name="Crate" data-meta="Cook a Dragon · smooth · Medium poly · 3,672 tris" data-glb="models/smooth/PROP_CRATE.glb">
+<button class="mc up" style="--i:7" type="button" data-item data-tier="medium" data-set="smooth" data-name="Crate" data-meta="Cook a Dragon · smooth · Medium poly · 3,672 tris" data-glb="models/smooth/PROP_CRATE.glb">
   <span class="ph"><img src="thumbs/smooth-PROP_CRATE.webp" alt="Crate" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Crate</b><i>Smooth · 3.7k tris</i></span></button>
-<button class="mc rv" style="--i:0" type="button" data-item data-tier="low" data-set="voxel" data-name="Magma Executioner" data-meta="Cook a Dragon · voxel · Low poly · 1,792 tris" data-glb="models/voxel/WEAPON_MAGMA_EXECUTIONER.glb">
+<button class="mc up" style="--i:0" type="button" data-item data-tier="low" data-set="voxel" data-name="Magma Executioner" data-meta="Cook a Dragon · voxel · Low poly · 1,792 tris" data-glb="models/voxel/WEAPON_MAGMA_EXECUTIONER.glb">
   <span class="ph"><img src="thumbs/voxel-WEAPON_MAGMA_EXECUTIONER.webp" alt="Magma Executioner" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Magma Executioner</b><i>Voxel · 1.8k tris</i></span></button>
-<button class="mc rv" style="--i:1" type="button" data-item data-tier="medium" data-set="smooth" data-name="Pot Plant" data-meta="Cook a Dragon · smooth · Medium poly · 3,003 tris" data-glb="models/smooth/PROP_POT_PLANT.glb">
+<button class="mc up" style="--i:1" type="button" data-item data-tier="medium" data-set="smooth" data-name="Pot Plant" data-meta="Cook a Dragon · smooth · Medium poly · 3,003 tris" data-glb="models/smooth/PROP_POT_PLANT.glb">
   <span class="ph"><img src="thumbs/smooth-PROP_POT_PLANT.webp" alt="Pot Plant" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Pot Plant</b><i>Smooth · 3.0k tris</i></span></button>
-<button class="mc rv" style="--i:2" type="button" data-item data-tier="low" data-set="voxel" data-name="Restaurant Entrance" data-meta="Cook a Dragon · voxel · Low poly · 1,784 tris" data-glb="models/voxel/REST_ENTRANCE.glb">
+<button class="mc up" style="--i:2" type="button" data-item data-tier="low" data-set="voxel" data-name="Restaurant Entrance" data-meta="Cook a Dragon · voxel · Low poly · 1,784 tris" data-glb="models/voxel/REST_ENTRANCE.glb">
   <span class="ph"><img src="thumbs/voxel-REST_ENTRANCE.webp" alt="Restaurant Entrance" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Restaurant Entrance</b><i>Voxel · 1.8k tris</i></span></button>
-<button class="mc rv" style="--i:3" type="button" data-item data-tier="low" data-set="smooth" data-name="Barrel" data-meta="Cook a Dragon · smooth · Low poly · 2,896 tris" data-glb="models/smooth/PROP_BARREL.glb">
+<button class="mc up" style="--i:3" type="button" data-item data-tier="low" data-set="smooth" data-name="Barrel" data-meta="Cook a Dragon · smooth · Low poly · 2,896 tris" data-glb="models/smooth/PROP_BARREL.glb">
   <span class="ph"><img src="thumbs/smooth-PROP_BARREL.webp" alt="Barrel" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Barrel</b><i>Smooth · 2.9k tris</i></span></button>
-<button class="mc rv" style="--i:4" type="button" data-item data-tier="low" data-set="voxel" data-name="Sell Counter" data-meta="Cook a Dragon · voxel · Low poly · 1,680 tris" data-glb="models/voxel/PROP_SELL_COUNTER.glb">
+<button class="mc up" style="--i:4" type="button" data-item data-tier="low" data-set="voxel" data-name="Sell Counter" data-meta="Cook a Dragon · voxel · Low poly · 1,680 tris" data-glb="models/voxel/PROP_SELL_COUNTER.glb">
   <span class="ph"><img src="thumbs/voxel-PROP_SELL_COUNTER.webp" alt="Sell Counter" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Sell Counter</b><i>Voxel · 1.7k tris</i></span></button>
-<button class="mc rv" style="--i:5" type="button" data-item data-tier="low" data-set="smooth" data-name="Table" data-meta="Cook a Dragon · smooth · Low poly · 2,524 tris" data-glb="models/smooth/GROVE_TABLE.glb">
+<button class="mc up" style="--i:5" type="button" data-item data-tier="low" data-set="smooth" data-name="Table" data-meta="Cook a Dragon · smooth · Low poly · 2,524 tris" data-glb="models/smooth/GROVE_TABLE.glb">
   <span class="ph"><img src="thumbs/smooth-GROVE_TABLE.webp" alt="Table" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Table</b><i>Smooth · 2.5k tris</i></span></button>
-<button class="mc rv" style="--i:6" type="button" data-item data-tier="low" data-set="voxel" data-name="Loot Sack III" data-meta="Cook a Dragon · voxel · Low poly · 1,608 tris" data-glb="models/voxel/SACK_TIER3.glb">
+<button class="mc up" style="--i:6" type="button" data-item data-tier="low" data-set="voxel" data-name="Loot Sack III" data-meta="Cook a Dragon · voxel · Low poly · 1,608 tris" data-glb="models/voxel/SACK_TIER3.glb">
   <span class="ph"><img src="thumbs/voxel-SACK_TIER3.webp" alt="Loot Sack III" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Loot Sack III</b><i>Voxel · 1.6k tris</i></span></button>
-<button class="mc rv" style="--i:7" type="button" data-item data-tier="low" data-set="smooth" data-name="Menu Board" data-meta="Cook a Dragon · smooth · Low poly · 2,372 tris" data-glb="models/smooth/PROP_MENU_BOARD.glb">
+<button class="mc up" style="--i:7" type="button" data-item data-tier="low" data-set="smooth" data-name="Menu Board" data-meta="Cook a Dragon · smooth · Low poly · 2,372 tris" data-glb="models/smooth/PROP_MENU_BOARD.glb">
   <span class="ph"><img src="thumbs/smooth-PROP_MENU_BOARD.webp" alt="Menu Board" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Menu Board</b><i>Smooth · 2.4k tris</i></span></button>
-<button class="mc rv" style="--i:0" type="button" data-item data-tier="low" data-set="voxel" data-name="Loot Sack II" data-meta="Cook a Dragon · voxel · Low poly · 1,588 tris" data-glb="models/voxel/SACK_TIER2.glb">
+<button class="mc up" style="--i:0" type="button" data-item data-tier="low" data-set="voxel" data-name="Loot Sack II" data-meta="Cook a Dragon · voxel · Low poly · 1,588 tris" data-glb="models/voxel/SACK_TIER2.glb">
   <span class="ph"><img src="thumbs/voxel-SACK_TIER2.webp" alt="Loot Sack II" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Loot Sack II</b><i>Voxel · 1.6k tris</i></span></button>
-<button class="mc rv" style="--i:1" type="button" data-item data-tier="low" data-set="smooth" data-name="Fence" data-meta="Cook a Dragon · smooth · Low poly · 2,364 tris" data-glb="models/smooth/PROP_FENCE.glb">
+<button class="mc up" style="--i:1" type="button" data-item data-tier="low" data-set="smooth" data-name="Fence" data-meta="Cook a Dragon · smooth · Low poly · 2,364 tris" data-glb="models/smooth/PROP_FENCE.glb">
   <span class="ph"><img src="thumbs/smooth-PROP_FENCE.webp" alt="Fence" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Fence</b><i>Smooth · 2.4k tris</i></span></button>
-<button class="mc rv" style="--i:2" type="button" data-item data-tier="low" data-set="voxel" data-name="Barrel" data-meta="Cook a Dragon · voxel · Low poly · 1,568 tris" data-glb="models/voxel/PROP_BARREL.glb">
+<button class="mc up" style="--i:2" type="button" data-item data-tier="low" data-set="voxel" data-name="Barrel" data-meta="Cook a Dragon · voxel · Low poly · 1,568 tris" data-glb="models/voxel/PROP_BARREL.glb">
   <span class="ph"><img src="thumbs/voxel-PROP_BARREL.webp" alt="Barrel" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Barrel</b><i>Voxel · 1.6k tris</i></span></button>
-<button class="mc rv" style="--i:3" type="button" data-item data-tier="low" data-set="smooth" data-name="Fridge" data-meta="Cook a Dragon · smooth · Low poly · 2,248 tris" data-glb="models/smooth/PROP_FRIDGE.glb">
+<button class="mc up" style="--i:3" type="button" data-item data-tier="low" data-set="smooth" data-name="Fridge" data-meta="Cook a Dragon · smooth · Low poly · 2,248 tris" data-glb="models/smooth/PROP_FRIDGE.glb">
   <span class="ph"><img src="thumbs/smooth-PROP_FRIDGE.webp" alt="Fridge" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Fridge</b><i>Smooth · 2.2k tris</i></span></button>
-<button class="mc rv" style="--i:4" type="button" data-item data-tier="low" data-set="voxel" data-name="Loot Sack I" data-meta="Cook a Dragon · voxel · Low poly · 1,552 tris" data-glb="models/voxel/SACK_TIER1.glb">
+<button class="mc up" style="--i:4" type="button" data-item data-tier="low" data-set="voxel" data-name="Loot Sack I" data-meta="Cook a Dragon · voxel · Low poly · 1,552 tris" data-glb="models/voxel/SACK_TIER1.glb">
   <span class="ph"><img src="thumbs/voxel-SACK_TIER1.webp" alt="Loot Sack I" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Loot Sack I</b><i>Voxel · 1.6k tris</i></span></button>
-<button class="mc rv" style="--i:5" type="button" data-item data-tier="low" data-set="smooth" data-name="Prep Counter" data-meta="Cook a Dragon · smooth · Low poly · 2,072 tris" data-glb="models/smooth/PROP_PREP_COUNTER.glb">
+<button class="mc up" style="--i:5" type="button" data-item data-tier="low" data-set="smooth" data-name="Prep Counter" data-meta="Cook a Dragon · smooth · Low poly · 2,072 tris" data-glb="models/smooth/PROP_PREP_COUNTER.glb">
   <span class="ph"><img src="thumbs/smooth-PROP_PREP_COUNTER.webp" alt="Prep Counter" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Prep Counter</b><i>Smooth · 2.1k tris</i></span></button>
-<button class="mc rv" style="--i:6" type="button" data-item data-tier="low" data-set="voxel" data-name="Fern" data-meta="Cook a Dragon · voxel · Low poly · 1,500 tris" data-glb="models/voxel/GROVE_FERN.glb">
+<button class="mc up" style="--i:6" type="button" data-item data-tier="low" data-set="voxel" data-name="Fern" data-meta="Cook a Dragon · voxel · Low poly · 1,500 tris" data-glb="models/voxel/GROVE_FERN.glb">
   <span class="ph"><img src="thumbs/voxel-GROVE_FERN.webp" alt="Fern" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Fern</b><i>Voxel · 1.5k tris</i></span></button>
-<button class="mc rv" style="--i:7" type="button" data-item data-tier="low" data-set="smooth" data-name="Half Gate" data-meta="Cook a Dragon · smooth · Low poly · 1,932 tris" data-glb="models/smooth/GROVE_HALF_GATE.glb">
+<button class="mc up" style="--i:7" type="button" data-item data-tier="low" data-set="smooth" data-name="Half Gate" data-meta="Cook a Dragon · smooth · Low poly · 1,932 tris" data-glb="models/smooth/GROVE_HALF_GATE.glb">
   <span class="ph"><img src="thumbs/smooth-GROVE_HALF_GATE.webp" alt="Half Gate" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Half Gate</b><i>Smooth · 1.9k tris</i></span></button>
-<button class="mc rv" style="--i:0" type="button" data-item data-tier="low" data-set="voxel" data-name="Table" data-meta="Cook a Dragon · voxel · Low poly · 1,408 tris" data-glb="models/voxel/GROVE_TABLE.glb">
+<button class="mc up" style="--i:0" type="button" data-item data-tier="low" data-set="voxel" data-name="Table" data-meta="Cook a Dragon · voxel · Low poly · 1,408 tris" data-glb="models/voxel/GROVE_TABLE.glb">
   <span class="ph"><img src="thumbs/voxel-GROVE_TABLE.webp" alt="Table" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Table</b><i>Voxel · 1.4k tris</i></span></button>
-<button class="mc rv" style="--i:1" type="button" data-item data-tier="low" data-set="smooth" data-name="Lantern Post" data-meta="Cook a Dragon · smooth · Low poly · 1,752 tris" data-glb="models/smooth/PROP_LANTERN_POST.glb">
+<button class="mc up" style="--i:1" type="button" data-item data-tier="low" data-set="smooth" data-name="Lantern Post" data-meta="Cook a Dragon · smooth · Low poly · 1,752 tris" data-glb="models/smooth/PROP_LANTERN_POST.glb">
   <span class="ph"><img src="thumbs/smooth-PROP_LANTERN_POST.webp" alt="Lantern Post" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Lantern Post</b><i>Smooth · 1.8k tris</i></span></button>
-<button class="mc rv" style="--i:2" type="button" data-item data-tier="low" data-set="voxel" data-name="Loot Sack V" data-meta="Cook a Dragon · voxel · Low poly · 1,344 tris" data-glb="models/voxel/SACK_TIER5.glb">
+<button class="mc up" style="--i:2" type="button" data-item data-tier="low" data-set="voxel" data-name="Loot Sack V" data-meta="Cook a Dragon · voxel · Low poly · 1,344 tris" data-glb="models/voxel/SACK_TIER5.glb">
   <span class="ph"><img src="thumbs/voxel-SACK_TIER5.webp" alt="Loot Sack V" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Loot Sack V</b><i>Voxel · 1.3k tris</i></span></button>
-<button class="mc rv" style="--i:3" type="button" data-item data-tier="low" data-set="smooth" data-name="Chair" data-meta="Cook a Dragon · smooth · Low poly · 1,728 tris" data-glb="models/smooth/PROP_CHAIR.glb">
+<button class="mc up" style="--i:3" type="button" data-item data-tier="low" data-set="smooth" data-name="Chair" data-meta="Cook a Dragon · smooth · Low poly · 1,728 tris" data-glb="models/smooth/PROP_CHAIR.glb">
   <span class="ph"><img src="thumbs/smooth-PROP_CHAIR.webp" alt="Chair" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Chair</b><i>Smooth · 1.7k tris</i></span></button>
-<button class="mc rv" style="--i:4" type="button" data-item data-tier="low" data-set="voxel" data-name="Crate" data-meta="Cook a Dragon · voxel · Low poly · 1,200 tris" data-glb="models/voxel/PROP_CRATE.glb">
+<button class="mc up" style="--i:4" type="button" data-item data-tier="low" data-set="voxel" data-name="Crate" data-meta="Cook a Dragon · voxel · Low poly · 1,200 tris" data-glb="models/voxel/PROP_CRATE.glb">
   <span class="ph"><img src="thumbs/voxel-PROP_CRATE.webp" alt="Crate" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Crate</b><i>Voxel · 1.2k tris</i></span></button>
-<button class="mc rv" style="--i:5" type="button" data-item data-tier="low" data-set="smooth" data-name="Fern" data-meta="Cook a Dragon · smooth · Low poly · 1,190 tris" data-glb="models/smooth/GROVE_FERN.glb">
+<button class="mc up" style="--i:5" type="button" data-item data-tier="low" data-set="smooth" data-name="Fern" data-meta="Cook a Dragon · smooth · Low poly · 1,190 tris" data-glb="models/smooth/GROVE_FERN.glb">
   <span class="ph"><img src="thumbs/smooth-GROVE_FERN.webp" alt="Fern" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Fern</b><i>Smooth · 1.2k tris</i></span></button>
-<button class="mc rv" style="--i:6" type="button" data-item data-tier="low" data-set="voxel" data-name="Menu Board" data-meta="Cook a Dragon · voxel · Low poly · 1,140 tris" data-glb="models/voxel/PROP_MENU_BOARD.glb">
+<button class="mc up" style="--i:6" type="button" data-item data-tier="low" data-set="voxel" data-name="Menu Board" data-meta="Cook a Dragon · voxel · Low poly · 1,140 tris" data-glb="models/voxel/PROP_MENU_BOARD.glb">
   <span class="ph"><img src="thumbs/voxel-PROP_MENU_BOARD.webp" alt="Menu Board" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Menu Board</b><i>Voxel · 1.1k tris</i></span></button>
-<button class="mc rv" style="--i:7" type="button" data-item data-tier="low" data-set="smooth" data-name="Stool" data-meta="Cook a Dragon · smooth · Low poly · 556 tris" data-glb="models/smooth/GROVE_STOOL.glb">
+<button class="mc up" style="--i:7" type="button" data-item data-tier="low" data-set="smooth" data-name="Stool" data-meta="Cook a Dragon · smooth · Low poly · 556 tris" data-glb="models/smooth/GROVE_STOOL.glb">
   <span class="ph"><img src="thumbs/smooth-GROVE_STOOL.webp" alt="Stool" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Stool</b><i>Smooth · 556 tris</i></span></button>
-<button class="mc rv" style="--i:0" type="button" data-item data-tier="low" data-set="voxel" data-name="Fence" data-meta="Cook a Dragon · voxel · Low poly · 1,136 tris" data-glb="models/voxel/PROP_FENCE.glb">
+<button class="mc up" style="--i:0" type="button" data-item data-tier="low" data-set="voxel" data-name="Fence" data-meta="Cook a Dragon · voxel · Low poly · 1,136 tris" data-glb="models/voxel/PROP_FENCE.glb">
   <span class="ph"><img src="thumbs/voxel-PROP_FENCE.webp" alt="Fence" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Fence</b><i>Voxel · 1.1k tris</i></span></button>
-<button class="mc rv" style="--i:1" type="button" data-item data-tier="low" data-set="voxel" data-name="Hearth Bush" data-meta="Cook a Dragon · voxel · Low poly · 1,132 tris" data-glb="models/voxel/HEARTH_BUSH.glb">
+<button class="mc up" style="--i:1" type="button" data-item data-tier="low" data-set="voxel" data-name="Hearth Bush" data-meta="Cook a Dragon · voxel · Low poly · 1,132 tris" data-glb="models/voxel/HEARTH_BUSH.glb">
   <span class="ph"><img src="thumbs/voxel-HEARTH_BUSH.webp" alt="Hearth Bush" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Hearth Bush</b><i>Voxel · 1.1k tris</i></span></button>
-<button class="mc rv" style="--i:2" type="button" data-item data-tier="low" data-set="voxel" data-name="Lantern Post" data-meta="Cook a Dragon · voxel · Low poly · 964 tris" data-glb="models/voxel/PROP_LANTERN_POST.glb">
+<button class="mc up" style="--i:2" type="button" data-item data-tier="low" data-set="voxel" data-name="Lantern Post" data-meta="Cook a Dragon · voxel · Low poly · 964 tris" data-glb="models/voxel/PROP_LANTERN_POST.glb">
   <span class="ph"><img src="thumbs/voxel-PROP_LANTERN_POST.webp" alt="Lantern Post" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Lantern Post</b><i>Voxel · 964 tris</i></span></button>
-<button class="mc rv" style="--i:3" type="button" data-item data-tier="low" data-set="voxel" data-name="Pot Plant" data-meta="Cook a Dragon · voxel · Low poly · 888 tris" data-glb="models/voxel/PROP_POT_PLANT.glb">
+<button class="mc up" style="--i:3" type="button" data-item data-tier="low" data-set="voxel" data-name="Pot Plant" data-meta="Cook a Dragon · voxel · Low poly · 888 tris" data-glb="models/voxel/PROP_POT_PLANT.glb">
   <span class="ph"><img src="thumbs/voxel-PROP_POT_PLANT.webp" alt="Pot Plant" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Pot Plant</b><i>Voxel · 888 tris</i></span></button>
-<button class="mc rv" style="--i:4" type="button" data-item data-tier="low" data-set="voxel" data-name="Stool" data-meta="Cook a Dragon · voxel · Low poly · 636 tris" data-glb="models/voxel/GROVE_STOOL.glb">
+<button class="mc up" style="--i:4" type="button" data-item data-tier="low" data-set="voxel" data-name="Stool" data-meta="Cook a Dragon · voxel · Low poly · 636 tris" data-glb="models/voxel/GROVE_STOOL.glb">
   <span class="ph"><img src="thumbs/voxel-GROVE_STOOL.webp" alt="Stool" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Stool</b><i>Voxel · 636 tris</i></span></button>
-<button class="mc rv" style="--i:5" type="button" data-item data-tier="low" data-set="voxel" data-name="Chair" data-meta="Cook a Dragon · voxel · Low poly · 596 tris" data-glb="models/voxel/PROP_CHAIR.glb">
+<button class="mc up" style="--i:5" type="button" data-item data-tier="low" data-set="voxel" data-name="Chair" data-meta="Cook a Dragon · voxel · Low poly · 596 tris" data-glb="models/voxel/PROP_CHAIR.glb">
   <span class="ph"><img src="thumbs/voxel-PROP_CHAIR.webp" alt="Chair" loading="lazy" width="800" height="800"></span>
   <span class="cap"><b>Chair</b><i>Voxel · 596 tris</i></span></button>
       </div>
@@ -592,55 +652,58 @@ dialog[open] { animation: pop .5s var(--ease); }
     </div>
   </section>
 
-  <section class="s" id="builds">
+  <div class="steps top" aria-hidden="true"><i style="--h:3;--i:0"></i><i style="--h:1;--i:1"></i><i style="--h:2;--i:2"></i><i style="--h:4;--i:3"></i><i style="--h:2;--i:4"></i><i style="--h:3;--i:5"></i><i style="--h:1;--i:6"></i><i style="--h:2;--i:7"></i><i style="--h:3;--i:8"></i><i style="--h:2;--i:9"></i><i style="--h:4;--i:10"></i><i style="--h:1;--i:11"></i><i style="--h:3;--i:12"></i><i style="--h:2;--i:13"></i><i style="--h:1;--i:14"></i><i style="--h:3;--i:15"></i></div>
+  <section class="s dark" id="builds">
     <div class="wrap">
-      <div class="shead rv"><h2>Builds</h2><p>Low-poly worlds, lit and shot in Roblox Studio.</p></div>
-<article class="build rv">
+      <div class="shead"><h2 class="split">Builds<sup>3</sup></h2><p class="up">Low-poly worlds, relit for their theme and shot in Roblox Studio.</p></div>
+<article class="build up">
   <header><span class="no">01</span><h3>Ember Hollow</h3><span class="tag">Low poly</span><span class="game">Environment study</span></header>
-  <div class="bgrid" style="--c:3"><figure class="fx lead" data-zoom><video muted loop playsinline preload="none" poster="assets/vid-ember-hollow.jpg" data-src="assets/vid-ember-hollow.mp4" aria-label="Ember Hollow, Fly-through"></video><figcaption>Fly-through</figcaption></figure><figure class="fx " data-zoom><img src="assets/build-ember-entrance.jpg" alt="Ember Hollow, Canyon entrance" loading="lazy"><figcaption>Canyon entrance</figcaption></figure><figure class="fx " data-zoom><img src="assets/build-ember-portal.jpg" alt="Ember Hollow, Portal garden" loading="lazy"><figcaption>Portal garden</figcaption></figure><figure class="fx " data-zoom><img src="assets/build-ember-overview.jpg" alt="Ember Hollow, Overview" loading="lazy"><figcaption>Overview</figcaption></figure></div>
+  <div class="bgrid" style="--c:3"><figure class="fx up lead" data-zoom><video muted loop playsinline preload="none" poster="assets/vid-ember-hollow.jpg" data-src="assets/vid-ember-hollow.mp4" aria-label="Ember Hollow, Fly-through"></video><figcaption>Fly-through</figcaption></figure><figure class="fx up " data-zoom><img src="assets/build-ember-entrance.jpg" alt="Ember Hollow, Canyon entrance" loading="lazy"><figcaption>Canyon entrance</figcaption></figure><figure class="fx up " data-zoom><img src="assets/build-ember-portal.jpg" alt="Ember Hollow, Portal garden" loading="lazy"><figcaption>Portal garden</figcaption></figure><figure class="fx up " data-zoom><img src="assets/build-ember-overview.jpg" alt="Ember Hollow, Overview" loading="lazy"><figcaption>Overview</figcaption></figure></div>
 </article>
-<article class="build rv">
+<article class="build up">
   <header><span class="no">02</span><h3>Cook a Dragon island</h3><span class="tag">Low poly</span><span class="game">Cook a Dragon</span></header>
-  <div class="bgrid" style="--c:2"><figure class="fx lead" data-zoom><video muted loop playsinline preload="none" poster="assets/vid-cad-island.jpg" data-src="assets/vid-cad-island.mp4" aria-label="Cook a Dragon island, Fly-through"></video><figcaption>Fly-through</figcaption></figure><figure class="fx " data-zoom><img src="assets/build-cad-plaza.jpg" alt="Cook a Dragon island, Cauldron plaza" loading="lazy"><figcaption>Cauldron plaza</figcaption></figure><figure class="fx " data-zoom><img src="assets/build-cad-restaurants.jpg" alt="Cook a Dragon island, Restaurant row" loading="lazy"><figcaption>Restaurant row</figcaption></figure><figure class="fx " data-zoom><img src="assets/build-cad-meadow.jpg" alt="Cook a Dragon island, Slime Meadow" loading="lazy"><figcaption>Slime Meadow</figcaption></figure><figure class="fx " data-zoom><img src="assets/build-cad-overview.jpg" alt="Cook a Dragon island, Overview" loading="lazy"><figcaption>Overview</figcaption></figure></div>
+  <div class="bgrid" style="--c:2"><figure class="fx up lead" data-zoom><video muted loop playsinline preload="none" poster="assets/vid-cad-island.jpg" data-src="assets/vid-cad-island.mp4" aria-label="Cook a Dragon island, Fly-through"></video><figcaption>Fly-through</figcaption></figure><figure class="fx up " data-zoom><img src="assets/build-cad-plaza.jpg" alt="Cook a Dragon island, Cauldron plaza" loading="lazy"><figcaption>Cauldron plaza</figcaption></figure><figure class="fx up " data-zoom><img src="assets/build-cad-restaurants.jpg" alt="Cook a Dragon island, Restaurant row" loading="lazy"><figcaption>Restaurant row</figcaption></figure><figure class="fx up " data-zoom><img src="assets/build-cad-meadow.jpg" alt="Cook a Dragon island, Slime Meadow" loading="lazy"><figcaption>Slime Meadow</figcaption></figure><figure class="fx up " data-zoom><img src="assets/build-cad-overview.jpg" alt="Cook a Dragon island, Overview" loading="lazy"><figcaption>Overview</figcaption></figure></div>
 </article>
-<article class="build rv">
+<article class="build up">
   <header><span class="no">03</span><h3>Halloween Bayou</h3><span class="tag">Low poly</span><span class="game">Odd Waters · Halloween</span></header>
-  <div class="bgrid" style="--c:2"><figure class="fx lead" data-zoom><video muted loop playsinline preload="none" poster="assets/vid-bayou.jpg" data-src="assets/vid-bayou.mp4" aria-label="Halloween Bayou, Fly-through"></video><figcaption>Fly-through</figcaption></figure><figure class="fx " data-zoom><img src="assets/build-bayou-entrance.jpg" alt="Halloween Bayou, Portal entrance" loading="lazy"><figcaption>Portal entrance</figcaption></figure><figure class="fx " data-zoom><img src="assets/build-bayou-candy-shop.jpg" alt="Halloween Bayou, Candy Shop" loading="lazy"><figcaption>Candy Shop</figcaption></figure><figure class="fx " data-zoom><img src="assets/build-bayou-pond.jpg" alt="Halloween Bayou, Pumpkin pond" loading="lazy"><figcaption>Pumpkin pond</figcaption></figure><figure class="fx " data-zoom><img src="assets/build-bayou-overview.jpg" alt="Halloween Bayou, Overview" loading="lazy"><figcaption>Overview</figcaption></figure></div>
+  <div class="bgrid" style="--c:2"><figure class="fx up lead" data-zoom><video muted loop playsinline preload="none" poster="assets/vid-bayou.jpg" data-src="assets/vid-bayou.mp4" aria-label="Halloween Bayou, Fly-through"></video><figcaption>Fly-through</figcaption></figure><figure class="fx up " data-zoom><img src="assets/build-bayou-entrance.jpg" alt="Halloween Bayou, Portal entrance" loading="lazy"><figcaption>Portal entrance</figcaption></figure><figure class="fx up " data-zoom><img src="assets/build-bayou-candy-shop.jpg" alt="Halloween Bayou, Candy Shop" loading="lazy"><figcaption>Candy Shop</figcaption></figure><figure class="fx up " data-zoom><img src="assets/build-bayou-pond.jpg" alt="Halloween Bayou, Pumpkin pond" loading="lazy"><figcaption>Pumpkin pond</figcaption></figure><figure class="fx up " data-zoom><img src="assets/build-bayou-overview.jpg" alt="Halloween Bayou, Overview" loading="lazy"><figcaption>Overview</figcaption></figure></div>
 </article>
     </div>
   </section>
+  <div class="steps bottom" aria-hidden="true"><i style="--h:3;--i:0"></i><i style="--h:1;--i:1"></i><i style="--h:2;--i:2"></i><i style="--h:4;--i:3"></i><i style="--h:2;--i:4"></i><i style="--h:3;--i:5"></i><i style="--h:1;--i:6"></i><i style="--h:2;--i:7"></i><i style="--h:3;--i:8"></i><i style="--h:2;--i:9"></i><i style="--h:4;--i:10"></i><i style="--h:1;--i:11"></i><i style="--h:3;--i:12"></i><i style="--h:2;--i:13"></i><i style="--h:1;--i:14"></i><i style="--h:3;--i:15"></i></div>
 
   <section class="s" id="ui">
     <div class="wrap">
-      <div class="shead rv"><h2>UI</h2><p>Shops, menus and reward screens, built and animated in Studio.</p></div>
-      <article class="build rv">
+      <div class="shead"><h2 class="split">UI<sup>24</sup></h2><p class="up">Shops, menus and reward screens, built and animated in Studio.</p></div>
+      <article class="build up">
         <header><span class="no">01</span><h3>Egg shop</h3><span class="tag hot">Latest</span><span class="game">UI lab</span></header>
-        <div class="ugrid"><figure class="fx lead" data-zoom><video muted loop playsinline preload="none" poster="assets/vid-r022-shop.jpg" data-src="assets/vid-r022-shop.mp4" aria-label="Egg shop animation"></video><figcaption>Open, buy and egg reveal</figcaption></figure><figure class="fx rv " data-zoom><img src="assets/ui-r022-c2-10-banner-rainbow-gifts-header.jpg" alt="Egg banner and rainbow bundle interface" loading="lazy"><figcaption>Egg banner and rainbow bundle</figcaption></figure><figure class="fx rv " data-zoom><img src="assets/ui-r022-c2-10-desktop-1080.jpg" alt="Passes and money interface" loading="lazy"><figcaption>Passes and money</figcaption></figure><figure class="fx rv " data-zoom><img src="assets/ui-r022-c2-10-bestvalue-speed.jpg" alt="Best value and speed interface" loading="lazy"><figcaption>Best value and speed</figcaption></figure><figure class="fx rv " data-zoom><img src="assets/ui-r022-v5-fx-02-egg-reveal.jpg" alt="Egg reveal interface" loading="lazy"><figcaption>Egg reveal</figcaption></figure><figure class="fx rv " data-zoom><img src="assets/ui-r022-v5-fx-04-reward-burst.jpg" alt="Reward burst interface" loading="lazy"><figcaption>Reward burst</figcaption></figure><figure class="fx rv " data-zoom><img src="assets/ui-r022-v5-fx-06-pass-unlocked.jpg" alt="Pass unlocked interface" loading="lazy"><figcaption>Pass unlocked</figcaption></figure></div>
+        <div class="ugrid"><figure class="fx up lead" data-zoom><video muted loop playsinline preload="none" poster="assets/vid-r022-shop.jpg" data-src="assets/vid-r022-shop.mp4" aria-label="Egg shop animation"></video><figcaption>Open, buy and egg reveal</figcaption></figure><figure class="fx up " data-zoom><img src="assets/ui-r022-c2-10-banner-rainbow-gifts-header.jpg" alt="Egg banner and rainbow bundle interface" loading="lazy"><figcaption>Egg banner and rainbow bundle</figcaption></figure><figure class="fx up " data-zoom><img src="assets/ui-r022-c2-10-desktop-1080.jpg" alt="Passes and money interface" loading="lazy"><figcaption>Passes and money</figcaption></figure><figure class="fx up " data-zoom><img src="assets/ui-r022-c2-10-bestvalue-speed.jpg" alt="Best value and speed interface" loading="lazy"><figcaption>Best value and speed</figcaption></figure><figure class="fx up " data-zoom><img src="assets/ui-r022-v5-fx-02-egg-reveal.jpg" alt="Egg reveal interface" loading="lazy"><figcaption>Egg reveal</figcaption></figure><figure class="fx up " data-zoom><img src="assets/ui-r022-v5-fx-04-reward-burst.jpg" alt="Reward burst interface" loading="lazy"><figcaption>Reward burst</figcaption></figure><figure class="fx up " data-zoom><img src="assets/ui-r022-v5-fx-06-pass-unlocked.jpg" alt="Pass unlocked interface" loading="lazy"><figcaption>Pass unlocked</figcaption></figure></div>
       </article>
-      <article class="build rv">
+      <article class="build up">
         <header><span class="no">02</span><h3>In motion</h3><span class="game">Shop and menu animations</span></header>
-        <div class="ugrid three"><figure class="fx " data-zoom><video muted loop playsinline preload="none" poster="assets/vid-dragon-weapon-shop.jpg" data-src="assets/vid-dragon-weapon-shop.mp4" aria-label="Weapon Shop animation, Cook a Dragon"></video><figcaption>Weapon Shop</figcaption></figure><figure class="fx " data-zoom><video muted loop playsinline preload="none" poster="assets/vid-halloween-shop.jpg" data-src="assets/vid-halloween-shop.mp4" aria-label="Candy Shop animation, Odd Waters · Halloween"></video><figcaption>Candy Shop</figcaption></figure><figure class="fx " data-zoom><video muted loop playsinline preload="none" poster="assets/vid-ui-menus.jpg" data-src="assets/vid-ui-menus.mp4" aria-label="Menus in motion animation, Odd Waters"></video><figcaption>Menus in motion</figcaption></figure></div>
+        <div class="ugrid three"><figure class="fx up " data-zoom><video muted loop playsinline preload="none" poster="assets/vid-dragon-weapon-shop.jpg" data-src="assets/vid-dragon-weapon-shop.mp4" aria-label="Weapon Shop animation, Cook a Dragon"></video><figcaption>Weapon Shop</figcaption></figure><figure class="fx up " data-zoom><video muted loop playsinline preload="none" poster="assets/vid-halloween-shop.jpg" data-src="assets/vid-halloween-shop.mp4" aria-label="Candy Shop animation, Odd Waters · Halloween"></video><figcaption>Candy Shop</figcaption></figure><figure class="fx up " data-zoom><video muted loop playsinline preload="none" poster="assets/vid-ui-menus.jpg" data-src="assets/vid-ui-menus.mp4" aria-label="Menus in motion animation, Odd Waters"></video><figcaption>Menus in motion</figcaption></figure></div>
       </article>
-      <article class="build rv">
+      <article class="build up">
         <header><span class="no">03</span><h3>Odd Waters</h3><span class="game">18 screens</span></header>
-        <div class="ugrid three"><figure class="fx rv " data-zoom><img src="assets/ui-shop.jpg" alt="Shop interface" loading="lazy"><figcaption>Shop</figcaption></figure><figure class="fx rv " data-zoom><img src="assets/ui-rodshop.jpg" alt="Rod Shop interface" loading="lazy"><figcaption>Rod Shop</figcaption></figure><figure class="fx rv " data-zoom><img src="assets/ui-inventory.jpg" alt="Inventory interface" loading="lazy"><figcaption>Inventory</figcaption></figure><figure class="fx rv " data-zoom><img src="assets/ui-index.jpg" alt="Fish Index interface" loading="lazy"><figcaption>Fish Index</figcaption></figure><figure class="fx rv " data-zoom><img src="assets/ui-skins.jpg" alt="Skin picker interface" loading="lazy"><figcaption>Skin picker</figcaption></figure><figure class="fx rv " data-zoom><img src="assets/ui-chests.jpg" alt="Chest odds interface" loading="lazy"><figcaption>Chest odds</figcaption></figure><figure class="fx rv " data-zoom><img src="assets/ui-reveal.jpg" alt="Chest reveal interface" loading="lazy"><figcaption>Chest reveal</figcaption></figure><figure class="fx rv " data-zoom><img src="assets/ui-daily.jpg" alt="Daily rewards interface" loading="lazy"><figcaption>Daily rewards</figcaption></figure><figure class="fx rv " data-zoom><img src="assets/ui-spin.jpg" alt="Spin wheel interface" loading="lazy"><figcaption>Spin wheel</figcaption></figure><figure class="fx rv " data-zoom><img src="assets/ui-quests.jpg" alt="Quests interface" loading="lazy"><figcaption>Quests</figcaption></figure><figure class="fx rv " data-zoom><img src="assets/ui-passes.jpg" alt="Gamepasses interface" loading="lazy"><figcaption>Gamepasses</figcaption></figure><figure class="fx rv " data-zoom><img src="assets/ui-coins.jpg" alt="Coin packs interface" loading="lazy"><figcaption>Coin packs</figcaption></figure><figure class="fx rv " data-zoom><img src="assets/ui-aquarium.jpg" alt="Aquarium interface" loading="lazy"><figcaption>Aquarium</figcaption></figure><figure class="fx rv " data-zoom><img src="assets/ui-playtime.jpg" alt="Playtime rewards interface" loading="lazy"><figcaption>Playtime rewards</figcaption></figure><figure class="fx rv " data-zoom><img src="assets/ui-stats.jpg" alt="Stats and titles interface" loading="lazy"><figcaption>Stats and titles</figcaption></figure><figure class="fx rv " data-zoom><img src="assets/ui-teleport.jpg" alt="Teleport interface" loading="lazy"><figcaption>Teleport</figcaption></figure><figure class="fx rv " data-zoom><img src="assets/ui-group.jpg" alt="Group perk interface" loading="lazy"><figcaption>Group perk</figcaption></figure><figure class="fx rv " data-zoom><img src="assets/ui-settings.jpg" alt="Settings interface" loading="lazy"><figcaption>Settings</figcaption></figure></div>
+        <div class="ugrid three"><figure class="fx up " data-zoom><img src="assets/ui-shop.jpg" alt="Shop interface" loading="lazy"><figcaption>Shop</figcaption></figure><figure class="fx up " data-zoom><img src="assets/ui-rodshop.jpg" alt="Rod Shop interface" loading="lazy"><figcaption>Rod Shop</figcaption></figure><figure class="fx up " data-zoom><img src="assets/ui-inventory.jpg" alt="Inventory interface" loading="lazy"><figcaption>Inventory</figcaption></figure><figure class="fx up " data-zoom><img src="assets/ui-index.jpg" alt="Fish Index interface" loading="lazy"><figcaption>Fish Index</figcaption></figure><figure class="fx up " data-zoom><img src="assets/ui-skins.jpg" alt="Skin picker interface" loading="lazy"><figcaption>Skin picker</figcaption></figure><figure class="fx up " data-zoom><img src="assets/ui-chests.jpg" alt="Chest odds interface" loading="lazy"><figcaption>Chest odds</figcaption></figure><figure class="fx up " data-zoom><img src="assets/ui-reveal.jpg" alt="Chest reveal interface" loading="lazy"><figcaption>Chest reveal</figcaption></figure><figure class="fx up " data-zoom><img src="assets/ui-daily.jpg" alt="Daily rewards interface" loading="lazy"><figcaption>Daily rewards</figcaption></figure><figure class="fx up " data-zoom><img src="assets/ui-spin.jpg" alt="Spin wheel interface" loading="lazy"><figcaption>Spin wheel</figcaption></figure><figure class="fx up " data-zoom><img src="assets/ui-quests.jpg" alt="Quests interface" loading="lazy"><figcaption>Quests</figcaption></figure><figure class="fx up " data-zoom><img src="assets/ui-passes.jpg" alt="Gamepasses interface" loading="lazy"><figcaption>Gamepasses</figcaption></figure><figure class="fx up " data-zoom><img src="assets/ui-coins.jpg" alt="Coin packs interface" loading="lazy"><figcaption>Coin packs</figcaption></figure><figure class="fx up " data-zoom><img src="assets/ui-aquarium.jpg" alt="Aquarium interface" loading="lazy"><figcaption>Aquarium</figcaption></figure><figure class="fx up " data-zoom><img src="assets/ui-playtime.jpg" alt="Playtime rewards interface" loading="lazy"><figcaption>Playtime rewards</figcaption></figure><figure class="fx up " data-zoom><img src="assets/ui-stats.jpg" alt="Stats and titles interface" loading="lazy"><figcaption>Stats and titles</figcaption></figure><figure class="fx up " data-zoom><img src="assets/ui-teleport.jpg" alt="Teleport interface" loading="lazy"><figcaption>Teleport</figcaption></figure><figure class="fx up " data-zoom><img src="assets/ui-group.jpg" alt="Group perk interface" loading="lazy"><figcaption>Group perk</figcaption></figure><figure class="fx up " data-zoom><img src="assets/ui-settings.jpg" alt="Settings interface" loading="lazy"><figcaption>Settings</figcaption></figure></div>
       </article>
     </div>
   </section>
 
-  <section class="contact" id="contact">
+  <section class="contact dark" id="contact">
+    <div class="steps top" aria-hidden="true"><i style="--h:3;--i:0"></i><i style="--h:1;--i:1"></i><i style="--h:2;--i:2"></i><i style="--h:4;--i:3"></i><i style="--h:2;--i:4"></i><i style="--h:3;--i:5"></i><i style="--h:1;--i:6"></i><i style="--h:2;--i:7"></i><i style="--h:3;--i:8"></i><i style="--h:2;--i:9"></i><i style="--h:4;--i:10"></i><i style="--h:1;--i:11"></i><i style="--h:3;--i:12"></i><i style="--h:2;--i:13"></i><i style="--h:1;--i:14"></i><i style="--h:3;--i:15"></i></div>
     <div class="wrap">
-      <p class="eyebrow rv">Contact</p>
-      <h2 class="rv" style="--i:1">Got a game that needs <em>models, a map or UI?</em></h2>
-      <div class="cta rv" style="--i:2">
-        <a class="btn" href="https://discord.com/users/767992133251629096" target="_blank" rel="noopener">Message me on Discord <span aria-hidden="true">→</span></a>
-        <a class="btn ghost" href="https://www.roblox.com/users/1424896813/profile" target="_blank" rel="noopener">Roblox profile</a>
+      <p class="eyebrow up">Contact</p>
+      <h2 class="split">Got a game that needs models, a map or UI?</h2>
+      <div class="cta up">
+        <a class="btn" href="https://discord.com/users/767992133251629096" target="_blank" rel="noopener"><span data-t="Message me on Discord">Message me on Discord</span> <i aria-hidden="true">→</i></a>
+        <a class="btn ghost" href="https://www.roblox.com/users/1424896813/profile" target="_blank" rel="noopener"><span data-t="Roblox profile">Roblox profile</span></a>
       </div>
     </div>
+    <div class="marq big" aria-hidden="true"><div class="mq"><span>Let's build it</span><b>✦</b><span>Let's build it</span><b>✦</b><span>Let's build it</span><b>✦</b><span>Let's build it</span><b>✦</b><span>Let's build it</span><b>✦</b><span>Let's build it</span><b>✦</b></div></div>
+    <footer><div class="wrap"><span>© 2026 KINGJAY142p · After Hours Studios</span><a href="#top">Back to top ↑</a></div></footer>
   </section>
 </main>
-
-<footer><div class="wrap"><span>© 2026 KINGJAY142p · After Hours Studios</span><a href="#top">Back to top ↑</a></div></footer>
 
 <dialog id="md" aria-labelledby="md-name">
   <div class="dtop"><div><b id="md-name"></b><span id="md-meta"></span></div><button type="button" class="x" id="md-close" aria-label="Close">✕</button></div>
@@ -654,21 +717,104 @@ const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-// reveal on scroll
-const rio = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); rio.unobserve(e.target); } }), { rootMargin: "0px 0px -8% 0px" });
-$$(".rv").forEach((el) => rio.observe(el));
+// split headings into word masks so each word slides up into place
+$$(".split").forEach((el) => {
+  let i = 0;
+  const walk = (node) => [...node.childNodes].forEach((n) => {
+    if (n.nodeType === 3) {
+      const frag = document.createDocumentFragment();
+      n.textContent.split(/(\s+)/).forEach((t) => {
+        if (!t) return;
+        if (/^\s+$/.test(t)) return frag.append(t);
+        const w = document.createElement("span"), inner = document.createElement("span");
+        w.className = "w"; inner.textContent = t; inner.style.setProperty("--i", i++); w.append(inner); frag.append(w);
+      });
+      n.replaceWith(frag);
+    } else if (n.nodeName === "SUP") {
+      const w = document.createElement("span"); w.className = "w"; n.replaceWith(w); n.style.setProperty("--i", i++);
+      const inner = document.createElement("span"); inner.style.setProperty("--i", i); inner.append(n); w.append(inner);
+    }
+  });
+  walk(el);
+});
+$$("[data-t]").forEach((el) => { el.innerHTML = `<span class="rl">${el.innerHTML}</span>`; });
 
-// nav: glass once scrolled, hides going down, returns going up; marks the section in view
-const nav = $("#nav"); let lastY = scrollY;
-addEventListener("scroll", () => {
-  const y = scrollY;
+// smooth scroll
+const lenis = !still && window.Lenis ? new Lenis({ duration: 1.15, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) }) : null;
+if (lenis) {
+  lenis.stop();
+  const raf = (t) => { lenis.raf(t); requestAnimationFrame(raf); };
+  requestAnimationFrame(raf);
+  $$('a[href^="#"]').forEach((a) => a.addEventListener("click", (e) => {
+    const t = a.hash === "#top" ? 0 : $(a.hash); if (t == null) return;
+    e.preventDefault(); lenis.scrollTo(t, { offset: a.hash === "#top" ? 0 : -72 });
+  }));
+}
+
+// reveal on scroll
+const rio = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); rio.unobserve(e.target); } }), { rootMargin: "0px 0px -10% 0px" });
+const watch = () => $$(".up, .split, .steps").forEach((el) => rio.observe(el));
+
+// preloader: count to 100 while the hero media loads, then wipe up and start the page
+const pre = $("#pre"), n = $("#pre-n");
+const start = () => {
+  document.body.classList.remove("loading");
+  if (pre) pre.classList.add("done");
+  if (lenis) lenis.start();
+  setTimeout(watch, still ? 0 : 350);
+  setTimeout(() => pre && pre.remove(), 1400);
+};
+if (still || !pre) start();
+else {
+  // time-based so slow frame rates don't stretch it: ~1.6s, holds at 90 until load, never past 3s
+  let v = 0, loaded = false, held = 0;
+  const t0 = performance.now();
+  addEventListener("load", () => { loaded = true; });
+  setTimeout(() => { loaded = true; }, 2600);
+  const tick = (now) => {
+    const goal = Math.min(100, ((now - t0) / 1600) * 100);
+    if (!loaded && goal > 90) { v = 90; held = now; } else v = held && loaded ? Math.min(100, 90 + (now - held) / 4) : goal;
+    n.textContent = Math.floor(v);
+    if (v < 100) requestAnimationFrame(tick); else setTimeout(start, 180);
+  };
+  requestAnimationFrame(tick);
+}
+
+// scroll-linked motion: nav state, marquees, parallax media
+const nav = $("#nav"), marqs = $$(".mq"), pz = $$(".pz"), darks = $$(".dark");
+let lastY = scrollY, drift = 0;
+const frame = () => {
+  const y = scrollY, vh = innerHeight;
   nav.classList.toggle("scrolled", y > 20);
-  nav.classList.toggle("away", y > 400 && y > lastY && !$("dialog[open]"));
+  nav.classList.toggle("away", y > 500 && y > lastY + 2 && !$("dialog[open]"));
+  if (y < lastY - 2) nav.classList.remove("away");
+  nav.classList.toggle("on-dark", darks.some((d) => { const r = d.getBoundingClientRect(); return r.top < 40 && r.bottom > 40; }));
+  if (!still) {
+    drift += 0.4;
+    marqs.forEach((m, i) => { const w = m.scrollWidth / 3; const x = -((y * 0.35 + drift) % w); m.style.setProperty("--x", (i % 2 ? -w - x : x) + "px"); });
+    pz.forEach((p) => { const r = p.parentElement.getBoundingClientRect(); if (r.bottom > 0 && r.top < vh) p.style.setProperty("--p", ((r.top + r.height / 2 - vh / 2) * -0.08).toFixed(1) + "px"); });
+  }
   lastY = y;
-}, { passive: true });
+  requestAnimationFrame(frame);
+};
+requestAnimationFrame(frame);
 const links = $$(".nav nav a");
 const sio = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) links.forEach((a) => a.classList.toggle("on", a.hash === "#" + e.target.id)); }), { rootMargin: "-45% 0px -50% 0px" });
 $$("main section[id]").forEach((s) => sio.observe(s));
+
+// cursor: a dot that trails the mouse and opens into "View" over work
+const cur = $("#cur");
+if (cur && matchMedia("(hover: hover)").matches && !still) {
+  let mx = -100, my = -100, cx = mx, cy = my;
+  addEventListener("mousemove", (e) => { mx = e.clientX; my = e.clientY; cur.classList.add("on"); }, { passive: true });
+  document.addEventListener("mouseleave", () => cur.classList.remove("on"));
+  const loop = () => { cx += (mx - cx) * 0.2; cy += (my - cy) * 0.2; cur.style.transform = `translate(${cx}px, ${cy}px)`; requestAnimationFrame(loop); };
+  loop();
+  $$(".mc, .fx, .r").forEach((el) => {
+    el.addEventListener("mouseenter", () => { cur.classList.add("big"); $("span", cur).textContent = el.classList.contains("mc") ? "Spin" : el.classList.contains("r") ? "Open" : "View"; });
+    el.addEventListener("mouseleave", () => cur.classList.remove("big"));
+  });
+}
 
 // model filters: poly tier x collection, with a short fade between states
 const grid = $("#mgrid"), cards = $$("[data-item]", grid), f = { tier: "all", set: "all" }, more = $("#mmore");
@@ -682,6 +828,7 @@ const apply = () => {
   });
   more.classList.toggle("hide", open || n <= LIMIT); more.textContent = "Show all " + n + " models";
   $("#mcount").textContent = shown + " of " + n + (n === 1 ? " model" : " models");
+  if (lenis) lenis.resize();
 };
 apply();
 more.addEventListener("click", () => { open = true; apply(); });
@@ -692,18 +839,20 @@ $$(".chip").forEach((b) => b.addEventListener("click", () => {
   setTimeout(() => {
     open = false; apply();
     requestAnimationFrame(() => cards.forEach((c) => c.classList.remove("out")));
-  }, still ? 0 : 260);
+  }, still ? 0 : 280);
 }));
 
-// 3D viewer
+// 3D viewer; page scroll pauses while a dialog is open
 const md = $("#md"), mv = $("#md-viewer");
+const openD = (d) => { d.showModal(); if (lenis) lenis.stop(); };
+const closed = () => { if (lenis) lenis.start(); };
 cards.forEach((c) => c.addEventListener("click", () => {
   $("#md-name").textContent = c.dataset.name; $("#md-meta").textContent = c.dataset.meta;
-  mv.setAttribute("alt", "3D model of " + c.dataset.name); mv.src = c.dataset.glb; md.showModal();
+  mv.setAttribute("alt", "3D model of " + c.dataset.name); mv.src = c.dataset.glb; openD(md);
 }));
 $("#md-close").addEventListener("click", () => md.close());
 md.addEventListener("click", (e) => { if (e.target === md) md.close(); });
-md.addEventListener("close", () => mv.removeAttribute("src"));
+md.addEventListener("close", () => { mv.removeAttribute("src"); closed(); });
 
 // videos play only while on screen
 const vio = new IntersectionObserver((es) => es.forEach((e) => {
@@ -718,10 +867,10 @@ $$("figure[data-zoom]").forEach((fig) => fig.addEventListener("click", () => {
   const v = $("video", fig); let el;
   if (v) { el = document.createElement("video"); Object.assign(el, { src: v.dataset.src || v.src, poster: v.poster, controls: true, autoplay: true, loop: true, muted: true, playsInline: true }); el.addEventListener("click", (e) => e.stopPropagation()); }
   else { const img = $("img", fig); el = document.createElement("img"); el.src = img.currentSrc || img.src; el.alt = img.alt; }
-  lb.replaceChildren(el); lb.showModal();
+  lb.replaceChildren(el); openD(lb);
 }));
 lb.addEventListener("click", () => lb.close());
-lb.addEventListener("close", () => lb.replaceChildren());
+lb.addEventListener("close", () => { lb.replaceChildren(); closed(); });
 </script>
 </body>
 </html>
